@@ -6,6 +6,7 @@ function App() {
 
     return (
         <div>
+            <button className="bg-red-100">done</button>
         </div>
     );
 }
