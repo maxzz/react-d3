@@ -1,5 +1,8 @@
 import React from 'react';
 import { lineRadial } from 'd3';
+import Slider from './Sider';
+// import { styled } from '@stitches/react';
+// import * as Slider from '@radix-ui/react-slider';
 
 type ShapeParams = {
     nRays: number;
@@ -41,8 +44,19 @@ function StarD3Interpolated() {
     };
 
     return (
-        <div className="w-32 h-32 bg-red-100 text-blue-600">
-            <InterpolatedShape shape={shape} />
+        <div className="">
+            {/* <Slider.Root>
+                <Slider.Track>
+                    <Slider.Range />
+                </Slider.Track>
+                <Slider.Thumb />
+            </Slider.Root> */}
+
+            <Slider />
+
+            <div className="w-32 h-32 bg-red-100 text-blue-600">
+                <InterpolatedShape shape={shape} />
+            </div>
         </div>
     );
 }
