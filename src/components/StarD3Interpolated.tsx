@@ -1,5 +1,6 @@
 import React from 'react';
 import { lineRadial } from 'd3';
+import './Slider.scss';
 
 type ShapeParams = {
     nRays: number;
@@ -19,14 +20,14 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
             iRadius,
             oRadius,
         } = shape;
-    
+
         const step = 2 * Math.PI / (nRays * 2);
-    
+
         const points: [number, number][] = [];
         for (let i = 0; i < nRays * 2; i++) {
             points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
         }
-    
+
         return lineRadial()(points) || '';
     }, [shape]);
 
@@ -37,19 +38,19 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
     );
 }
 
-function Slider({ value, onChange, label }: { value: number, onChange: (v: number) => void; label: string }) {
+function Slider({ value, onChange, label }: { value: number, onChange: (v: number) => void; label: string; }) {
     return (
         <div className="flex text-sm">
             <div className="w-24">{label}</div>
-            <input type="range" value={value} onChange={(e) => onChange(+e.target.value)} />
+            <div className=""><input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} /></div>
             <div className="ml-1">{value}</div>
         </div>
     );
 }
 
 function StarD3Interpolated() {
-    const [nRays, setURays] = React.useState(5);
-    const [iRadius, setIRadius] = React.useState(23);
+    const [nRays, setURays] = React.useState(7);
+    const [iRadius, setIRadius] = React.useState(49);
     const [oRadius, setORadius] = React.useState(63);
 
     const shape = {
