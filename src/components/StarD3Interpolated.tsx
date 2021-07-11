@@ -61,7 +61,9 @@ function StarD3Interpolated() {
 
     return (
         <div className="p-2 flex">
-            <div className="w-40 h-40 border-8 border-blue-200 bg-blue-400 text-blue-800">
+            <div className="w-44 h-44 text-blue-800 bg-blue-400 border-8 border-blue-200"
+                style={{boxShadow: '#0000001f 0px 0px 3px 1px'}}
+            >
                 <InterpolatedShape shape={shape} />
             </div>
             <div className="mx-2 p-2">
