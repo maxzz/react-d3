@@ -33,10 +33,12 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
     );
 }
 
-function Slider({value, onChange}: {value: number, onChange: (v: number) => void}) {
+function Slider({ value, onChange, label }: { value: number, onChange: (v: number) => void; label: string }) {
     return (
-        <div className="">
+        <div className="flex">
+            <div className="">{label}</div>
             <input type="range" value={value} onChange={(e) => onChange(+e.target.value)} />
+            <div className="">{value}</div>
         </div>
     );
 }
@@ -53,13 +55,14 @@ function StarD3Interpolated() {
     };
 
     return (
-        <div className="">
-            <Slider value={nRays} onChange={(v) => setURays(v)}/>
-            <Slider value={iRadius} onChange={(v) => setIRadius(v)}/>
-            <Slider value={oRadius} onChange={(v) => setORadius(v)}/>
-
+        <div className="flex">
             <div className="w-32 h-32 bg-red-100 text-blue-600">
                 <InterpolatedShape shape={shape} />
+            </div>
+            <div className="mx-2 bg-yellow-100">
+                <Slider label="nRays" value={nRays} onChange={(v) => setURays(v)} />
+                <Slider label="iRadius" value={iRadius} onChange={(v) => setIRadius(v)} />
+                <Slider label="oRadius" value={oRadius} onChange={(v) => setORadius(v)} />
             </div>
         </div>
     );
