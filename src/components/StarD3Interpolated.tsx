@@ -33,9 +33,9 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
         <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-SIZE / 2} ${-SIZE / 2} ${SIZE} ${SIZE}`}>
             <path className="" d={`${path[0]}z`} />
 
-            {path[1].map(([x ,y], idx) => (
-                <circle cx={x} cy={y} r={3} key={idx} />
-            ))}
+            <g stroke="white" strokeWidth=".5" fill="none">
+                {path[1].map(([x, y], idx) => <circle cx={x} cy={y} r={5} key={idx} />)}
+            </g>
         </svg>
     );
 }
