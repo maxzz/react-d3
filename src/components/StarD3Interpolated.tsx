@@ -23,19 +23,19 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
         for (let i = 0; i < nRays * 2; i++) {
             points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
         }
-        const gen = lineRadial()(points);
-        console.log('gen', gen);
-        
-        const outerPts: [number, number][] = points.filter((_, idx) => idx % 0 === 0);
-        return [gen || '', outerPts] as const;
+        const outerPts: [number, number][] = points.filter((_, idx) => idx % 2 === 0).map(([a, r]) => {
+            return [r * Math.sin(a), r * -Math.cos(a)];
+        });
+        return [lineRadial()(points) || '', outerPts] as const;
     }, [nRays, iRadius, oRadius]);
 
     return (
         <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-SIZE / 2} ${-SIZE / 2} ${SIZE} ${SIZE}`}>
             <path className="" d={`${path[0]}z`} />
-            {/* {path[1].map(pt => (
-                <circle cx={pt.}
-            ))} */}
+
+            {path[1].map(([x ,y], idx) => (
+                <circle cx={x} cy={y} r={3} key={idx} />
+            ))}
         </svg>
     );
 }
