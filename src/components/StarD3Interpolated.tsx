@@ -1,11 +1,22 @@
 import React from 'react';
 import { lineRadial } from 'd3';
 
-function StarD3Interpolated() {
-    
-    const nRays = 15;
-    const iRadius = 20;
-    const oRadius = 40;
+type ShapeParams = {
+    nRays: number;
+    iRadius: number;
+    oRadius: number;
+};
+
+type InterpolatedShapeProps = {
+    shape: ShapeParams;
+};
+
+function InterpolatedShape({ shape }: InterpolatedShapeProps) {
+    const { nRays,
+        iRadius,
+        oRadius,
+    } = shape;
+
     const step = 2 * Math.PI / (nRays * 2);
 
     const points: [number, number][] = [];
@@ -16,13 +27,24 @@ function StarD3Interpolated() {
     const path = lineRadial()(points) || '';
 
     return (
+        <svg className="" fill="currentColor" viewBox="0 0 100 100">
+            <path className="translate-x-[50px] translate-y-[50px]" d={path} />
+        </svg>
+    );
+}
+
+function StarD3Interpolated() {
+    const shape = {
+        nRays: 15,
+        iRadius: 20,
+        oRadius: 40,
+    };
+
+    return (
         <div className="w-32 h-32 bg-red-100 text-blue-600">
-            <svg className="" fill="currentColor" viewBox="0 0 100 100">
-                <path className="translate-x-[50px] translate-y-[50px]" d={path} />
-            </svg>
+            <InterpolatedShape shape={shape} />
         </div>
     );
 }
 
 export default StarD3Interpolated;
-
