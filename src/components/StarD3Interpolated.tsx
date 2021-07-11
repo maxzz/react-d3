@@ -11,6 +11,8 @@ type InterpolatedShapeProps = {
     shape: ShapeParams;
 };
 
+const SIZE = 100;
+
 function InterpolatedShape({ shape }: InterpolatedShapeProps) {
     const path = React.useMemo(() => {
         const { nRays,
@@ -25,13 +27,11 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
             points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
         }
     
-        const path = lineRadial()(points) || '';
-        return path;
-    
+        return lineRadial()(points) || '';
     }, [shape]);
 
     return (
-        <svg className="" fill="currentColor" viewBox="-50 -50 100 100">
+        <svg className="" fill="currentColor" viewBox={`${-SIZE / 2} ${-SIZE / 2} ${SIZE} ${SIZE}`}>
             <path className="" d={path} />
         </svg>
     );
