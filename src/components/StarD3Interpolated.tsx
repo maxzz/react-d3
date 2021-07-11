@@ -11,7 +11,7 @@ type InterpolatedShapeProps = {
     shape: ShapeParams;
 };
 
-const SIZE = 100;
+const SIZE = 200;
 
 function InterpolatedShape({ shape }: InterpolatedShapeProps) {
     const path = React.useMemo(() => {
@@ -60,7 +60,7 @@ function StarD3Interpolated() {
 
     return (
         <div className="flex">
-            <div className="w-32 h-32 bg-red-100 text-blue-600">
+            <div className="w-40 h-40 bg-red-100 text-blue-600">
                 <InterpolatedShape shape={shape} />
             </div>
             <div className="mx-2 p-2 bg-yellow-100">
