@@ -32,7 +32,7 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
 
     return (
         <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-SIZE / 2} ${-SIZE / 2} ${SIZE} ${SIZE}`}>
-            <path className="" d={path} />
+            <path className="" d={`${path}z`} />
         </svg>
     );
 }
@@ -48,9 +48,9 @@ function Slider({ value, onChange, label }: { value: number, onChange: (v: numbe
 }
 
 function StarD3Interpolated() {
-    const [nRays, setURays] = React.useState(15);
-    const [iRadius, setIRadius] = React.useState(20);
-    const [oRadius, setORadius] = React.useState(40);
+    const [nRays, setURays] = React.useState(5);
+    const [iRadius, setIRadius] = React.useState(23);
+    const [oRadius, setORadius] = React.useState(63);
 
     const shape = {
         nRays,
@@ -60,7 +60,7 @@ function StarD3Interpolated() {
 
     return (
         <div className="p-2 flex">
-            <div className="w-40 h-40 border-8 border-white bg-gray-800 text-blue-400">
+            <div className="w-40 h-40 border-8 border-white bg-gray-800 text-blue-800">
                 <InterpolatedShape shape={shape} />
             </div>
             <div className="mx-2 p-2">
