@@ -1,5 +1,5 @@
 import React from 'react';
-import { lineRadial } from 'd3';
+import { lineRadial, randomUniform } from 'd3';
 import './Slider.scss';
 
 type ShapeParams = {
@@ -22,7 +22,9 @@ function InterpolatedShape({ shape, showOuter }: InterpolatedShapeProps) {
         const step = 2 * Math.PI / (nRays * 2);
         const points: [number, number][] = [];
         for (let i = 0; i < nRays * 2; i++) {
-            points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
+            // points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
+            // points.push([i * step, randomUniform(oRadius, iRadius)()]);
+            points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
         }
         const outerPts: [number, number][] = points.filter((_, idx) => idx % 2 === 0).map(([a, r]) => {
             return [r * Math.sin(a), r * -Math.cos(a)];
