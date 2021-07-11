@@ -23,12 +23,19 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
         for (let i = 0; i < nRays * 2; i++) {
             points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
         }
-        return lineRadial()(points) || '';
+        const gen = lineRadial()(points);
+        console.log('gen', gen);
+        
+        const outerPts: [number, number][] = points.filter((_, idx) => idx % 0 === 0);
+        return [gen || '', outerPts] as const;
     }, [nRays, iRadius, oRadius]);
 
     return (
         <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-SIZE / 2} ${-SIZE / 2} ${SIZE} ${SIZE}`}>
-            <path className="" d={`${path}z`} />
+            <path className="" d={`${path[0]}z`} />
+            {/* {path[1].map(pt => (
+                <circle cx={pt.}
+            ))} */}
         </svg>
     );
 }
@@ -48,11 +55,7 @@ function StarD3Interpolated() {
     const [iRadius, setIRadius] = React.useState(49);
     const [oRadius, setORadius] = React.useState(34);
 
-    const shape = {
-        nRays,
-        iRadius,
-        oRadius,
-    };
+    const shape = { nRays, iRadius, oRadius, };
 
     return (
         <div className="p-2 flex">
