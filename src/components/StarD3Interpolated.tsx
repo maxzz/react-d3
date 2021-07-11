@@ -15,21 +15,16 @@ type InterpolatedShapeProps = {
 const SIZE = 200;
 
 function InterpolatedShape({ shape }: InterpolatedShapeProps) {
+    const { nRays, iRadius, oRadius, } = shape;
+
     const path = React.useMemo(() => {
-        const { nRays,
-            iRadius,
-            oRadius,
-        } = shape;
-
         const step = 2 * Math.PI / (nRays * 2);
-
         const points: [number, number][] = [];
         for (let i = 0; i < nRays * 2; i++) {
             points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
         }
-
         return lineRadial()(points) || '';
-    }, [shape]);
+    }, [nRays, iRadius, oRadius]);
 
     return (
         <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-SIZE / 2} ${-SIZE / 2} ${SIZE} ${SIZE}`}>
@@ -62,7 +57,7 @@ function StarD3Interpolated() {
     return (
         <div className="p-2 flex">
             <div className="w-44 h-44 text-blue-800 bg-blue-400 border-8 border-blue-200"
-                style={{boxShadow: '#0000001f 0px 0px 3px 1px'}}
+                style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}
             >
                 <InterpolatedShape shape={shape} />
             </div>
