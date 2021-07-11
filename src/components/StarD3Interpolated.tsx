@@ -40,10 +40,10 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
 
 function Slider({ value, onChange, label }: { value: number, onChange: (v: number) => void; label: string; }) {
     return (
-        <div className="flex text-sm">
+        <div className="flex items-center text-sm text-gray-800">
             <div className="w-24">{label}</div>
-            <div className=""><input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} /></div>
-            <div className="ml-1">{value}</div>
+            <div className="flex items-center"><input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} /></div>
+            <div className="ml-4">{value}</div>
         </div>
     );
 }
@@ -51,7 +51,7 @@ function Slider({ value, onChange, label }: { value: number, onChange: (v: numbe
 function StarD3Interpolated() {
     const [nRays, setURays] = React.useState(7);
     const [iRadius, setIRadius] = React.useState(49);
-    const [oRadius, setORadius] = React.useState(63);
+    const [oRadius, setORadius] = React.useState(34);
 
     const shape = {
         nRays,
@@ -61,7 +61,7 @@ function StarD3Interpolated() {
 
     return (
         <div className="p-2 flex">
-            <div className="w-40 h-40 border-8 border-white bg-gray-800 text-blue-800">
+            <div className="w-40 h-40 border-8 border-blue-200 bg-blue-400 text-blue-800">
                 <InterpolatedShape shape={shape} />
             </div>
             <div className="mx-2 p-2">
