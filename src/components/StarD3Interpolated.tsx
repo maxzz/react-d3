@@ -31,7 +31,7 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
     }, [shape]);
 
     return (
-        <svg className="" fill="currentColor" viewBox={`${-SIZE / 2} ${-SIZE / 2} ${SIZE} ${SIZE}`}>
+        <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-SIZE / 2} ${-SIZE / 2} ${SIZE} ${SIZE}`}>
             <path className="" d={path} />
         </svg>
     );
@@ -59,11 +59,11 @@ function StarD3Interpolated() {
     };
 
     return (
-        <div className="flex">
-            <div className="w-40 h-40 bg-red-100 text-blue-600">
+        <div className="p-2 flex">
+            <div className="w-40 h-40 border-8 border-white bg-gray-800 text-blue-400">
                 <InterpolatedShape shape={shape} />
             </div>
-            <div className="mx-2 p-2 bg-yellow-100">
+            <div className="mx-2 p-2">
                 <Slider label="# Rays" value={nRays} onChange={(v) => setURays(v)} />
                 <Slider label="Inner radius" value={iRadius} onChange={(v) => setIRadius(v)} />
                 <Slider label="Outer radius" value={oRadius} onChange={(v) => setORadius(v)} />
