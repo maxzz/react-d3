@@ -27,21 +27,37 @@ function InterpolatedShape({ shape }: InterpolatedShapeProps) {
     const path = lineRadial()(points) || '';
 
     return (
-        <svg className="" fill="currentColor" viewBox="0 0 100 100">
-            <path className="translate-x-[50px] translate-y-[50px]" d={path} />
+        <svg className="" fill="currentColor" viewBox="-50 -50 100 100">
+            <path className="" d={path} />
         </svg>
     );
 }
 
+function Slider({value, onChange}: {value: number, onChange: (v: number) => void}) {
+    return (
+        <div className="">
+            <input type="range" value={value} onChange={(e) => onChange(+e.target.value)} />
+        </div>
+    );
+}
+
 function StarD3Interpolated() {
+    const [nRays, setURays] = React.useState(15);
+    const [iRadius, setIRadius] = React.useState(20);
+    const [oRadius, setORadius] = React.useState(40);
+
     const shape = {
-        nRays: 15,
-        iRadius: 20,
-        oRadius: 40,
+        nRays,
+        iRadius,
+        oRadius,
     };
 
     return (
         <div className="">
+            <Slider value={nRays} onChange={(v) => setURays(v)}/>
+            <Slider value={iRadius} onChange={(v) => setIRadius(v)}/>
+            <Slider value={oRadius} onChange={(v) => setORadius(v)}/>
+
             <div className="w-32 h-32 bg-red-100 text-blue-600">
                 <InterpolatedShape shape={shape} />
             </div>
