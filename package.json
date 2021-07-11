@@ -1,10 +1,14 @@
 {
   "name": "red3",
   "version": "0.0.1",
+  "license": "MIT",
+  "description": "Coexistence of React with D3.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "autoprefixer": "^10.3.0",
