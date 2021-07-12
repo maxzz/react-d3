@@ -26,15 +26,18 @@ type InterpolatedShapeProps = {
 
 const VIEWBOX_SIZE = 200;
 
-function generateSVG(path: readonly [string, [number, number][]], size: number) {
-    const viewbox = `${-size / 2} ${-size / 2} ${size} ${size}`;
-    const circles = () => path[1].map(([x, y]) => `            <circle r="5" cx="${x}" cy="${y}" />`).join('\n');
+function viewboxString(size: number) {
+    return `${-size / 2} ${-size / 2} ${size} ${size}`;
+}
+
+function generateSVG({ path, outerPoints, size }: { path: string; outerPoints: [number, number][]; size: number; }) {
+    const viewbox = viewboxString(size);
+    const circles = () => outerPoints.map(([x, y]) => `            <circle r="5" cx="${x}" cy="${y}" />`).join('\n');
     let s = 
     `<svg viewBox="${viewbox}" width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4" xmlns="http://www.w3.org/2000/svg">
         <path
-            d="${path[0]}"
-        />
-        ${path[1].length ? `<g stroke="#7c82ff80" strokeWidth=".5" fill="none">\n${circles()}\n        </g>` : ''}
+            d="${path}"
+        />${outerPoints.length ? `\n        <g stroke="#7c82ff80" strokeWidth=".5" fill="none">\n${circles()}\n        </g>` : ''}
     </svg>
     `;
     return reduceIndentByLast(s);
@@ -69,12 +72,12 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
 
     React.useEffect(() => {
         if (save) {
-            saveTextData(generateSVG([path[0], showOuter ? path[1] : []], VIEWBOX_SIZE), 'red3.svg');
+            saveTextData(generateSVG({ path: path[0], outerPoints: showOuter ? path[1] : [], size: VIEWBOX_SIZE }), 'red3.svg');
         }
     }, [save]);
 
     return (
-        <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}>
+        <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${viewboxString(VIEWBOX_SIZE)}`}>
             <path className="" d={path[0]} />
 
             {showOuter &&
@@ -131,9 +134,9 @@ function IconSave() {
 }
 
 function StarD3Interpolated() {
-    const [nRays, setURays] = React.useState(7);
-    const [iRadius, setIRadius] = React.useState(60);
-    const [oRadius, setORadius] = React.useState(87);
+    const [nRays, setURays] = React.useState(21);
+    const [iRadius, setIRadius] = React.useState(89);
+    const [oRadius, setORadius] = React.useState(7);
     const [smooth, setSmooth] = React.useState(true);
     const shape = {
         nRays,
@@ -142,8 +145,8 @@ function StarD3Interpolated() {
         smooth,
     };
 
-    const [iRandom, setIRandom] = React.useState(false);
-    const [oRandom, setORandom] = React.useState(false);
+    const [iRandom, setIRandom] = React.useState(true);
+    const [oRandom, setORandom] = React.useState(true);
     const [update, setUpdate] = React.useState(0);
     const [save, setSave] = React.useState(0);
     const randomize: RandomizeParams = {
