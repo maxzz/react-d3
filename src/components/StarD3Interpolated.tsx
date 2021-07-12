@@ -59,10 +59,12 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams): readonly 
     });
     */
 
-    const now = nRays * 1000//Date.now();
+    const now = nRays * 1000; //Date.now();
     const step = (Math.PI * (-10 + ((now / 2000) % nRays)) ) / 20;
     const spiral: [number, number][] = Array.from({ length: nRays }, (_, i) => {
-        return [step * i, 2 * i + oRadius];
+        let len = randomUniform(oRadius, iRadius)();
+        return [step * i, 2 * i + len];
+        // return [step * i, 2 * i + oRadius];
     });
     const points: [number, number][] = spiral;
     const outerPts: [number, number][] = [];
