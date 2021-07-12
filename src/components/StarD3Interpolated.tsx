@@ -26,6 +26,20 @@ type InterpolatedShapeProps = {
 
 const VIEWBOX_SIZE = 200;
 
+function generateSVG(path: readonly [string, [number, number][]]) {
+    const viewbox = `${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`;
+    const circles = () => path[1].map(([x, y]) => `                    <circle r="5" cx="${x}" cy="${y}" />`).join('\n');
+    let s = 
+    `<svg viewBox="${viewbox}" width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="${path[0]}"
+        />
+        ${path[1].length ? `<g stroke="#7c82ff80" strokeWidth=".5" fill="none">\n${circles()}\n                </g>` : ''}
+    </svg>
+    `;
+    return reduceIndentByLast(s);
+}
+
 function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapeProps) {
     const { nRays, iRadius, oRadius, smooth } = shape;
     const { inner, outer, update, save, } = randomize;
@@ -55,18 +69,7 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
 
     React.useEffect(() => {
         if (save) {
-            const viewbox = `${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`;
-            const circles = () => path[1].map(([x, y]) => `                    <circle r="5" cx="${x}" cy="${y}" />`).join('\n');
-            let s = 
-            `<svg viewBox="${viewbox}" width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="${path[0]}"
-                />
-                ${showOuter ? `<g stroke="#7c82ff80" strokeWidth=".5" fill="none">\n${circles()}\n                </g>` : ''}
-            </svg>
-            `;
-            saveTextData(reduceIndentByLast(s), 'red3.svg');
-            console.log('save', s);
+            saveTextData(generateSVG(path), 'red3.svg');
         }
     }, [save]);
 
