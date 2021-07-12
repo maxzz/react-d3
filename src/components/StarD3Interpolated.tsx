@@ -69,7 +69,7 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
 
     React.useEffect(() => {
         if (save) {
-            saveTextData(generateSVG(path), 'red3.svg');
+            saveTextData(generateSVG([path[0], showOuter ? path[1] : []]), 'red3.svg');
         }
     }, [save]);
 
