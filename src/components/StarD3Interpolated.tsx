@@ -105,16 +105,23 @@ function StarD3Interpolated() {
 
     const [iRandom, setIRandom] = React.useState(false);
     const [oRandom, setORandom] = React.useState(false);
+    const [update, setUpdate] = React.useState(0);
     const randomize: RandomizeParams = {
         inner: iRandom,
         outer: oRandom,
-        update: 0,
+        update,
     };
 
     const [showOuter, setShowOuter] = React.useState(false);
 
     function onRandomBoth(v: boolean) {
+        setIRandom(v);
+        v && setORandom(v);
+    }
 
+    function onRandomOuter(v: boolean) {
+        setIRandom(false);
+        setORandom(v);
     }
 
     return (
@@ -133,8 +140,8 @@ function StarD3Interpolated() {
 
                 <div className="">
                     <Checkbox className="" label="Smooth lines" value={smooth} onChange={setSmooth} />
-                    <Checkbox className="" label="Randomize outer and inner radius" value={iRandom} onChange={setIRandom} />
-                    <Checkbox className="" label="Randomize outer radius" value={oRandom} onChange={setORandom} />
+                    <Checkbox className="" label="Randomize outer and inner radius" value={iRandom} onChange={onRandomBoth} />
+                    <Checkbox className="" label="Randomize outer radius" value={oRandom} onChange={onRandomOuter} />
                     <Checkbox className="" label="Show outer points" value={showOuter} onChange={setShowOuter} />
                 </div>
 
