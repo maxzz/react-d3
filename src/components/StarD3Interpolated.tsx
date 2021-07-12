@@ -2,6 +2,7 @@ import React from 'react';
 import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform } from 'd3';
 import './Slider.scss';
 import { saveTextData } from '../utils/save-data';
+import { reduceIndentByLast } from '../utils/indentation';
 
 type ShapeParams = {
     nRays: number;
@@ -24,28 +25,6 @@ type InterpolatedShapeProps = {
 };
 
 const VIEWBOX_SIZE = 200;
-
-function caclLineIndent(line: string): number {
-    const whitespace = /^(\s+)/;
-    let space = whitespace.exec(line);
-    return +(space ? space[1].length : 0);
-} //caclLineIndent()
-
-function reduceIndentByLast(s: string): string {
-    // 0. Reduce the indent of multi-line string by the last line indent.
-    let arr = s.split(/\r?\n/g);
-    if (arr.length < 2) {
-        return s;
-    }
-    let last = caclLineIndent(arr[arr.length-1]);
-    arr.forEach((line: string, index: number) => {
-        let l = caclLineIndent(line);
-        if (l >= last) {
-            arr[index] = line.slice(last);
-        }
-    });
-    return arr.join('\n');
-} //reduceIndentByLast()
 
 function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapeProps) {
     const { nRays, iRadius, oRadius, smooth } = shape;
@@ -76,17 +55,17 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
 
     React.useEffect(() => {
         if (save) {
-            let s = `
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}"
-                width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4">
-                <path d="${path[0]}" />
-                ${showOuter ? 
-                    `<g stroke="#7c82ff80" strokeWidth=".5" fill="none">\n${path[1].map(([x, y]) => `                        <circle cx="${x}" cy="${y}" r="5" />`).join('\n')}
-                    </g>` : ''
-                }
+            const viewbox = `${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`;
+            const circles = () => path[1].map(([x, y]) => `                    <circle r="5" cx="${x}" cy="${y}" />`).join('\n');
+            let s = 
+            `<svg viewBox="${viewbox}" width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="${path[0]}"
+                />
+                ${showOuter ? `<g stroke="#7c82ff80" strokeWidth=".5" fill="none">\n${circles()}\n                </g>` : ''}
             </svg>
             `;
-            saveTextData(s, 'red3.svg');
+            saveTextData(reduceIndentByLast(s), 'red3.svg');
             console.log('save', s);
         }
     }, [save]);
