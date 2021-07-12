@@ -39,7 +39,7 @@ function InterpolatedShape({ shape, showOuter }: InterpolatedShapeProps) {
 
         let gen = lineRadial().curve(curveLinearClosed);
         if (smooth) {
-            gen = gen.curve(curveCatmullRomOpen);
+            gen = gen.curve(curveCatmullRomClosed);
         }
 
         return [gen(points) || '', outerPts] as const;
