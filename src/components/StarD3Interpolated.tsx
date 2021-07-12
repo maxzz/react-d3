@@ -43,31 +43,38 @@ function generateSVG({ path, outerPoints, size }: { path: string; outerPoints: [
     return reduceIndentByLast(s);
 }
 
+function generatePath(shape: ShapeParams, randomize: RandomizeParams) {
+    const {nRays, iRadius, oRadius, smooth} = shape;
+    const { inner, outer, } = randomize;
+
+    const step = 2 * Math.PI / (nRays * 2);
+    const points: [number, number][] = [];
+    for (let i = 0; i < nRays * 2; i++) {
+        if (inner && outer) {
+            points.push([i * step, randomUniform(oRadius, iRadius)()]);
+        } else
+            if (outer) {
+                points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
+            } else {
+                points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
+            }
+    }
+    const outerPts: [number, number][] = points.filter((_, idx) => idx % 2 === 0).map(([a, r]) => {
+        return [r * Math.sin(a), r * -Math.cos(a)];
+    });
+
+    let gen = lineRadial();
+    gen = smooth ? gen.curve(curveCatmullRomClosed) : gen.curve(curveLinearClosed);
+
+    return [gen(points) || '', outerPts] as const;
+}
+
 function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapeProps) {
     const { nRays, iRadius, oRadius, smooth } = shape;
     const { inner, outer, update, save, } = randomize;
 
     const path = React.useMemo(() => {
-        const step = 2 * Math.PI / (nRays * 2);
-        const points: [number, number][] = [];
-        for (let i = 0; i < nRays * 2; i++) {
-            if (inner && outer) {
-                points.push([i * step, randomUniform(oRadius, iRadius)()]);
-            } else
-                if (outer) {
-                    points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
-                } else {
-                    points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
-                }
-        }
-        const outerPts: [number, number][] = points.filter((_, idx) => idx % 2 === 0).map(([a, r]) => {
-            return [r * Math.sin(a), r * -Math.cos(a)];
-        });
-
-        let gen = lineRadial();
-        gen = smooth ? gen.curve(curveCatmullRomClosed) : gen.curve(curveLinearClosed);
-
-        return [gen(points) || '', outerPts] as const;
+        return generatePath(shape, randomize);
     }, [nRays, iRadius, oRadius, smooth, inner, outer, update,]);
 
     React.useEffect(() => {
