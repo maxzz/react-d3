@@ -26,8 +26,8 @@ type InterpolatedShapeProps = {
 
 const VIEWBOX_SIZE = 200;
 
-function generateSVG(path: readonly [string, [number, number][]]) {
-    const viewbox = `${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`;
+function generateSVG(path: readonly [string, [number, number][]], size: number) {
+    const viewbox = `${-size / 2} ${-size / 2} ${size} ${size}`;
     const circles = () => path[1].map(([x, y]) => `            <circle r="5" cx="${x}" cy="${y}" />`).join('\n');
     let s = 
     `<svg viewBox="${viewbox}" width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4" xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +69,7 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
 
     React.useEffect(() => {
         if (save) {
-            saveTextData(generateSVG([path[0], showOuter ? path[1] : []]), 'red3.svg');
+            saveTextData(generateSVG([path[0], showOuter ? path[1] : []], VIEWBOX_SIZE), 'red3.svg');
         }
     }, [save]);
 
