@@ -154,8 +154,8 @@ function StarD3Interpolated() {
                 {/* Sliders */}
                 <div className="">
                     <Slider label="# Rays" value={nRays} onChange={(v) => setURays(v)} />
-                    <Slider label="Inner radius" value={iRadius} onChange={(v) => setIRadius(v)} />
-                    <Slider label="Outer radius" value={oRadius} onChange={(v) => setORadius(v)} />
+                    {!iRandom && <Slider label="Inner radius" value={iRadius} onChange={(v) => setIRadius(v)} />}
+                    {!oRandom && <Slider label="Outer radius" value={oRadius} onChange={(v) => setORadius(v)} />}
                 </div>
                 {/* Options */}
                 <div className="relative">
