@@ -33,8 +33,8 @@ function viewboxString(size: number) {
 function generateSVG({ path, outerPoints, size }: { path: string; outerPoints: [number, number][]; size: number; }) {
     const viewbox = viewboxString(size);
     const circles = () => outerPoints.map(([x, y]) => `            <circle r="5" cx="${x}" cy="${y}" />`).join('\n');
-    let s = 
-    `<svg viewBox="${viewbox}" width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4" xmlns="http://www.w3.org/2000/svg">
+    let s =
+        `<svg viewBox="${viewbox}" width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4" xmlns="http://www.w3.org/2000/svg">
         <path
             d="${path}"
         />${outerPoints.length ? `\n        <g stroke="#7c82ff80" strokeWidth=".5" fill="none">\n${circles()}\n        </g>` : ''}
@@ -44,7 +44,7 @@ function generateSVG({ path, outerPoints, size }: { path: string; outerPoints: [
 }
 
 function generatePath(shape: ShapeParams, randomize: RandomizeParams) {
-    const {nRays, iRadius, oRadius, smooth} = shape;
+    const { nRays, iRadius, oRadius, smooth } = shape;
     const { inner, outer, } = randomize;
 
     const step = 2 * Math.PI / (nRays * 2);
@@ -69,13 +69,19 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams) {
     return [gen(points) || '', outerPts] as const;
 }
 
-function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapeProps) {
+function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShapeProps, ref: React.Ref<{ save: () => void; }>) {
     const { nRays, iRadius, oRadius, smooth } = shape;
     const { inner, outer, update, save, } = randomize;
 
     const path = React.useMemo(() => {
         return generatePath(shape, randomize);
     }, [nRays, iRadius, oRadius, smooth, inner, outer, update,]);
+
+    React.useImperativeHandle(ref, () => ({
+        save: () => {
+            saveTextData(generateSVG({ path: path[0], outerPoints: showOuter ? path[1] : [], size: VIEWBOX_SIZE }), 'red3.svg');
+        }
+    }));
 
     React.useEffect(() => {
         if (save) {
@@ -95,6 +101,8 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
         </svg>
     );
 }
+
+const InterpolatedShape = React.forwardRef(InterpolatedShapeRaw);
 
 function Slider({ value, onChange, label }: { value: number, onChange: (v: number) => void; label: string; }) {
     return (
@@ -175,6 +183,8 @@ function StarD3Interpolated() {
         setORandom(v);
     }
 
+    const genCb = React.useRef<{ save: () => void; }>(null);
+
     return (
         <div className="p-2 flex select-none">
             {/* Shape */}
@@ -182,7 +192,7 @@ function StarD3Interpolated() {
                 className="w-44 h-44 text-blue-800 bg-blue-400 border-8 border-blue-200"
                 style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}
             >
-                <InterpolatedShape shape={shape} randomize={randomize} showOuter={showOuter} />
+                <InterpolatedShape shape={shape} randomize={randomize} showOuter={showOuter} ref={genCb} />
             </div>
             {/* Controls */}
             <div className="mx-2 p-2 flex flex-col justify-between">
@@ -202,7 +212,9 @@ function StarD3Interpolated() {
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
                         <button
                             className="rounded border border-gray-500 p-1 text-green-900 bg-green-100"
-                            onClick={() => setSave(v => v + 1)}
+                            onClick={() => {
+                                genCb?.current?.save();
+                            }}
                             title="Save"
                         >
                             <IconSave />
