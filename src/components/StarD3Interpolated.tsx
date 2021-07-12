@@ -94,7 +94,7 @@ function Checkbox({ className, label, enabled = true, value, onChange }: Checkbo
 function IconRefresh() {
     return (
         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
         </svg>
     );
 }
@@ -102,7 +102,7 @@ function IconRefresh() {
 function IconSave() {
     return (
         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
         </svg>
     );
 }
@@ -142,23 +142,28 @@ function StarD3Interpolated() {
 
     return (
         <div className="p-2 flex select-none">
-            <div className="w-44 h-44 text-blue-800 bg-blue-400 border-8 border-blue-200"
+            {/* Shape */}
+            <div
+                className="w-44 h-44 text-blue-800 bg-blue-400 border-8 border-blue-200"
                 style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}
             >
                 <InterpolatedShape shape={shape} randomize={randomize} showOuter={showOuter} />
             </div>
+            {/* Controls */}
             <div className="mx-2 p-2 flex flex-col justify-between">
+                {/* Sliders */}
                 <div className="">
                     <Slider label="# Rays" value={nRays} onChange={(v) => setURays(v)} />
                     <Slider label="Inner radius" value={iRadius} onChange={(v) => setIRadius(v)} />
                     <Slider label="Outer radius" value={oRadius} onChange={(v) => setORadius(v)} />
                 </div>
-
+                {/* Options */}
                 <div className="relative">
                     <Checkbox className="" label="Smooth lines" value={smooth} onChange={setSmooth} />
                     <Checkbox className="" label="Randomize outer and inner radius" value={iRandom} onChange={onRandomBoth} />
                     <Checkbox className="" label="Randomize outer radius" value={oRandom} onChange={onRandomOuter} />
                     <Checkbox className="" label="Show outer points" value={showOuter} onChange={setShowOuter} />
+                    {/* Actions */}
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
                         <button
                             className="rounded border border-gray-500 p-1 text-green-900 bg-green-100"
@@ -175,7 +180,6 @@ function StarD3Interpolated() {
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     );
