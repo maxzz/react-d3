@@ -13,6 +13,7 @@ type RandomizeParams = {
     inner: boolean;
     outer: boolean;
     update: number; // any new number will update the shape.
+    save: number; // any new number different from zero will trigger the shape.
 };
 
 type InterpolatedShapeProps = {
@@ -23,9 +24,24 @@ type InterpolatedShapeProps = {
 
 const VIEWBOX_SIZE = 200;
 
+const saveTextData = (function () {
+    const a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style.display = 'none';
+    a.id = 'noise-gen-image';
+    return function (text: string, fileName: string) {
+        let blob = new Blob([text], {type: 'text/plain'});
+        let url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+}());
+
 function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapeProps) {
     const { nRays, iRadius, oRadius, smooth } = shape;
-    const { inner, outer, update, } = randomize;
+    const { inner, outer, update, save, } = randomize;
 
     const path = React.useMemo(() => {
         const step = 2 * Math.PI / (nRays * 2);
@@ -49,6 +65,26 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
 
         return [gen(points) || '', outerPts] as const;
     }, [nRays, iRadius, oRadius, smooth, inner, outer, update,]);
+
+    React.useEffect(() => {
+        if (save) {
+            let s = `
+            <svg xmlns="http://www.w3.org/2000/svg" stroke="white" strokeWidth="2" fill="blue" 
+                viewBox="${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}"
+                width="64px" height="64px"
+            >
+                <path d="${path[0]}" />
+
+                ${showOuter ? `
+                    <g stroke="white" strokeWidth=".5" fill="none">
+                        {${path[1].map(([x, y], idx) => `<circle cx=${x} cy=${y} r={5} />`)}}
+                    </g>` : ''
+                }
+            </svg>
+            `
+            console.log('save', s);
+        }
+    }, [save]);
 
     return (
         <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}>
@@ -122,10 +158,12 @@ function StarD3Interpolated() {
     const [iRandom, setIRandom] = React.useState(false);
     const [oRandom, setORandom] = React.useState(false);
     const [update, setUpdate] = React.useState(0);
+    const [save, setSave] = React.useState(0);
     const randomize: RandomizeParams = {
         inner: iRandom,
         outer: oRandom,
         update,
+        save,
     };
 
     const [showOuter, setShowOuter] = React.useState(false);
@@ -167,6 +205,7 @@ function StarD3Interpolated() {
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
                         <button
                             className="rounded border border-gray-500 p-1 text-green-900 bg-green-100"
+                            onClick={() => setSave(v => v + 1)}
                             title="Save"
                         >
                             <IconSave />
