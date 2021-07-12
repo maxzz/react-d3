@@ -33,12 +33,12 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
         for (let i = 0; i < nRays * 2; i++) {
             if (inner && outer) {
                 points.push([i * step, randomUniform(oRadius, iRadius)()]);
-            } else 
-            if (outer) {
-                points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
-            } else {
-                points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
-            }
+            } else
+                if (outer) {
+                    points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
+                } else {
+                    points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
+                }
         }
         const outerPts: [number, number][] = points.filter((_, idx) => idx % 2 === 0).map(([a, r]) => {
             return [r * Math.sin(a), r * -Math.cos(a)];
@@ -73,9 +73,17 @@ function Slider({ value, onChange, label }: { value: number, onChange: (v: numbe
     );
 }
 
-function Checkbox({ className, label, value, onChange }: { className?: string, label: string, value: boolean, onChange: (v: boolean) => void; }) {
+type CheckboxProps = {
+    className?: string;
+    label: string;
+    enabled?: boolean;
+    value: boolean;
+    onChange: (v: boolean) => void;
+};
+
+function Checkbox({ className, label, enabled = true, value, onChange }: CheckboxProps) {
     return (
-        <label className={`flex items-center text-sm ${className}`}>
+        <label className={`flex items-center text-sm ${enabled ? '' : 'opacity-50'} ${className}`}>
             <input className="mr-1" type="checkbox" checked={value} onChange={(e) => onChange(e.target.checked)} />
             {label}
         </label>
@@ -104,6 +112,10 @@ function StarD3Interpolated() {
     };
 
     const [showOuter, setShowOuter] = React.useState(false);
+
+    function onRandomBoth(v: boolean) {
+
+    }
 
     return (
         <div className="p-2 flex select-none">
