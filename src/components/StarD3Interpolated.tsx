@@ -138,11 +138,15 @@ function StarD3Interpolated() {
                     <Slider label="Outer radius" value={oRadius} onChange={(v) => setORadius(v)} />
                 </div>
 
-                <div className="">
+                <div className="relative bg-green-100">
                     <Checkbox className="" label="Smooth lines" value={smooth} onChange={setSmooth} />
                     <Checkbox className="" label="Randomize outer and inner radius" value={iRandom} onChange={onRandomBoth} />
                     <Checkbox className="" label="Randomize outer radius" value={oRandom} onChange={onRandomOuter} />
                     <Checkbox className="" label="Show outer points" value={showOuter} onChange={setShowOuter} />
+                    <div className="absolute text-sm bg-red-100 bottom-0 right-0 space-x-1">
+                        <button className="rounded border border-gray-500 px-1 pb-1">save</button>
+                        <button className="rounded border border-gray-500 px-1 pb-1" onClick={() => setUpdate(v => v + 1)}>update</button>
+                    </div>
                 </div>
 
             </div>
