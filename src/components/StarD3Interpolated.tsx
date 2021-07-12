@@ -15,7 +15,6 @@ type RandomizeParams = {
     inner: boolean;
     outer: boolean;
     update: number; // any new number will update the shape.
-    save: number; // any new number different from zero will trigger the shape.
 };
 
 type InterpolatedShapeProps = {
@@ -71,7 +70,7 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams) {
 
 function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShapeProps, ref: React.Ref<{ save: () => void; }>) {
     const { nRays, iRadius, oRadius, smooth } = shape;
-    const { inner, outer, update, save, } = randomize;
+    const { inner, outer, update, } = randomize;
 
     const path = React.useMemo(() => {
         return generatePath(shape, randomize);
@@ -82,12 +81,6 @@ function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShape
             saveTextData(generateSVG({ path: path[0], outerPoints: showOuter ? path[1] : [], size: VIEWBOX_SIZE }), 'red3.svg');
         }
     }));
-
-    React.useEffect(() => {
-        if (save) {
-            saveTextData(generateSVG({ path: path[0], outerPoints: showOuter ? path[1] : [], size: VIEWBOX_SIZE }), 'red3.svg');
-        }
-    }, [save]);
 
     return (
         <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${viewboxString(VIEWBOX_SIZE)}`}>
@@ -163,12 +156,10 @@ function StarD3Interpolated() {
     const [iRandom, setIRandom] = React.useState(true);
     const [oRandom, setORandom] = React.useState(true);
     const [update, setUpdate] = React.useState(0);
-    const [save, setSave] = React.useState(0);
     const randomize: RandomizeParams = {
         inner: iRandom,
         outer: oRandom,
         update,
-        save,
     };
 
     const [showOuter, setShowOuter] = React.useState(false);
