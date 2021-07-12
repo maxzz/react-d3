@@ -55,6 +55,16 @@ function Slider({ value, onChange, label }: { value: number, onChange: (v: numbe
     );
 }
 
+function Checkbox({ label, value, onChange }: { label: string, value: boolean, onChange: (v: boolean) => void; }) {
+    return (
+        <label className="mt-1 flex items-center text-sm">
+            <input className="mr-1" type="checkbox" checked={value} onChange={(e) => onChange(e.target.checked)} />
+            {label}
+        </label>
+
+    );
+}
+
 function StarD3Interpolated() {
     const [nRays, setURays] = React.useState(7);
     const [iRadius, setIRadius] = React.useState(60);
@@ -74,6 +84,9 @@ function StarD3Interpolated() {
                 <Slider label="# Rays" value={nRays} onChange={(v) => setURays(v)} />
                 <Slider label="Inner radius" value={iRadius} onChange={(v) => setIRadius(v)} />
                 <Slider label="Outer radius" value={oRadius} onChange={(v) => setORadius(v)} />
+
+                <Checkbox label="Show outer" value={showOuter} onChange={setShowOuter} />
+                
                 <label className="mt-1 flex items-center text-sm">
                     <input className="mr-1" type="checkbox" checked={showOuter} onChange={(e) => setShowOuter(e.target.checked)} />
                     Show outer
