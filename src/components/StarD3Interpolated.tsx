@@ -1,5 +1,5 @@
 import React from 'react';
-import { curveCatmullRomClosed, curveCatmullRomOpen, curveLinearClosed, lineRadial, randomUniform } from 'd3';
+import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform } from 'd3';
 import './Slider.scss';
 
 type ShapeParams = {
@@ -12,6 +12,7 @@ type ShapeParams = {
 type RandomizeParams = {
     inner: boolean;
     outer: boolean;
+    update: number; // any new number will update the shape.
 };
 
 type InterpolatedShapeProps = {
@@ -37,17 +38,15 @@ function InterpolatedShape({ shape, showOuter }: InterpolatedShapeProps) {
             return [r * Math.sin(a), r * -Math.cos(a)];
         });
 
-        let gen = lineRadial().curve(curveLinearClosed);
-        if (smooth) {
-            gen = gen.curve(curveCatmullRomClosed);
-        }
+        let gen = lineRadial();
+        gen = smooth ? gen.curve(curveCatmullRomClosed) : gen.curve(curveLinearClosed);
 
         return [gen(points) || '', outerPts] as const;
     }, [nRays, iRadius, oRadius, smooth]);
 
     return (
         <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}>
-            <path className="" d={`${path[0]}`} />
+            <path className="" d={path[0]} />
 
             {showOuter &&
                 <g stroke="white" strokeWidth=".5" fill="none">
@@ -95,6 +94,7 @@ function StarD3Interpolated() {
     const randomize: RandomizeParams = {
         inner: iRandom,
         outer: oRandom,
+        update: 0,
     };
 
     const [showOuter, setShowOuter] = React.useState(false);
@@ -115,8 +115,8 @@ function StarD3Interpolated() {
 
                 <div className="">
                     <Checkbox className="" label="Smooth lines" value={smooth} onChange={setSmooth} />
-                    <Checkbox className="" label="Randomize both" value={iRandom} onChange={setIRandom} />
-                    <Checkbox className="" label="Randomize outer" value={oRandom} onChange={setORandom} />
+                    <Checkbox className="" label="Randomize outer and inner radius" value={iRandom} onChange={setIRandom} />
+                    <Checkbox className="" label="Randomize outer radius" value={oRandom} onChange={setORandom} />
                     <Checkbox className="" label="Show outer points" value={showOuter} onChange={setShowOuter} />
                 </div>
 
