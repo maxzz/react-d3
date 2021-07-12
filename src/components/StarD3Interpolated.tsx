@@ -1,6 +1,7 @@
 import React from 'react';
 import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform } from 'd3';
 import './Slider.scss';
+import { saveTextData } from '../utils/save-data';
 
 type ShapeParams = {
     nRays: number;
@@ -23,21 +24,6 @@ type InterpolatedShapeProps = {
 };
 
 const VIEWBOX_SIZE = 200;
-
-const saveTextData = (function () {
-    const a = document.createElement("a");
-    document.body.appendChild(a);
-    a.style.display = 'none';
-    a.id = 'noise-gen-image';
-    return function (text: string, fileName: string) {
-        let blob = new Blob([text], {type: 'text/plain'});
-        let url = window.URL.createObjectURL(blob);
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
-    };
-}());
 
 function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapeProps) {
     const { nRays, iRadius, oRadius, smooth } = shape;
@@ -69,19 +55,17 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
     React.useEffect(() => {
         if (save) {
             let s = `
-            <svg xmlns="http://www.w3.org/2000/svg" stroke="white" strokeWidth="2" fill="blue" 
-                viewBox="${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}"
-                width="64px" height="64px"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}"
+                width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4">
                 <path d="${path[0]}" />
-
                 ${showOuter ? `
-                    <g stroke="white" strokeWidth=".5" fill="none">
-                        {${path[1].map(([x, y], idx) => `<circle cx=${x} cy=${y} r={5} />`)}}
+                    <g stroke="#7c82ff80" strokeWidth=".5" fill="none">
+                        ${path[1].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" />\n`)}
                     </g>` : ''
                 }
             </svg>
-            `
+            `;
+            saveTextData(s, 'red3.svg');
             console.log('save', s);
         }
     }, [save]);
