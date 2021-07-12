@@ -17,12 +17,6 @@ type RandomizeParams = {
     update: number; // any new number will update the shape.
 };
 
-type InterpolatedShapeProps = {
-    shape: ShapeParams;
-    randomize: RandomizeParams;
-    showOuter: boolean;
-};
-
 const VIEWBOX_SIZE = 200;
 
 function viewboxString(size: number) {
@@ -68,7 +62,17 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams) {
     return [gen(points) || '', outerPts] as const;
 }
 
-function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShapeProps, ref: React.Ref<{ save: () => void; }>) {
+type InterpolatedShapeProps = {
+    shape: ShapeParams;
+    randomize: RandomizeParams;
+    showOuter: boolean;
+};
+
+type InterpolatedShapeActions = {
+    save: () => void;
+};
+
+function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShapeProps, ref: React.Ref<InterpolatedShapeActions>) {
     const { nRays, iRadius, oRadius, smooth } = shape;
     const { inner, outer, update, } = randomize;
 
@@ -174,7 +178,7 @@ function StarD3Interpolated() {
         setORandom(v);
     }
 
-    const genCb = React.useRef<{ save: () => void; }>(null);
+    const genCb = React.useRef<InterpolatedShapeActions>(null);
 
     return (
         <div className="p-2 flex select-none">
@@ -203,9 +207,7 @@ function StarD3Interpolated() {
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
                         <button
                             className="rounded border border-gray-500 p-1 text-green-900 bg-green-100"
-                            onClick={() => {
-                                genCb?.current?.save();
-                            }}
+                            onClick={() => genCb?.current?.save()}
                             title="Save"
                         >
                             <IconSave />
