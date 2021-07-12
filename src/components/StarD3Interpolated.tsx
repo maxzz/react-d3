@@ -1,5 +1,5 @@
 import React from 'react';
-import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform } from 'd3';
+import { curveCatmullRomClosed, curveBundle, curveLinearClosed, lineRadial, randomUniform } from 'd3';
 import './Slider.scss';
 import { saveTextData } from '../utils/save-data';
 import { reduceIndentByLast } from '../utils/indentation';
@@ -57,14 +57,8 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams): readonly 
         return [r * Math.sin(a), r * -Math.cos(a)];
     });
 
-    // const now = nRays * 1000//Date.now();
-    // const step = (Math.PI * (-10 + ((now / 2000) % nRays)) ) / 20;
-    // const spiral: [number, number][] = Array.from({ length: nRays }, (_, i) => [step * i, 2 * i]);
-    // const points: [number, number][] = spiral;
-    // const outerPts: [number, number][] = [];
-
     let gen = lineRadial();
-    gen = smooth ? gen.curve(curveCatmullRomClosed) : gen.curve(curveLinearClosed);
+    gen = smooth ? gen.curve(curveBundle.beta(0.5)).curve(curveCatmullRomClosed) : gen.curve(curveLinearClosed);
 
     return [gen(points) || '', outerPts] as const;
 }
