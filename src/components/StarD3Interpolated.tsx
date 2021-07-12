@@ -40,7 +40,6 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams): readonly 
     const { nRays, iRadius, oRadius, smooth } = shape;
     const { inner, outer, } = randomize;
 
-    /*
     const step = 2 * Math.PI / (nRays * 2);
     const points: [number, number][] = [];
     for (let i = 0; i < nRays * 2; i++) {
@@ -57,17 +56,6 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams): readonly 
     const outerPts: [number, number][] = points.filter((_, idx) => idx % 2 === 0).map(([a, r]) => {
         return [r * Math.sin(a), r * -Math.cos(a)];
     });
-    */
-
-    const now = nRays * 1000; //Date.now();
-    const step = (Math.PI * (-10 + ((now / 2000) % nRays)) ) / 20;
-    const spiral: [number, number][] = Array.from({ length: nRays }, (_, i) => {
-        let len = randomUniform(oRadius, iRadius)();
-        return [step * i, 2 * i + len];
-        // return [step * i, 2 * i + oRadius];
-    });
-    const points: [number, number][] = spiral;
-    const outerPts: [number, number][] = [];
 
     // const now = nRays * 1000//Date.now();
     // const step = (Math.PI * (-10 + ((now / 2000) % nRays)) ) / 20;
