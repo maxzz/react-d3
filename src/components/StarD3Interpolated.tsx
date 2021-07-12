@@ -23,16 +23,22 @@ type InterpolatedShapeProps = {
 
 const VIEWBOX_SIZE = 200;
 
-function InterpolatedShape({ shape, showOuter }: InterpolatedShapeProps) {
+function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapeProps) {
     const { nRays, iRadius, oRadius, smooth } = shape;
+    const { inner, outer, update, } = randomize;
 
     const path = React.useMemo(() => {
         const step = 2 * Math.PI / (nRays * 2);
         const points: [number, number][] = [];
         for (let i = 0; i < nRays * 2; i++) {
-            //points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
-            //points.push([i * step, randomUniform(oRadius, iRadius)()]);
-            points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
+            if (inner && outer) {
+                points.push([i * step, randomUniform(oRadius, iRadius)()]);
+            } else 
+            if (outer) {
+                points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
+            } else {
+                points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
+            }
         }
         const outerPts: [number, number][] = points.filter((_, idx) => idx % 2 === 0).map(([a, r]) => {
             return [r * Math.sin(a), r * -Math.cos(a)];
@@ -42,7 +48,7 @@ function InterpolatedShape({ shape, showOuter }: InterpolatedShapeProps) {
         gen = smooth ? gen.curve(curveCatmullRomClosed) : gen.curve(curveLinearClosed);
 
         return [gen(points) || '', outerPts] as const;
-    }, [nRays, iRadius, oRadius, smooth]);
+    }, [nRays, iRadius, oRadius, smooth, inner, outer, update,]);
 
     return (
         <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${-VIEWBOX_SIZE / 2} ${-VIEWBOX_SIZE / 2} ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}>
