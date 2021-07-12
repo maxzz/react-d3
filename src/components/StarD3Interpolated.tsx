@@ -60,7 +60,7 @@ function InterpolatedShape({ shape, randomize, showOuter }: InterpolatedShapePro
                 <path d="${path[0]}" />
                 ${showOuter ? `
                     <g stroke="#7c82ff80" strokeWidth=".5" fill="none">
-                        ${path[1].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" />\n`)}
+                    ${path[1].map(([x, y]) => `            <circle cx="${x}" cy="${y}" r="5" />`).join('\n')}
                     </g>` : ''
                 }
             </svg>
