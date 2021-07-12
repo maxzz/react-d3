@@ -91,6 +91,22 @@ function Checkbox({ className, label, enabled = true, value, onChange }: Checkbo
     );
 }
 
+function IconRefresh() {
+    return (
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+    );
+}
+
+function IconSave() {
+    return (
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+        </svg>
+    );
+}
+
 function StarD3Interpolated() {
     const [nRays, setURays] = React.useState(7);
     const [iRadius, setIRadius] = React.useState(60);
@@ -138,14 +154,25 @@ function StarD3Interpolated() {
                     <Slider label="Outer radius" value={oRadius} onChange={(v) => setORadius(v)} />
                 </div>
 
-                <div className="relative bg-green-100">
+                <div className="relative">
                     <Checkbox className="" label="Smooth lines" value={smooth} onChange={setSmooth} />
                     <Checkbox className="" label="Randomize outer and inner radius" value={iRandom} onChange={onRandomBoth} />
                     <Checkbox className="" label="Randomize outer radius" value={oRandom} onChange={onRandomOuter} />
                     <Checkbox className="" label="Show outer points" value={showOuter} onChange={setShowOuter} />
-                    <div className="absolute text-sm bg-red-100 bottom-0 right-0 space-x-1">
-                        <button className="rounded border border-gray-500 px-1 pb-1">save</button>
-                        <button className="rounded border border-gray-500 px-1 pb-1" onClick={() => setUpdate(v => v + 1)}>update</button>
+                    <div className="absolute text-sm bottom-0 right-0 space-x-1">
+                        <button
+                            className="rounded border border-gray-500 p-1 text-green-900 bg-green-100"
+                            title="Save"
+                        >
+                            <IconSave />
+                        </button>
+                        <button
+                            className="rounded border border-gray-500 p-1 text-green-900 bg-green-100"
+                            onClick={() => setUpdate(v => v + 1)}
+                            title="Update"
+                        >
+                            <IconRefresh />
+                        </button>
                     </div>
                 </div>
 
