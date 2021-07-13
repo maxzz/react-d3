@@ -7,8 +7,10 @@ function HierarchyClassic() {
     React.useEffect(() => {
         const svg = d3.select(ref.current);
 
+        const width = 300;
+
         const dx = 12;
-        const dy = 120;
+        const dy = 70;
         const tree = d3.tree().nodeSize([dx, dy]);
         const treeLink = d3.linkHorizontal().x((d: any) => d.y).y((d: any) => d.x);
 
@@ -26,6 +28,9 @@ function HierarchyClassic() {
                 if (d.x < x0) x0 = d.x;
             });
 
+            svg.attr("viewBox", [0, 0, width, x1 - x0 + dx * 2] as any)
+                .style("overflow", "visible");
+
             const g = svg.append("g")
                 .attr("font-family", "sans-serif")
                 .attr("font-size", 10)
@@ -41,7 +46,7 @@ function HierarchyClassic() {
                 .join("path")
                 .attr("stroke", (d: any) => highlight(d.source) && highlight(d.target) ? "red" : null)
                 .attr("stroke-opacity", (d: any) => highlight(d.source) && highlight(d.target) ? 1 : null)
-                .attr("d", treeLink);
+                .attr("d", treeLink as any);
 
             const node = g.append("g")
                 .attr("stroke-linejoin", "round")
@@ -53,7 +58,7 @@ function HierarchyClassic() {
 
             node.append("circle")
                 .attr("fill", (d: any) => highlight(d) ? "red" : d.children ? "#555" : "#999")
-                .attr("r", 2.5);
+                .attr("r", 4);
 
             node.append("text")
                 .attr("fill", d => highlight(d) ? "red" : null)
