@@ -52,13 +52,13 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams): readonly 
                 points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
             }
     }
-    
+
     const outerPts: [number, number][] = points.filter((_, idx) => idx % 2 === 0).map(([a, r]) => {
         return [r * Math.sin(a), r * -Math.cos(a)];
     });
 
     let gen = lineRadial();
-    gen = smooth ? gen.curve(curveBundle.beta(0.5)).curve(curveCatmullRomClosed) : gen.curve(curveLinearClosed);
+    gen = smooth ? gen.curve(curveCatmullRomClosed) : gen.curve(curveLinearClosed);
 
     return [gen(points) || '', outerPts] as const;
 }
@@ -102,12 +102,23 @@ function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShape
 
 const InterpolatedShape = React.forwardRef(InterpolatedShapeRaw);
 
-function Slider({ value, onChange, label }: { value: number, onChange: (v: number) => void; label: string; }) {
+type SliderProps = {
+    value: number;
+    onChange: (v: number) => void;
+    label: string;
+    min?: number;
+    max?: number;
+    step?: number;
+};
+
+function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: SliderProps) {
     return (
         <div className="flex items-center text-sm text-gray-800">
             <div className="w-24">{label}</div>
-            <div className="flex items-center"><input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} /></div>
-            <div className="ml-4">{value}</div>
+            <div className="flex items-center">
+                <input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} min={min} max={max} step={step} />
+            </div>
+            <div className="min-w-[2rem] text-right">{value}</div>
         </div>
     );
 }
@@ -195,7 +206,7 @@ function StarD3Interpolated() {
                 {/* Sliders */}
                 <div className="">
                     <Slider label="# Rays" value={nRays} onChange={(v) => setURays(v)} />
-                    <Slider label="Inner radius" value={iRadius} onChange={(v) => setIRadius(v)} />
+                    <Slider label="Inner radius" value={iRadius} min={-100} onChange={(v) => setIRadius(v)} />
                     <Slider label="Outer radius" value={oRadius} onChange={(v) => setORadius(v)} />
                 </div>
                 {/* Options */}
