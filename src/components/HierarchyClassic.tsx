@@ -38,9 +38,9 @@ function HierarchyClassic() {
 
             const link = g.append("g")
                 .attr("fill", "none")
-                .attr("stroke", "#555")
+                .attr("stroke", "green")
                 .attr("stroke-opacity", 0.4)
-                .attr("stroke-width", 1.5)
+                .attr("stroke-width", 1.2)
                 .selectAll("path")
                 .data(root.links())
                 .join("path")
@@ -57,17 +57,20 @@ function HierarchyClassic() {
                 .attr("transform", (d: any) => `translate(${d.y},${d.x})`);
 
             node.append("circle")
-                .attr("fill", (d: any) => highlight(d) ? "red" : d.children ? "#555" : "#999")
+                .attr("fill", (d: any) => highlight(d) ? "red" : d.children ? "#5a5" : "none")
+                .attr("stroke", (d: any) => highlight(d) ? "red" : d.children ? "#585" : "#5a5")
+                .attr("stroke-width", (d: any) => d.children ? 1.5 : 1)
                 .attr("r", 4);
 
             node.append("text")
-                .attr("fill", d => highlight(d) ? "red" : null)
-                .attr("dy", "0.31em")
+                .attr("fill", d => highlight(d) ? "red" : 'green')
+                .attr("dy", "0.32em")
                 .attr("x", (d: any) => d.children ? -6 : 6)
                 .attr("text-anchor", (d: any) => d.children ? "end" : "start")
                 .text(label)
                 .clone(true).lower()
-                .attr("stroke", "white");
+                .attr("stroke-width", 1.7)
+                .attr("stroke", "#4aff8780");
 
             return svg.node();
         }
@@ -89,7 +92,7 @@ function HierarchyClassic() {
 
     return (
         <div className="w-[450px] h-48">
-            <svg className="w-full h-full bg-red-100" ref={ref}>
+            <svg className="w-full h-full" ref={ref}>
 
             </svg>
         </div>
