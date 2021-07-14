@@ -91,6 +91,15 @@ function HierarchyClassic() {
             { id: "Tartarus 7", parentId: "Tartarus" },
             { id: "Tartarus 8", parentId: "Tartarus" },
 
+            { id: "Tartarus 1", parentId: "Tartarus" },
+            { id: "Tartarus 2", parentId: "Tartarus" },
+            { id: "Tartarus 3", parentId: "Tartarus" },
+            { id: "Tartarus 4", parentId: "Tartarus" },
+            { id: "Tartarus 5", parentId: "Tartarus" },
+            { id: "Tartarus 6", parentId: "Tartarus" },
+            { id: "Tartarus 7", parentId: "Tartarus" },
+            { id: "Tartarus 8", parentId: "Tartarus" },
+
             { id: "Mountains", parentId: "Gaia" },
             { id: "Pontus", parentId: "Gaia" },
             { id: "Uranus", parentId: "Gaia" },
