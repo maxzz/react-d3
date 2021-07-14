@@ -81,9 +81,28 @@ function HierarchyClassic() {
             { id: "Eros", parentId: "Chaos" },
             { id: "Erebus", parentId: "Chaos" },
             { id: "Tartarus", parentId: "Chaos" },
+
+            { id: "Tartarus 1", parentId: "Tartarus" },
+            { id: "Tartarus 2", parentId: "Tartarus" },
+            { id: "Tartarus 3", parentId: "Tartarus" },
+            { id: "Tartarus 4", parentId: "Tartarus" },
+            { id: "Tartarus 5", parentId: "Tartarus" },
+            { id: "Tartarus 6", parentId: "Tartarus" },
+            { id: "Tartarus 7", parentId: "Tartarus" },
+            { id: "Tartarus 8", parentId: "Tartarus" },
+
             { id: "Mountains", parentId: "Gaia" },
             { id: "Pontus", parentId: "Gaia" },
-            { id: "Uranus", parentId: "Gaia" }
+            { id: "Uranus", parentId: "Gaia" },
+
+            { id: "Uranus 1", parentId: "Uranus" },
+            { id: "Uranus 2", parentId: "Uranus" },
+            { id: "Uranus 3", parentId: "Uranus" },
+            { id: "Uranus 4", parentId: "Uranus" },
+            { id: "Uranus 5", parentId: "Uranus" },
+            { id: "Uranus 6", parentId: "Uranus" },
+            { id: "Uranus 7", parentId: "Uranus" },
+            { id: "Uranus 8", parentId: "Uranus" },
         ]);
 
         graph(chaos);
