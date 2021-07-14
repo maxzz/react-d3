@@ -7,8 +7,7 @@ function HierarchyClassic() {
     React.useEffect(() => {
         const svg = d3.select(ref.current);
 
-        svg.select('g').remove(); //Proper temp hack to fix HMR problem.
-        //const hackEl = (svg as any)?._groups?.[0]?.[0] as SVGSVGElement; hackEl && (hackEl.innerHTML = ''); //Temp hack to fix HMR problem.
+        svg.select('*').remove(); //Proper temp hack to fix HMR problem.
 
         const width = 300;
 
