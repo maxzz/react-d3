@@ -7,7 +7,8 @@ function HierarchyClassic() {
     React.useEffect(() => {
         const svg = d3.select(ref.current);
 
-        const hackEl = (svg as any)?._groups?.[0]?.[0] as SVGSVGElement; hackEl && (hackEl.innerHTML = ''); //Temp hack to fix HMR problem.
+        svg.select('g').remove(); //Proper temp hack to fix HMR problem.
+        //const hackEl = (svg as any)?._groups?.[0]?.[0] as SVGSVGElement; hackEl && (hackEl.innerHTML = ''); //Temp hack to fix HMR problem.
 
         const width = 300;
 
@@ -19,7 +20,7 @@ function HierarchyClassic() {
         function graph(root: any, {
             label = (d: any) => d.data.id,
             highlight = (d: any) => false,
-            marginLeft = 40
+            marginLeft = 40,
         } = {}) {
             root = tree(root);
 
@@ -38,6 +39,7 @@ function HierarchyClassic() {
                 .attr("font-size", 10)
                 .attr("transform", `translate(${marginLeft},${dx - x0})`);
 
+            // lines
             const link = g.append("g")
                 .attr("fill", "none")
                 .attr("stroke", "green")
@@ -50,6 +52,7 @@ function HierarchyClassic() {
                 .attr("stroke-opacity", (d: any) => highlight(d.source) && highlight(d.target) ? 1 : null)
                 .attr("d", treeLink as any);
 
+            // circle and text
             const node = g.append("g")
                 .attr("stroke-linejoin", "round")
                 .attr("stroke-width", 3)
@@ -58,14 +61,16 @@ function HierarchyClassic() {
                 .join("g")
                 .attr("transform", (d: any) => `translate(${d.y},${d.x})`);
 
+            // circle
             node.append("circle")
-                .attr("fill", (d: any) => highlight(d) ? "red" : d.children ? "#5a5" : "none")
+                .attr("fill", (d: any) => highlight(d) ? "red" : d.children ? "#5a57" : "none")
                 .attr("stroke", (d: any) => highlight(d) ? "red" : d.children ? "#585" : "#5a5")
-                .attr("stroke-width", (d: any) => d.children ? 1.5 : 1)
+                .attr("stroke-width", (d: any) => d.children ? .7 : 1)
                 .attr("r", 4);
 
+            // text
             node.append("text")
-                .attr("fill", d => highlight(d) ? "red" : 'green')
+                .attr("fill", d => highlight(d) ? "red" : 'blue')
                 .attr("dy", "0.32em")
                 .attr("x", (d: any) => d.children ? -6 : 6)
                 .attr("text-anchor", (d: any) => d.children ? "end" : "start")
