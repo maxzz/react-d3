@@ -29,15 +29,19 @@ const Line = ({ angle = '0deg', offset = '0px, 0px', color }: LineProps) => {
 
 function App() {
     return (
-        <div className="h-screen flex flex-col bg-green-50 bg-gradient-to-tl from-green-500 to-cyan-500">
-            {/* <div className="h-screen bg-green-50" style={{backgroundColor: '#defeff', backgroundImage: 'linear-gradient(347deg, #defeff 0%, #D2FFE2 100%)'}}> */}
-            <StarD3Interpolated />
-            <HierarchyClassic />
-            <div className="w-32 h-32 relative overflow-hidden">
+        <div className="h-screen bg-green-50 bg-gradient-to-tl from-green-500 to-cyan-500">
+            <div className="absolute inset-0 overflow-hidden z-0">
                 <Line angle="45deg" color="red" />
             </div>
-            <div className="w-full h-10">
-                <Footer />
+            <div className="w-full h-full flex flex-col z-10">
+                {/* <div className="h-screen bg-green-50" style={{backgroundColor: '#defeff', backgroundImage: 'linear-gradient(347deg, #defeff 0%, #D2FFE2 100%)'}}> */}
+                <div className="flex flex-col items-center">
+                    <StarD3Interpolated />
+                    <HierarchyClassic />
+                </div>
+                <div className="h-10">
+                    <Footer />
+                </div>
             </div>
         </div>
     );
