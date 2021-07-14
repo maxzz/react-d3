@@ -1,5 +1,5 @@
 import React from 'react';
-import { curveCatmullRomClosed, curveBundle, curveLinearClosed, lineRadial, randomUniform, randomLcg, randomNormal } from 'd3';
+import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform, randomLcg, randomNormal } from 'd3';
 import './Slider.scss';
 import { saveTextData } from '../utils/save-data';
 import { reduceIndentByLast } from '../utils/indentation';
@@ -36,13 +36,13 @@ function generateSVG({ path, outerPoints, size }: { path: string; outerPoints: [
     return reduceIndentByLast(s);
 }
 
-const seed = 0.25160386911120525; // a number in [0,1)
-const source = randomLcg(seed);
+// const seed = 0.25160386911120525; // a number in [0,1)
+// const source = randomLcg(seed);
 
-function random(min: number, max: number) {
-    const randomRes = randomNormal.source(source)(min, max);
-    return randomRes;
-}
+// function random(min: number, max: number) {
+//     const randomRes = randomNormal.source(source)(min, max);
+//     return randomRes;
+// }
 
 function generatePath(shape: ShapeParams, randomize: RandomizeParams): readonly [string, [number, number][]] {
     const { nRays, iRadius, oRadius, smooth } = shape;
@@ -52,12 +52,12 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams): readonly 
     const points: [number, number][] = [];
     for (let i = 0; i < nRays * 2; i++) {
         if (inner && outer) {
-            // points.push([i * step, randomUniform(oRadius, iRadius)()]);
-            points.push([i * step, random(oRadius, iRadius)()]);
+            points.push([i * step, randomUniform(oRadius, iRadius)()]);
+            //points.push([i * step, random(oRadius, iRadius)()]);
         } else
             if (outer) {
-                points.push([i * step, i % 2 === 0 ? random(iRadius, oRadius)() : iRadius]);
-                // points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
+                //points.push([i * step, i % 2 === 0 ? random(iRadius, oRadius)() : iRadius]);
+                points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
             } else {
                 points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
             }
