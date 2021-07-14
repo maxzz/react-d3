@@ -110,7 +110,7 @@ function HierarchyClassic() {
     }, []);
 
     return (
-        <div className="w-[450px] h-48">
+        <div className="w-[450px] h-48 bg-yellow-100">
             <svg className="w-full h-full" ref={ref}>
 
             </svg>
