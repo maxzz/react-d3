@@ -28,14 +28,31 @@ function HierarchyClassic() {
             .style('--text-color', '#00295d')
             .style('--circle-fill', '#0070ff');
 
+        let gLinks: d3.Selection<SVGGElement, unknown, null, undefined>;
+        let gNodes: d3.Selection<SVGGElement, unknown, null, undefined>;
+
         let mainG = svg.select<SVGGElement>('g');
         if (mainG.empty()) {
             mainG = svg.append('g')
                 .attr('font-family', 'sans-serif')
                 .attr('font-size', 8);
+
+            gLinks = mainG.append('g')
+                .attr('fill', 'none')
+                .attr('stroke', 'var(--line-color)')
+                .attr('stroke-opacity', 0.4)
+                .attr('stroke-width', 1.2);
+
+            gNodes = mainG.append('g')
+                .attr('stroke-linejoin', 'round')
+                .attr('stroke-width', 3);
+        } else {
+            gLinks = mainG.selectChild(':nth-child(1)');
+            gNodes = mainG.selectChild(':nth-child(2)');
+            //console.log('b', gLinks, gNodes);
         }
 
-        mainG.selectChildren().remove();
+        //mainG.selectChildren().remove();
 
         function graph(rootData: d3.HierarchyNode<TreeItemData>, {
             label = (d: TItem) => d.data.id,
@@ -54,7 +71,7 @@ function HierarchyClassic() {
             svg.attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any)
                 .style('overflow', 'visible');
 
-            mainG.selectChildren().remove();
+            //mainG.selectChildren().remove();
             const g = mainG
                 .attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
             // const g = svg.append('g')
@@ -63,11 +80,13 @@ function HierarchyClassic() {
             //     .attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
 
             // lines
-            const link = g.append('g')
-                .attr('fill', 'none')
-                .attr('stroke', 'var(--line-color)')
-                .attr('stroke-opacity', 0.4)
-                .attr('stroke-width', 1.2)
+            const link = 
+                gLinks
+                // g.append('g')
+                // .attr('fill', 'none')
+                // .attr('stroke', 'var(--line-color)')
+                // .attr('stroke-opacity', 0.4)
+                // .attr('stroke-width', 1.2)
                 .selectAll('path')
                 .data(root.links())
                 .join('path')
@@ -76,9 +95,11 @@ function HierarchyClassic() {
                 .attr('d', treeLink as any);
 
             // circle and text
-            const node = g.append('g')
-                .attr('stroke-linejoin', 'round')
-                .attr('stroke-width', 3)
+            const node = 
+                gNodes
+                // g.append('g')
+                // .attr('stroke-linejoin', 'round')
+                // .attr('stroke-width', 3)
                 .selectAll('g')
                 .data(root.descendants())
                 .join('g')
@@ -97,7 +118,7 @@ function HierarchyClassic() {
                 .attr('dy', '0.32em')
                 .attr('x', (d: TItem) => d.children ? -6 : 6)
                 .attr('text-anchor', (d: TItem) => d.children ? 'end' : 'start')
-                .text(label)//.clone(true).lower().attr('stroke-width', 1.7).attr('stroke', '#4aff8780');
+                .text(label);//.clone(true).lower().attr('stroke-width', 1.7).attr('stroke', '#4aff8780');
 
             return svg.node();
         }
