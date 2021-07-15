@@ -90,8 +90,9 @@ function HierarchyClassic() {
                 // .attr('stroke-opacity', 0.4)
                 // .attr('stroke-width', 1.2)
                 .selectAll('path')
-                .data(links)
-                .join('path')
+                .data(links);
+
+                link.join('path')
                 .attr('stroke', (d) => highlight(d.source) && highlight(d.target) ? 'red' : null)
                 .attr('stroke-opacity', (d) => highlight(d.source) && highlight(d.target) ? 1 : null)
                 .attr('d', treeLink as any);
