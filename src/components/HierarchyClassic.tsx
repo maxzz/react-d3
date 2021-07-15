@@ -23,7 +23,9 @@ function HierarchyClassic() {
 
         svg.select('*').remove(); //Proper temp hack to fix HMR problem.
 
-        svg.style('--line-color', '#00295d');
+        svg.style('--line-color', '#ffffff');
+        svg.style('--text-color', '#00295d');
+        svg.style('--circle-fill', '#0070ff');
 
         function graph(_root: d3.HierarchyNode<TreeItemData>, {
             label = (d: TItem) => d.data.id,
@@ -44,7 +46,7 @@ function HierarchyClassic() {
 
             const g = svg.append('g')
                 .attr('font-family', 'sans-serif')
-                .attr('font-size', 10)
+                .attr('font-size', 8)
                 .attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
 
             // lines
@@ -71,14 +73,14 @@ function HierarchyClassic() {
 
             // circle
             node.append('circle')
-                .attr('fill', (d) => highlight(d) ? 'red' : d.children ? '#5a57' : 'none')
-                .attr('stroke', (d) => highlight(d) ? 'red' : d.children ? '#585' : '#5a5')
+                .attr('fill', (d) => highlight(d) ? 'red' : d.children ? 'var(--circle-fill)' : 'var(--circle-fill)')
+                .attr('stroke', (d) => highlight(d) ? 'red' : d.children ? 'var(--line-color)' : 'var(--line-color)')
                 .attr('stroke-width', (d) => d.children ? .7 : 1)
                 .attr('r', 4);
 
             // text
             node.append('text')
-                .attr('fill', (d: TItem) => highlight(d) ? 'red' : 'blue')
+                .attr('fill', (d: TItem) => highlight(d) ? 'red' : 'var(--text-color)')
                 .attr('dy', '0.32em')
                 .attr('x', (d: TItem) => d.children ? -6 : 6)
                 .attr('text-anchor', (d: TItem) => d.children ? 'end' : 'start')
@@ -93,6 +95,15 @@ function HierarchyClassic() {
             { id: 'Eros', parentId: 'Chaos' },
             { id: 'Erebus', parentId: 'Chaos' },
             { id: 'Tartarus', parentId: 'Chaos' },
+
+            { id: 'Tartarus 1', parentId: 'Tartarus' },
+            { id: 'Tartarus 2', parentId: 'Tartarus' },
+            { id: 'Tartarus 3', parentId: 'Tartarus' },
+            { id: 'Tartarus 4', parentId: 'Tartarus' },
+            { id: 'Tartarus 5', parentId: 'Tartarus' },
+            { id: 'Tartarus 6', parentId: 'Tartarus' },
+            { id: 'Tartarus 7', parentId: 'Tartarus' },
+            { id: 'Tartarus 8', parentId: 'Tartarus' },
 
             { id: 'Tartarus 1', parentId: 'Tartarus' },
             { id: 'Tartarus 2', parentId: 'Tartarus' },
@@ -131,7 +142,7 @@ function HierarchyClassic() {
     }, []);
 
     return (
-        <div className="w-full px-8">
+        <div className="w-full">
             <svg className="bg-blue-400 border-8 border-blue-200" ref={ref}>
             </svg>
         </div>
