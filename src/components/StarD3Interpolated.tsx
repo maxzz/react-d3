@@ -203,7 +203,7 @@ function StarD3Interpolated() {
     const genCb = React.useRef<InterpolatedShapeActions>(null);
 
     return (
-        <div className="p-2 flex select-none">
+        <div className="flex select-none">
             {/* Shape */}
             <div
                 className="w-44 h-44 text-blue-800 bg-blue-400 border-8 border-blue-200"
