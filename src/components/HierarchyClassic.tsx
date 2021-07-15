@@ -1,15 +1,79 @@
 import React from 'react';
 import * as d3 from 'd3';
 
+// Data
+
+type TreeItemData = {
+    id: string;
+    parentId?: string;
+};
+
+const chaosData: TreeItemData[] = [
+    { id: 'Chaos' },
+    { id: 'Gaia', parentId: 'Chaos' },
+    { id: 'Eros', parentId: 'Chaos' },
+    { id: 'Erebus', parentId: 'Chaos' },
+    { id: 'Tartarus', parentId: 'Chaos' },
+
+    { id: 'Tartarus 1', parentId: 'Tartarus' },
+    { id: 'Tartarus 2', parentId: 'Tartarus' },
+    { id: 'Tartarus 3', parentId: 'Tartarus' },
+    { id: 'Tartarus 4', parentId: 'Tartarus' },
+    { id: 'Tartarus 5', parentId: 'Tartarus' },
+    { id: 'Tartarus 6', parentId: 'Tartarus' },
+    { id: 'Tartarus 7', parentId: 'Tartarus' },
+    { id: 'Tartarus 8', parentId: 'Tartarus' },
+
+    { id: 'Tartarus 1', parentId: 'Tartarus' },
+    { id: 'Tartarus 2', parentId: 'Tartarus' },
+    { id: 'Tartarus 3', parentId: 'Tartarus' },
+    { id: 'Tartarus 4', parentId: 'Tartarus' },
+    { id: 'Tartarus 5', parentId: 'Tartarus' },
+    { id: 'Tartarus 6', parentId: 'Tartarus' },
+    { id: 'Tartarus 7', parentId: 'Tartarus' },
+    { id: 'Tartarus 8', parentId: 'Tartarus' },
+
+    { id: 'Tartarus 1', parentId: 'Tartarus' },
+    { id: 'Tartarus 2', parentId: 'Tartarus' },
+    { id: 'Tartarus 3', parentId: 'Tartarus' },
+    { id: 'Tartarus 4', parentId: 'Tartarus' },
+    { id: 'Tartarus 5', parentId: 'Tartarus' },
+    { id: 'Tartarus 6', parentId: 'Tartarus' },
+    { id: 'Tartarus 7', parentId: 'Tartarus' },
+    { id: 'Tartarus 8', parentId: 'Tartarus' },
+
+    { id: 'Mountains', parentId: 'Gaia' },
+    { id: 'Pontus', parentId: 'Gaia' },
+    { id: 'Uranus', parentId: 'Gaia' },
+
+    { id: 'Uranus 1', parentId: 'Uranus' },
+    { id: 'Uranus 2', parentId: 'Uranus' },
+    { id: 'Uranus 3', parentId: 'Uranus' },
+    { id: 'Uranus 4', parentId: 'Uranus' },
+    { id: 'Uranus 5', parentId: 'Uranus' },
+    { id: 'Uranus 6', parentId: 'Uranus' },
+    { id: 'Uranus 7', parentId: 'Uranus' },
+    { id: 'Uranus 8', parentId: 'Uranus' },
+];
+
+// D3 extentions
+
+type D3Selection<T extends d3.BaseType> = d3.Selection<T, unknown, null, undefined>;
+
+function getLeftRight<T extends d3.HierarchyPointNode<T>>(root: T): readonly [number, number] {
+    let x0 = Infinity; // left
+    let x1 = -x0; // right
+    root.each((d) => {
+        if (d.x > x1) x1 = d.x;
+        if (d.x < x0) x0 = d.x;
+    });
+    return [x0, x1] as const;
+}
+
 function HierarchyClassicRaw() {
     const ref = React.useRef(null);
 
     React.useEffect(() => {
-
-        type TreeItemData = {
-            id: string;
-            parentId?: string;
-        };
 
         type TItem = d3.HierarchyPointNode<TreeItemData>;
 
@@ -25,8 +89,8 @@ function HierarchyClassicRaw() {
             .style('--circle-fill', '#0070ff')
             .style('overflow', 'visible');
 
-        let gLinks: d3.Selection<SVGGElement, unknown, null, undefined>;
-        let gNodes: d3.Selection<SVGGElement, unknown, null, undefined>;
+        let gLinks: D3Selection<SVGGElement>;
+        let gNodes: D3Selection<SVGGElement>;
 
         let mainG = svg.select<SVGGElement>('g'); // Hack to fix HMR problem
         if (mainG.empty()) {
@@ -35,14 +99,14 @@ function HierarchyClassicRaw() {
                 .attr('font-size', 8);
 
             gLinks = mainG.append('g')
-                .classed('tm-links', true)
+                .classed('links', true)
                 .attr('fill', 'none')
                 .attr('stroke', 'var(--line-color)')
                 .attr('stroke-opacity', 0.4)
                 .attr('stroke-width', 1.2);
 
             gNodes = mainG.append('g')
-                .classed('tm-nodes', true)
+                .classed('nodes', true)
                 .attr('stroke-linejoin', 'round')
                 .attr('stroke-width', 3);
         } else {
@@ -55,12 +119,14 @@ function HierarchyClassicRaw() {
             const nodes = root.descendants();
             const links = root.links();
 
-            let x0 = Infinity; // left
-            let x1 = -x0; // right
-            root.each((d: TItem) => {
-                if (d.x > x1) x1 = d.x;
-                if (d.x < x0) x0 = d.x;
-            });
+            let [x0, x1] = getLeftRight(root);
+
+            // let x0 = Infinity; // left
+            // let x1 = -x0; // right
+            // root.each((d: TItem) => {
+            //     if (d.x > x1) x1 = d.x;
+            //     if (d.x < x0) x0 = d.x;
+            // });
 
             svg.attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any);
 
@@ -100,54 +166,6 @@ function HierarchyClassicRaw() {
             return svg.node();
         }
 
-        const chaosData: TreeItemData[] = [
-            { id: 'Chaos' },
-            { id: 'Gaia', parentId: 'Chaos' },
-            { id: 'Eros', parentId: 'Chaos' },
-            { id: 'Erebus', parentId: 'Chaos' },
-            { id: 'Tartarus', parentId: 'Chaos' },
-
-            { id: 'Tartarus 1', parentId: 'Tartarus' },
-            { id: 'Tartarus 2', parentId: 'Tartarus' },
-            { id: 'Tartarus 3', parentId: 'Tartarus' },
-            { id: 'Tartarus 4', parentId: 'Tartarus' },
-            { id: 'Tartarus 5', parentId: 'Tartarus' },
-            { id: 'Tartarus 6', parentId: 'Tartarus' },
-            { id: 'Tartarus 7', parentId: 'Tartarus' },
-            { id: 'Tartarus 8', parentId: 'Tartarus' },
-
-            { id: 'Tartarus 1', parentId: 'Tartarus' },
-            { id: 'Tartarus 2', parentId: 'Tartarus' },
-            { id: 'Tartarus 3', parentId: 'Tartarus' },
-            { id: 'Tartarus 4', parentId: 'Tartarus' },
-            { id: 'Tartarus 5', parentId: 'Tartarus' },
-            { id: 'Tartarus 6', parentId: 'Tartarus' },
-            { id: 'Tartarus 7', parentId: 'Tartarus' },
-            { id: 'Tartarus 8', parentId: 'Tartarus' },
-
-            { id: 'Tartarus 1', parentId: 'Tartarus' },
-            { id: 'Tartarus 2', parentId: 'Tartarus' },
-            { id: 'Tartarus 3', parentId: 'Tartarus' },
-            { id: 'Tartarus 4', parentId: 'Tartarus' },
-            { id: 'Tartarus 5', parentId: 'Tartarus' },
-            { id: 'Tartarus 6', parentId: 'Tartarus' },
-            { id: 'Tartarus 7', parentId: 'Tartarus' },
-            { id: 'Tartarus 8', parentId: 'Tartarus' },
-
-            { id: 'Mountains', parentId: 'Gaia' },
-            { id: 'Pontus', parentId: 'Gaia' },
-            { id: 'Uranus', parentId: 'Gaia' },
-
-            { id: 'Uranus 1', parentId: 'Uranus' },
-            { id: 'Uranus 2', parentId: 'Uranus' },
-            { id: 'Uranus 3', parentId: 'Uranus' },
-            { id: 'Uranus 4', parentId: 'Uranus' },
-            { id: 'Uranus 5', parentId: 'Uranus' },
-            { id: 'Uranus 6', parentId: 'Uranus' },
-            { id: 'Uranus 7', parentId: 'Uranus' },
-            { id: 'Uranus 8', parentId: 'Uranus' },
-        ]
-
         const chaos: d3.HierarchyNode<TreeItemData> = d3.stratify<TreeItemData>()(chaosData);
         graph(chaos);
     }, []);
@@ -163,7 +181,7 @@ function HierarchyClassicRaw() {
 function HierarchyClassic() {
     return (
         <HierarchyClassicRaw />
-    )
+    );
 }
 
 export default HierarchyClassic;
