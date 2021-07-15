@@ -60,7 +60,7 @@ const chaosData: TreeItemData[] = [
 
 type D3Selection<T extends d3.BaseType> = d3.Selection<T, unknown, null, undefined>;
 
-function getLeftRight<T extends d3.HierarchyPointNode<T>>(root: T): readonly [number, number] {
+function getLeftRight<T>(root: d3.HierarchyPointNode<T>): readonly [number, number] {
     let x0 = Infinity; // left
     let x1 = -x0; // right
     root.each((d) => {
