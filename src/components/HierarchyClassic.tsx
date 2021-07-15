@@ -14,9 +14,9 @@ function HierarchyClassic() {
         type TItem = d3.HierarchyPointNode<TreeItemData>;
 
         const width = 300;
-        const dx = 12;
-        const dy = 70;
-        const tree = d3.tree<TreeItemData>().nodeSize([dx, dy]);
+        const nodeDX = 12;
+        const nodeDY = 70;
+        const tree = d3.tree<TreeItemData>().nodeSize([nodeDX, nodeDY]);
         const treeLink = d3.linkHorizontal<d3.HierarchyPointLink<TItem>, d3.HierarchyPointNode<TItem>>().x((d: any) => d.y).y((d: any) => d.x);
 
         const svg = d3.select(ref.current);
@@ -37,13 +37,13 @@ function HierarchyClassic() {
                 if (d.x < x0) x0 = d.x;
             });
 
-            svg.attr("viewBox", [0, 0, width, x1 - x0 + dx * 2] as any)
+            svg.attr("viewBox", [0, 0, width, x1 - x0 + nodeDX * 2] as any)
                 .style("overflow", "visible");
 
             const g = svg.append("g")
                 .attr("font-family", "sans-serif")
                 .attr("font-size", 10)
-                .attr("transform", `translate(${marginLeft},${dx - x0})`);
+                .attr("transform", `translate(${marginLeft},${nodeDX - x0})`);
 
             // lines
             const link = g.append("g")
@@ -132,9 +132,8 @@ function HierarchyClassic() {
     }, []);
 
     return (
-        <div className="w-[450px] h-48 bg-yellow-100">
-            <svg className="w-full h-full" ref={ref}>
-
+        <div className="w-full px-8">
+            <svg className="bg-blue-400 border-8 border-blue-200" ref={ref}>
             </svg>
         </div>
     );
