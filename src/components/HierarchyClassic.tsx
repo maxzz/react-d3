@@ -20,18 +20,16 @@ function HierarchyClassic() {
         const treeLink = d3.linkHorizontal<d3.HierarchyPointLink<TItem>, d3.HierarchyPointNode<TItem>>().x((d: any) => d.y).y((d: any) => d.x);
 
         const svg = d3.select(ref.current);
-
-        //svg.selectAll('*').remove(); //Proper temp hack to fix HMR problem. //svg.selectAll('g *').remove(); //OK but does not remove group itself
-
         svg
             .style('--line-color', '#ffffff')
             .style('--text-color', '#00295d')
-            .style('--circle-fill', '#0070ff');
+            .style('--circle-fill', '#0070ff')
+            .style('overflow', 'visible');
 
         let gLinks: d3.Selection<SVGGElement, unknown, null, undefined>;
         let gNodes: d3.Selection<SVGGElement, unknown, null, undefined>;
 
-        let mainG = svg.select<SVGGElement>('g');
+        let mainG = svg.select<SVGGElement>('g'); // Hack to fix HMR problem
         if (mainG.empty()) {
             mainG = svg.append('g')
                 .attr('font-family', 'sans-serif')
@@ -51,10 +49,7 @@ function HierarchyClassic() {
         } else {
             gLinks = mainG.selectChild(':nth-child(1)');
             gNodes = mainG.selectChild(':nth-child(2)');
-            //console.log('b', gLinks, gNodes);
         }
-
-        //mainG.selectChildren().remove();
 
         function graph(rootData: d3.HierarchyNode<TreeItemData>, {
             label = (d: TItem) => d.data.id,
@@ -72,48 +67,23 @@ function HierarchyClassic() {
                 if (d.x < x0) x0 = d.x;
             });
 
-            svg.attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any)
-                .style('overflow', 'visible');
+            svg.attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any);
 
-            //mainG.selectChildren().remove();
-            const g = mainG
-                .attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
-            // const g = svg.append('g')
-            //     .attr('font-family', 'sans-serif')
-            //     .attr('font-size', 8)
-            //     .attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
+            mainG.attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
 
             // lines
-            const link =
-                gLinks
-                    // g.append('g')
-                    // .attr('fill', 'none')
-                    // .attr('stroke', 'var(--line-color)')
-                    // .attr('stroke-opacity', 0.4)
-                    // .attr('stroke-width', 1.2)
-                    .selectAll('path')
-                    .data(links);
+            const link = gLinks.selectAll('path').data(links);
 
             const linkEnter = link.enter().append('path');
 
-            //link.join('path')
-            //link.join('path').enter()
-            //link.enter().join('path')
             linkEnter
                 .attr('stroke', (d) => highlight(d.source) && highlight(d.target) ? 'red' : null)
                 .attr('stroke-opacity', (d) => highlight(d.source) && highlight(d.target) ? 1 : null)
                 .attr('d', treeLink as any);
 
-            // circle and text
-            const node =
-                gNodes
-                    // g.append('g')
-                    // .attr('stroke-linejoin', 'round')
-                    // .attr('stroke-width', 3)
-                    .selectAll('g')
-                    .data(nodes);
+            // circle and text group
+            const node = gNodes.selectAll('g').data(nodes);
 
-            // node.join('g')
             const nodeEnter = node.enter().append('g')
                 .attr('transform', (d) => `translate(${d.y},${d.x})`);
 
