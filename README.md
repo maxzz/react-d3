@@ -2,7 +2,7 @@
 
 Coexistence of React with D3.js
 
-<img src="src/assets/previews/2021-07-14_18-55-53.png" widht="400px">
+<img src="src/assets/previews/2021-07-14_18-55-53.png" widht="300px">
 
 #### Links, Refs, Credits
 

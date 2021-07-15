@@ -21,18 +21,22 @@ function HierarchyClassic() {
 
         const svg = d3.select(ref.current);
 
-        svg.select('*').remove(); //Proper temp hack to fix HMR problem.
+        //console.log('a', svg.selectAll('g *'));
+        
 
-        svg.style('--line-color', '#ffffff');
-        svg.style('--text-color', '#00295d');
-        svg.style('--circle-fill', '#0070ff');
+        svg.selectAll('g *').remove(); //Proper temp hack to fix HMR problem.
 
-        function graph(_root: d3.HierarchyNode<TreeItemData>, {
+        svg
+            .style('--line-color', '#ffffff')
+            .style('--text-color', '#00295d')
+            .style('--circle-fill', '#0070ff');
+
+        function graph(rootData: d3.HierarchyNode<TreeItemData>, {
             label = (d: TItem) => d.data.id,
             highlight = (d: TItem) => false,
             marginLeft = 40,
         } = {}) {
-            const root: TItem = tree(_root);
+            const root: TItem = tree(rootData);
 
             let x0 = Infinity;
             let x1 = -x0;
@@ -84,7 +88,8 @@ function HierarchyClassic() {
                 .attr('dy', '0.32em')
                 .attr('x', (d: TItem) => d.children ? -6 : 6)
                 .attr('text-anchor', (d: TItem) => d.children ? 'end' : 'start')
-                .text(label)//.clone(true).lower().attr('stroke-width', 1.7).attr('stroke', '#4aff8780');
+                .text(label).clone(true).lower().attr('stroke-width', 1.7).attr('stroke', '#4aff8780');
+
 
             return svg.node();
         }
