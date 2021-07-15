@@ -10,3 +10,7 @@ Coexistence of React with D3.js
     * [d3-random](https://github.com/d3/d3-random)
     * [random-source](https://observablehq.com/@d3/random-source)
     * [seedrandom](https://github.com/davidbau/seedrandom)
+
+* d3-hierarchy
+    * [collapsible-tree](https://observablehq.com/@d3/collapsible-tree)
+    

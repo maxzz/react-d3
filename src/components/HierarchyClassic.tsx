@@ -120,17 +120,14 @@ function HierarchyClassicRaw() {
             const links = root.links();
 
             let [x0, x1] = getLeftRight(root);
-
-            // let x0 = Infinity; // left
-            // let x1 = -x0; // right
-            // root.each((d: TItem) => {
-            //     if (d.x > x1) x1 = d.x;
-            //     if (d.x < x0) x0 = d.x;
-            // });
-
             svg.attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any);
-
             mainG.attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
+
+            const duration = 2500; //d3.event && d3.event.altKey ? 2500 : 250;
+            // const transition = svg.transition()
+            //     .duration(duration)
+            //     .attr("viewBox", [-margin.left, left.x - margin.top, width, height] as any)
+            //     .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
 
             // lines
             const link = gLinks.selectAll('path').data(links);
@@ -152,16 +149,45 @@ function HierarchyClassicRaw() {
             nodeEnter.append('circle')
                 .attr('fill', (d) => highlight(d) ? 'red' : d.children ? 'var(--circle-fill)' : 'var(--circle-fill)')
                 .attr('stroke', (d) => highlight(d) ? 'red' : d.children ? 'var(--line-color)' : 'var(--line-color)')
-                .attr('stroke-width', (d) => d.children ? .7 : 1)
-                .attr('r', 4);
+                .attr('stroke-width', (d) => d.children ? .7 : .7)
+                .attr('r', 3);
 
             // text
             nodeEnter.append('text')
+                .style('background-color', 'red')
                 .attr('fill', (d: TItem) => highlight(d) ? 'red' : 'var(--text-color)')
                 .attr('dy', '0.32em')
                 .attr('x', (d: TItem) => d.children ? -6 : 6)
                 .attr('text-anchor', (d: TItem) => d.children ? 'end' : 'start')
                 .text(label);//.clone(true).lower().attr('stroke-width', 1.7).attr('stroke', '#4aff8780');
+
+
+            nodeEnter.append('foreignObject')
+                .style('position', 'relative')
+                .style('background', 'green')
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('width', 50)
+                .attr('height', 2)
+                .append('div')
+                .style('position', 'absolute')
+                .style('background', 'blue')
+                .style('top', 0)
+                .style('left', 0)
+                .style('right', 0)
+                .style('bottom', 0);
+            //.style('position: absolute; background: red; top:0; left:0; right:0; bottom:0')
+            /*
+                <foreignObject x="0" y="0" width="50" height="20">
+                    <div style="position: absolute; background: red; top:0; left:0; right:0; bottom:0" x="0" y="0" width="100%" height="100%"></div>
+                </foreignObject>                
+            */
+
+            // Transition nodes to their new position.
+            // const nodeUpdate = node.merge(nodeEnter).transition(transition)
+            //     .attr("transform", d => `translate(${d.y},${d.x})`)
+            //     .attr("fill-opacity", 1)
+            //     .attr("stroke-opacity", 1);
 
             return svg.node();
         }
