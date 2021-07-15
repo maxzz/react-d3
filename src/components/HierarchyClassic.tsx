@@ -123,11 +123,15 @@ function HierarchyClassicRaw() {
             svg.attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any);
             mainG.attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
 
+            const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+            const height = x1 - x0 + margin.top + margin.bottom;
+
             const duration = 2500; //d3.event && d3.event.altKey ? 2500 : 250;
-            // const transition = svg.transition()
-            //     .duration(duration)
-            //     .attr("viewBox", [-margin.left, left.x - margin.top, width, height] as any)
-            //     .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
+            const transition = svg.transition()
+                .duration(duration)
+                //.attr("viewBox", [-margin.left, x0 - margin.top, width, height] as any)
+                .attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any)
+                .tween("resize", (window.ResizeObserver ? null : () => () => svg.dispatch("toggle")) as any) as any;
 
             // lines
             const link = gLinks.selectAll('path').data(links);
@@ -162,7 +166,7 @@ function HierarchyClassicRaw() {
                 .text(label);//.clone(true).lower().attr('stroke-width', 1.7).attr('stroke', '#4aff8780');
 
             // Transition nodes to their new position.
-            const nodeUpdate = node.merge(nodeEnter)//.transition(transition)
+            const nodeUpdate = node.merge(nodeEnter).transition(transition)
                 .attr("transform", d => `translate(${d.y},${d.x})`)
                 .attr("fill-opacity", 1)
                 .attr("stroke-opacity", 1);
