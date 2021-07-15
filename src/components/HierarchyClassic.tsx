@@ -21,13 +21,21 @@ function HierarchyClassic() {
 
         const svg = d3.select(ref.current);
 
-        svg.selectAll('*').remove(); //Proper temp hack to fix HMR problem.
-        //svg.selectAll('g *').remove(); //OK but does not remove group itself
+        //svg.selectAll('*').remove(); //Proper temp hack to fix HMR problem. //svg.selectAll('g *').remove(); //OK but does not remove group itself
 
         svg
             .style('--line-color', '#ffffff')
             .style('--text-color', '#00295d')
             .style('--circle-fill', '#0070ff');
+
+        let mainG = svg.select<SVGGElement>('g');
+        if (mainG.empty()) {
+            mainG = svg.append('g')
+                .attr('font-family', 'sans-serif')
+                .attr('font-size', 8);
+        }
+
+        mainG.selectChildren().remove();
 
         function graph(rootData: d3.HierarchyNode<TreeItemData>, {
             label = (d: TItem) => d.data.id,
@@ -46,10 +54,13 @@ function HierarchyClassic() {
             svg.attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any)
                 .style('overflow', 'visible');
 
-            const g = svg.append('g')
-                .attr('font-family', 'sans-serif')
-                .attr('font-size', 8)
+            mainG.selectChildren().remove();
+            const g = mainG
                 .attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
+            // const g = svg.append('g')
+            //     .attr('font-family', 'sans-serif')
+            //     .attr('font-size', 8)
+            //     .attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
 
             // lines
             const link = g.append('g')
