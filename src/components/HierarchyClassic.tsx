@@ -38,12 +38,14 @@ function HierarchyClassic() {
                 .attr('font-size', 8);
 
             gLinks = mainG.append('g')
+                .classed('tm-links', true)
                 .attr('fill', 'none')
                 .attr('stroke', 'var(--line-color)')
                 .attr('stroke-opacity', 0.4)
                 .attr('stroke-width', 1.2);
 
             gNodes = mainG.append('g')
+                .classed('tm-nodes', true)
                 .attr('stroke-linejoin', 'round')
                 .attr('stroke-width', 3);
         } else {
@@ -95,7 +97,7 @@ function HierarchyClassic() {
             //link.join('path')
             //link.join('path').enter()
             //link.enter().join('path')
-                link.enter().append('path')
+            link.enter().append('path')
                 .attr('stroke', (d) => highlight(d.source) && highlight(d.target) ? 'red' : null)
                 .attr('stroke-opacity', (d) => highlight(d.source) && highlight(d.target) ? 1 : null)
                 .attr('d', treeLink as any);
@@ -107,19 +109,21 @@ function HierarchyClassic() {
                     // .attr('stroke-linejoin', 'round')
                     // .attr('stroke-width', 3)
                     .selectAll('g')
-                    .data(nodes)
-                    .join('g')
-                    .attr('transform', (d) => `translate(${d.y},${d.x})`);
+                    .data(nodes);
+
+            // node.join('g')
+            const nodeEnter = node.enter().append('g')
+                .attr('transform', (d) => `translate(${d.y},${d.x})`);
 
             // circle
-            node.append('circle')
+            nodeEnter.append('circle')
                 .attr('fill', (d) => highlight(d) ? 'red' : d.children ? 'var(--circle-fill)' : 'var(--circle-fill)')
                 .attr('stroke', (d) => highlight(d) ? 'red' : d.children ? 'var(--line-color)' : 'var(--line-color)')
                 .attr('stroke-width', (d) => d.children ? .7 : 1)
                 .attr('r', 4);
 
             // text
-            node.append('text')
+            nodeEnter.append('text')
                 .attr('fill', (d: TItem) => highlight(d) ? 'red' : 'var(--text-color)')
                 .attr('dy', '0.32em')
                 .attr('x', (d: TItem) => d.children ? -6 : 6)
