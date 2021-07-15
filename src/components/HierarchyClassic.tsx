@@ -21,10 +21,8 @@ function HierarchyClassic() {
 
         const svg = d3.select(ref.current);
 
-        //console.log('a', svg.selectAll('g *'));
-        
-
-        svg.selectAll('g *').remove(); //Proper temp hack to fix HMR problem.
+        svg.selectAll('*').remove(); //Proper temp hack to fix HMR problem.
+        //svg.selectAll('g *').remove(); //OK but does not remove group itself
 
         svg
             .style('--line-color', '#ffffff')
@@ -88,8 +86,7 @@ function HierarchyClassic() {
                 .attr('dy', '0.32em')
                 .attr('x', (d: TItem) => d.children ? -6 : 6)
                 .attr('text-anchor', (d: TItem) => d.children ? 'end' : 'start')
-                .text(label).clone(true).lower().attr('stroke-width', 1.7).attr('stroke', '#4aff8780');
-
+                .text(label)//.clone(true).lower().attr('stroke-width', 1.7).attr('stroke', '#4aff8780');
 
             return svg.node();
         }
