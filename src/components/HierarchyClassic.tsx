@@ -1,7 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-function HierarchyClassic() {
+function HierarchyClassicRaw() {
     const ref = React.useRef(null);
 
     React.useEffect(() => {
@@ -19,8 +19,7 @@ function HierarchyClassic() {
         const tree = d3.tree<TreeItemData>().nodeSize([nodeDX, nodeDY]);
         const treeLink = d3.linkHorizontal<d3.HierarchyPointLink<TItem>, d3.HierarchyPointNode<TItem>>().x((d: any) => d.y).y((d: any) => d.x);
 
-        const svg = d3.select(ref.current);
-        svg
+        const svg = d3.select(ref.current)
             .style('--line-color', '#ffffff')
             .style('--text-color', '#00295d')
             .style('--circle-fill', '#0070ff')
@@ -51,17 +50,13 @@ function HierarchyClassic() {
             gNodes = mainG.selectChild(':nth-child(2)');
         }
 
-        function graph(rootData: d3.HierarchyNode<TreeItemData>, {
-            label = (d: TItem) => d.data.id,
-            highlight = (d: TItem) => false,
-            marginLeft = 40,
-        } = {}) {
+        function graph(rootData: d3.HierarchyNode<TreeItemData>, { label = (d: TItem) => d.data.id, highlight = (d: TItem) => false, marginLeft = 40, } = {}) {
             const root: TItem = tree(rootData);
             const nodes = root.descendants();
             const links = root.links();
 
-            let x0 = Infinity;
-            let x1 = -x0;
+            let x0 = Infinity; // left
+            let x1 = -x0; // right
             root.each((d: TItem) => {
                 if (d.x > x1) x1 = d.x;
                 if (d.x < x0) x0 = d.x;
@@ -105,7 +100,7 @@ function HierarchyClassic() {
             return svg.node();
         }
 
-        const chaos: d3.HierarchyNode<TreeItemData> = d3.stratify<TreeItemData>()([
+        const chaosData: TreeItemData[] = [
             { id: 'Chaos' },
             { id: 'Gaia', parentId: 'Chaos' },
             { id: 'Eros', parentId: 'Chaos' },
@@ -151,10 +146,10 @@ function HierarchyClassic() {
             { id: 'Uranus 6', parentId: 'Uranus' },
             { id: 'Uranus 7', parentId: 'Uranus' },
             { id: 'Uranus 8', parentId: 'Uranus' },
-        ]);
+        ]
 
+        const chaos: d3.HierarchyNode<TreeItemData> = d3.stratify<TreeItemData>()(chaosData);
         graph(chaos);
-
     }, []);
 
     return (
@@ -163,6 +158,12 @@ function HierarchyClassic() {
             </svg>
         </div>
     );
+}
+
+function HierarchyClassic() {
+    return (
+        <HierarchyClassicRaw />
+    )
 }
 
 export default HierarchyClassic;
