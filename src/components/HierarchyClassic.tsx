@@ -140,7 +140,7 @@ function HierarchyClassicRaw() {
                 .attr('d', treeLink as any);
 
             // circle and text group
-            const node = gNodes.selectAll('g').data(nodes);
+            const node = gNodes.selectAll<SVGGElement, TItem>('g').data(nodes);
 
             const nodeEnter = node.enter().append('g')
                 .attr('transform', (d) => `translate(${d.y},${d.x})`);
@@ -161,33 +161,11 @@ function HierarchyClassicRaw() {
                 .attr('text-anchor', (d: TItem) => d.children ? 'end' : 'start')
                 .text(label);//.clone(true).lower().attr('stroke-width', 1.7).attr('stroke', '#4aff8780');
 
-
-            nodeEnter.append('foreignObject')
-                .style('position', 'relative')
-                .style('background', 'green')
-                .attr('x', 0)
-                .attr('y', 0)
-                .attr('width', 50)
-                .attr('height', 2)
-                .append('div')
-                .style('position', 'absolute')
-                .style('background', 'blue')
-                .style('top', 0)
-                .style('left', 0)
-                .style('right', 0)
-                .style('bottom', 0);
-            //.style('position: absolute; background: red; top:0; left:0; right:0; bottom:0')
-            /*
-                <foreignObject x="0" y="0" width="50" height="20">
-                    <div style="position: absolute; background: red; top:0; left:0; right:0; bottom:0" x="0" y="0" width="100%" height="100%"></div>
-                </foreignObject>                
-            */
-
             // Transition nodes to their new position.
-            // const nodeUpdate = node.merge(nodeEnter).transition(transition)
-            //     .attr("transform", d => `translate(${d.y},${d.x})`)
-            //     .attr("fill-opacity", 1)
-            //     .attr("stroke-opacity", 1);
+            const nodeUpdate = node.merge(nodeEnter)//.transition(transition)
+                .attr("transform", d => `translate(${d.y},${d.x})`)
+                .attr("fill-opacity", 1)
+                .attr("stroke-opacity", 1);
 
             return svg.node();
         }
