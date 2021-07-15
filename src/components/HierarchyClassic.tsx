@@ -94,10 +94,12 @@ function HierarchyClassic() {
                     .selectAll('path')
                     .data(links);
 
+            const linkEnter = link.enter().append('path');
+
             //link.join('path')
             //link.join('path').enter()
             //link.enter().join('path')
-            link.enter().append('path')
+            linkEnter
                 .attr('stroke', (d) => highlight(d.source) && highlight(d.target) ? 'red' : null)
                 .attr('stroke-opacity', (d) => highlight(d.source) && highlight(d.target) ? 1 : null)
                 .attr('d', treeLink as any);
