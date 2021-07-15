@@ -60,6 +60,8 @@ function HierarchyClassic() {
             marginLeft = 40,
         } = {}) {
             const root: TItem = tree(rootData);
+            const nodes = root.descendants();
+            const links = root.links();
 
             let x0 = Infinity;
             let x1 = -x0;
@@ -88,7 +90,7 @@ function HierarchyClassic() {
                 // .attr('stroke-opacity', 0.4)
                 // .attr('stroke-width', 1.2)
                 .selectAll('path')
-                .data(root.links())
+                .data(links)
                 .join('path')
                 .attr('stroke', (d) => highlight(d.source) && highlight(d.target) ? 'red' : null)
                 .attr('stroke-opacity', (d) => highlight(d.source) && highlight(d.target) ? 1 : null)
@@ -101,7 +103,7 @@ function HierarchyClassic() {
                 // .attr('stroke-linejoin', 'round')
                 // .attr('stroke-width', 3)
                 .selectAll('g')
-                .data(root.descendants())
+                .data(nodes)
                 .join('g')
                 .attr('transform', (d) => `translate(${d.y},${d.x})`);
 
