@@ -5,27 +5,34 @@ function HierarchyClassic() {
     const ref = React.useRef(null);
 
     React.useEffect(() => {
+
+        type TreeItemData = {
+            id: string;
+            parentId?: string;
+        };
+
+        type TItem = d3.HierarchyPointNode<TreeItemData>;
+
+        const width = 300;
+        const dx = 12;
+        const dy = 70;
+        const tree = d3.tree<TreeItemData>().nodeSize([dx, dy]);
+        const treeLink = d3.linkHorizontal<d3.HierarchyPointLink<TItem>, d3.HierarchyPointNode<TItem>>().x((d: any) => d.y).y((d: any) => d.x);
+
         const svg = d3.select(ref.current);
 
         svg.select('*').remove(); //Proper temp hack to fix HMR problem.
 
-        const width = 300;
-
-        const dx = 12;
-        const dy = 70;
-        const tree = d3.tree().nodeSize([dx, dy]);
-        const treeLink = d3.linkHorizontal().x((d: any) => d.y).y((d: any) => d.x);
-
-        function graph(root: any, {
-            label = (d: any) => d.data.id,
-            highlight = (d: any) => false,
+        function graph(_root: d3.HierarchyNode<TreeItemData>, {
+            label = (d: TItem) => d.data.id,
+            highlight = (d: TItem) => false,
             marginLeft = 40,
         } = {}) {
-            root = tree(root);
+            const root: TItem = tree(_root);
 
             let x0 = Infinity;
             let x1 = -x0;
-            root.each((d: any) => {
+            root.each((d: TItem) => {
                 if (d.x > x1) x1 = d.x;
                 if (d.x < x0) x0 = d.x;
             });
@@ -47,8 +54,8 @@ function HierarchyClassic() {
                 .selectAll("path")
                 .data(root.links())
                 .join("path")
-                .attr("stroke", (d: any) => highlight(d.source) && highlight(d.target) ? "red" : null)
-                .attr("stroke-opacity", (d: any) => highlight(d.source) && highlight(d.target) ? 1 : null)
+                .attr("stroke", (d) => highlight(d.source) && highlight(d.target) ? "red" : null)
+                .attr("stroke-opacity", (d) => highlight(d.source) && highlight(d.target) ? 1 : null)
                 .attr("d", treeLink as any);
 
             // circle and text
@@ -58,21 +65,21 @@ function HierarchyClassic() {
                 .selectAll("g")
                 .data(root.descendants())
                 .join("g")
-                .attr("transform", (d: any) => `translate(${d.y},${d.x})`);
+                .attr("transform", (d) => `translate(${d.y},${d.x})`);
 
             // circle
             node.append("circle")
-                .attr("fill", (d: any) => highlight(d) ? "red" : d.children ? "#5a57" : "none")
-                .attr("stroke", (d: any) => highlight(d) ? "red" : d.children ? "#585" : "#5a5")
-                .attr("stroke-width", (d: any) => d.children ? .7 : 1)
+                .attr("fill", (d) => highlight(d) ? "red" : d.children ? "#5a57" : "none")
+                .attr("stroke", (d) => highlight(d) ? "red" : d.children ? "#585" : "#5a5")
+                .attr("stroke-width", (d) => d.children ? .7 : 1)
                 .attr("r", 4);
 
             // text
             node.append("text")
-                .attr("fill", d => highlight(d) ? "red" : 'blue')
+                .attr("fill", (d: TItem) => highlight(d) ? "red" : 'blue')
                 .attr("dy", "0.32em")
-                .attr("x", (d: any) => d.children ? -6 : 6)
-                .attr("text-anchor", (d: any) => d.children ? "end" : "start")
+                .attr("x", (d: TItem) => d.children ? -6 : 6)
+                .attr("text-anchor", (d: TItem) => d.children ? "end" : "start")
                 .text(label)
                 .clone(true).lower()
                 .attr("stroke-width", 1.7)
@@ -81,7 +88,7 @@ function HierarchyClassic() {
             return svg.node();
         }
 
-        const chaos = d3.stratify()([
+        const chaos: d3.HierarchyNode<TreeItemData> = d3.stratify<TreeItemData>()([
             { id: "Chaos" },
             { id: "Gaia", parentId: "Chaos" },
             { id: "Eros", parentId: "Chaos" },
