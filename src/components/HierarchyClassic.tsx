@@ -82,32 +82,34 @@ function HierarchyClassic() {
             //     .attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
 
             // lines
-            const link = 
+            const link =
                 gLinks
-                // g.append('g')
-                // .attr('fill', 'none')
-                // .attr('stroke', 'var(--line-color)')
-                // .attr('stroke-opacity', 0.4)
-                // .attr('stroke-width', 1.2)
-                .selectAll('path')
-                .data(links);
+                    // g.append('g')
+                    // .attr('fill', 'none')
+                    // .attr('stroke', 'var(--line-color)')
+                    // .attr('stroke-opacity', 0.4)
+                    // .attr('stroke-width', 1.2)
+                    .selectAll('path')
+                    .data(links);
 
-                //link.join('path')
-                link.join('path').enter()
+            //link.join('path')
+            //link.join('path').enter()
+            //link.enter().join('path')
+                link.enter().append('path')
                 .attr('stroke', (d) => highlight(d.source) && highlight(d.target) ? 'red' : null)
                 .attr('stroke-opacity', (d) => highlight(d.source) && highlight(d.target) ? 1 : null)
                 .attr('d', treeLink as any);
 
             // circle and text
-            const node = 
+            const node =
                 gNodes
-                // g.append('g')
-                // .attr('stroke-linejoin', 'round')
-                // .attr('stroke-width', 3)
-                .selectAll('g')
-                .data(nodes)
-                .join('g')
-                .attr('transform', (d) => `translate(${d.y},${d.x})`);
+                    // g.append('g')
+                    // .attr('stroke-linejoin', 'round')
+                    // .attr('stroke-width', 3)
+                    .selectAll('g')
+                    .data(nodes)
+                    .join('g')
+                    .attr('transform', (d) => `translate(${d.y},${d.x})`);
 
             // circle
             node.append('circle')
