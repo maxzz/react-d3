@@ -88,8 +88,9 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
 
 function FunPlot() {
     const ref = React.useRef<SVGSVGElement>(null);
+    
     React.useEffect(() => {
-        ref.current && funplot(ref.current, [Math.sin, Math.cos]);
+        ref.current && funplot(ref.current, [Math.sin, Math.cos], {xdomain: [-.6 * Math.PI, .6 * Math.PI]});
     }, []);
     return (
         <div>
