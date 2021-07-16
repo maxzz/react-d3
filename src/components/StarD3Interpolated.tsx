@@ -1,8 +1,8 @@
 import React from 'react';
 import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform, randomLcg, randomNormal } from 'd3';
-import './Slider.scss';
 import { saveTextData } from '../utils/save-data';
 import { reduceIndentByLast } from '../utils/indentation';
+import { SliderProps } from './Slider';
 
 type ShapeParams = {
     nRays: number;
@@ -111,15 +111,6 @@ function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShape
 }
 
 const InterpolatedShape = React.forwardRef(InterpolatedShapeRaw);
-
-type SliderProps = {
-    value: number;
-    onChange: (v: number) => void;
-    label: string;
-    min?: number;
-    max?: number;
-    step?: number;
-};
 
 function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: SliderProps) {
     return (

@@ -1,25 +1,27 @@
 import React from 'react';
 import * as d3 from 'd3';
+import { SliderProps } from '../Slider';
+import '../Slider.scss';
 
 type FunPlotOptions = {
-    xdomain: [number, number];
-    ydomain: number;
-    marginTop: number;
-    marginRight: number;
-    marginBottom: number;
-    marginLeft: number;
-    inset: number;
-    insetTop: number;
-    insetRight: number;
-    insetBottom: number;
-    insetLeft: number;
-    width: number;
-    height: number;
-    xticks: number;
-    yticks: number;
-    scheme: string[];
-    strokeWidth: number;
-    n: number; // number of sample;
+    xdomain?: [number, number] | [undefined, undefined] | [string, string];
+    ydomain?: number;
+    marginTop?: number;
+    marginRight?: number;
+    marginBottom?: number;
+    marginLeft?: number;
+    inset?: number;
+    insetTop?: number;
+    insetRight?: number;
+    insetBottom?: number;
+    insetLeft?: number;
+    width?: number;
+    height?: number;
+    xticks?: number;
+    yticks?: number;
+    scheme?: string[];
+    strokeWidth?: number;
+    n?: number; // number of sample;
 };
 
 function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a function or array of functions */, options?: FunPlotOptions) {
@@ -86,17 +88,31 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
     return svg.node();
 }
 
+function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: SliderProps) {
+    return (
+        <div className="flex items-center text-sm text-gray-800">
+            <div className="w-24">{label}</div>
+            <div className="flex items-center">
+                <input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} min={min} max={max} step={step} />
+            </div>
+            <div className="min-w-[2rem] text-right">{value}</div>
+        </div>
+    );
+}
+
 function FunPlot() {
     const ref = React.useRef<SVGSVGElement>(null);
-    
+
+    const [xdomain, setxDomain] = React.useState(1);
+
     React.useEffect(() => {
-        ref.current && funplot(ref.current, [Math.sin, Math.cos], {xdomain: [-.6 * Math.PI, .6 * Math.PI]});
+        ref.current && funplot(ref.current, [Math.sin, Math.cos], {xdomain: [-xdomain * Math.PI, xdomain * Math.PI]});
     }, []);
     return (
         <div>
-            <svg className="w-64 h-64" ref={ref}>
-
+            <svg className="w-64 h-64 bg-yellow-100" ref={ref}>
             </svg>
+            <Slider value={xdomain} onChange={setxDomain} label="xdomain" min={-1} max={50}/>
         </div>
     );
 }
