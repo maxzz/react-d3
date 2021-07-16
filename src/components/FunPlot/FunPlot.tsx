@@ -1,26 +1,50 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a function or array of functions */, {
-    xdomain = [-10, +10],
-    ydomain,
-    marginTop = 20,
-    marginRight = 30,
-    marginBottom = 30,
-    marginLeft = 40,
-    inset = 6,
-    insetTop = inset,
-    insetRight = inset,
-    insetBottom = inset,
-    insetLeft = inset,
-    width = 640,
-    height = 240,
-    xticks = (width - marginRight - marginLeft - insetLeft - insetRight) / 80,
-    yticks = (height - marginTop - marginBottom - insetTop - insetBottom) / 40,
-    scheme = d3.schemeTableau10,
-    strokeWidth = 1.5,
-    n = width // number of samples
-} = {}) {
+type FunPlotOptions = {
+    xdomain: [number, number];
+    ydomain: number;
+    marginTop: number;
+    marginRight: number;
+    marginBottom: number;
+    marginLeft: number;
+    inset: number;
+    insetTop: number;
+    insetRight: number;
+    insetBottom: number;
+    insetLeft: number;
+    width: number;
+    height: number;
+    xticks: number;
+    yticks: number;
+    scheme: string[];
+    strokeWidth: number;
+    n: number; // number of sample;
+};
+
+function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a function or array of functions */, options?: FunPlotOptions) {
+
+    let {
+        xdomain = [-10, +10],
+        ydomain,
+        marginTop = 20,
+        marginRight = 30,
+        marginBottom = 30,
+        marginLeft = 40,
+        inset = 6,
+        insetTop = inset,
+        insetRight = inset,
+        insetBottom = inset,
+        insetLeft = inset,
+        width = 640,
+        height = 240,
+        xticks = (width - marginRight - marginLeft - insetLeft - insetRight) / 80,
+        yticks = (height - marginTop - marginBottom - insetTop - insetBottom) / 40,
+        scheme = d3.schemeTableau10,
+        strokeWidth = 1.5,
+        n = width // number of samples
+    } = options || {} as FunPlotOptions;
+
     const F = typeof f === "function" ? [f] : Array.from(f);
     const X = d3.range(n).map(d3.scaleLinear([0, n - 1], xdomain));
     const Y = F.map(f => X.map(f));
@@ -65,7 +89,7 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
 function FunPlot() {
     const ref = React.useRef<SVGSVGElement>(null);
     React.useEffect(() => {
-        ref.current && funplot(ref.current, Math.sin);
+        ref.current && funplot(ref.current, [Math.sin, Math.cos]);
     }, []);
     return (
         <div>
