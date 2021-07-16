@@ -1,6 +1,7 @@
 //@ts-nocheck
 import * as d3 from 'd3';
 //<!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+//http://bl.ocks.org/robschmuecker/7880033 'D3.js Drag and Drop, Zoomable, Panning, Collapsible Tree with auto-sizing.'
 
 export function treeJSON(treeData) {
 
@@ -22,14 +23,10 @@ export function treeJSON(treeData) {
     var viewerWidth = $(document).width();
     var viewerHeight = $(document).height();
 
-    var tree = d3.layout.tree()
-        .size([viewerHeight, viewerWidth]);
+    var tree = d3.layout.tree().size([viewerHeight, viewerWidth]);
 
     // define a d3 diagonal projection for use by the node paths later on.
-    var diagonal = d3.svg.diagonal()
-        .projection(function (d) {
-            return [d.y, d.x];
-        });
+    var diagonal = d3.svg.diagonal().projection((d) => [d.y, d.x]);
 
     // A recursive helper function for performing some setup by walking through all nodes
 
@@ -48,24 +45,20 @@ export function treeJSON(treeData) {
     }
 
     // Call visit function to establish maxLabelLength
-    visit(treeData, function (d) {
-        totalNodes++;
-        maxLabelLength = Math.max(d.name.length, maxLabelLength);
-
-    }, function (d) {
-        return d.children && d.children.length > 0 ? d.children : null;
-    });
-
+    visit(treeData,
+        (d) => {
+            totalNodes++;
+            maxLabelLength = Math.max(d.name.length, maxLabelLength);
+        },
+        (d) => d.children && d.children.length > 0 ? d.children : null
+    );
 
     // sort the tree according to the node names
 
     function sortTree() {
-        tree.sort(function (a, b) {
-            return b.name.toLowerCase() < a.name.toLowerCase() ? 1 : -1;
-        });
+        tree.sort((a, b) => b.name.toLowerCase() < a.name.toLowerCase() ? 1 : -1);
     }
-    // Sort the tree initially incase the JSON isn't in a sorted order.
-    sortTree();
+    sortTree(); // Sort the tree initially incase the JSON isn't in a sorted order.
 
     // TODO: Pan function, can be better implemented.
 
@@ -74,18 +67,21 @@ export function treeJSON(treeData) {
         if (panTimer) {
             clearTimeout(panTimer);
             translateCoords = d3.transform(svgGroup.attr("transform"));
+
             if (direction == 'left' || direction == 'right') {
                 translateX = direction == 'left' ? translateCoords.translate[0] + speed : translateCoords.translate[0] - speed;
                 translateY = translateCoords.translate[1];
-            } else if (direction == 'up' || direction == 'down') {
+            }
+            else if (direction == 'up' || direction == 'down') {
                 translateX = translateCoords.translate[0];
                 translateY = direction == 'up' ? translateCoords.translate[1] + speed : translateCoords.translate[1] - speed;
             }
+
             scaleX = translateCoords.scale[0];
             scaleY = translateCoords.scale[1];
             scale = zoomListener.scale();
-            svgGroup.transition().attr("transform", "translate(" + translateX + "," + translateY + ")scale(" + scale + ")");
-            d3.select(domNode).select('g.node').attr("transform", "translate(" + translateX + "," + translateY + ")");
+            svgGroup.transition().attr("transform", `translate(${translateX},${translateY})scale(${scale})`);
+            d3.select(domNode).select('g.node').attr("transform", `translate(${translateX},${translateY})`);
             zoomListener.scale(zoomListener.scale());
             zoomListener.translate([translateX, translateY]);
             panTimer = setTimeout(function () {
@@ -97,7 +93,7 @@ export function treeJSON(treeData) {
     // Define the zoom function for the zoomable tree
 
     function zoom() {
-        svgGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        svgGroup.attr("transform", `translate(${d3.event.translate})scale(${d3.event.scale})`);
     }
 
 
@@ -119,29 +115,29 @@ export function treeJSON(treeData) {
             // remove link paths
             links = tree.links(nodes);
             nodePaths = svgGroup.selectAll("path.link")
-                .data(links, function (d) {
-                    return d.target.id;
-                }).remove();
+                .data(links, (d) => d.target.id).remove();
             // remove child nodes
             nodesExit = svgGroup.selectAll("g.node")
-                .data(nodes, function (d) {
-                    return d.id;
-                }).filter(function (d, i) {
+                .data(nodes, (d) => d.id)
+                .filter(function (d, i) {
                     if (d.id == draggingNode.id) {
                         return false;
                     }
                     return true;
-                }).remove();
+                })
+                .remove();
         }
 
         // remove parent link
         parentLink = tree.links(tree.nodes(draggingNode.parent));
-        svgGroup.selectAll('path.link').filter(function (d, i) {
-            if (d.target.id == draggingNode.id) {
-                return true;
-            }
-            return false;
-        }).remove();
+        svgGroup.selectAll('path.link')
+            .filter(function (d, i) {
+                if (d.target.id == draggingNode.id) {
+                    return true;
+                }
+                return false;
+            })
+            .remove();
 
         dragStarted = null;
     }
@@ -179,28 +175,29 @@ export function treeJSON(treeData) {
             if (relCoords[0] < panBoundary) {
                 panTimer = true;
                 pan(this, 'left');
-            } else if (relCoords[0] > ($('svg').width() - panBoundary)) {
-
+            }
+            else if (relCoords[0] > ($('svg').width() - panBoundary)) {
                 panTimer = true;
                 pan(this, 'right');
-            } else if (relCoords[1] < panBoundary) {
+            }
+            else if (relCoords[1] < panBoundary) {
                 panTimer = true;
                 pan(this, 'up');
-            } else if (relCoords[1] > ($('svg').height() - panBoundary)) {
+            }
+            else if (relCoords[1] > ($('svg').height() - panBoundary)) {
                 panTimer = true;
                 pan(this, 'down');
             } else {
                 try {
                     clearTimeout(panTimer);
                 } catch (e) {
-
                 }
             }
 
             d.x0 += d3.event.dy;
             d.y0 += d3.event.dx;
             var node = d3.select(this);
-            node.attr("transform", "translate(" + d.y0 + "," + d.x0 + ")");
+            node.attr("transform", `translate(${d.y0},${d.x0})`);
             updateTempConnector();
         }).on("dragend", function (d) {
             if (d == root) {
@@ -311,7 +308,7 @@ export function treeJSON(treeData) {
         y = y * scale + viewerHeight / 2;
         d3.select('g').transition()
             .duration(duration)
-            .attr("transform", "translate(" + x + "," + y + ")scale(" + scale + ")");
+            .attr("transform", `translate(${x},${y})scale(${scale})`);
         zoomListener.scale(scale);
         zoomListener.translate([x, y]);
     }
@@ -372,38 +369,26 @@ export function treeJSON(treeData) {
 
         // Update the nodes…
         node = svgGroup.selectAll("g.node")
-            .data(nodes, function (d) {
-                return d.id || (d.id = ++i);
-            });
+            .data(nodes, (d) => d.id || (d.id = ++i));
 
         // Enter any new nodes at the parent's previous position.
         var nodeEnter = node.enter().append("g")
             .call(dragListener)
             .attr("class", "node")
-            .attr("transform", function (d) {
-                return "translate(" + source.y0 + "," + source.x0 + ")";
-            })
+            .attr("transform", (d) => `translate(${source.y0},${source.x0})`)
             .on('click', click);
 
         nodeEnter.append("circle")
             .attr('class', 'nodeCircle')
             .attr("r", 0)
-            .style("fill", function (d) {
-                return d._children ? "lightsteelblue" : "#fff";
-            });
+            .style("fill", (d) => d._children ? "lightsteelblue" : "#fff");
 
         nodeEnter.append("text")
-            .attr("x", function (d) {
-                return d.children || d._children ? -10 : 10;
-            })
+            .attr("x", (d) => d.children || d._children ? -10 : 10)
             .attr("dy", ".35em")
             .attr('class', 'nodeText')
-            .attr("text-anchor", function (d) {
-                return d.children || d._children ? "end" : "start";
-            })
-            .text(function (d) {
-                return d.name;
-            })
+            .attr("text-anchor", (d) => d.children || d._children ? "end" : "start")
+            .text(d => d.name)
             .style("fill-opacity", 0);
 
         // phantom node to give us mouseover in a radius around it
@@ -422,29 +407,19 @@ export function treeJSON(treeData) {
 
         // Update the text to reflect whether node has children or not.
         node.select('text')
-            .attr("x", function (d) {
-                return d.children || d._children ? -10 : 10;
-            })
-            .attr("text-anchor", function (d) {
-                return d.children || d._children ? "end" : "start";
-            })
-            .text(function (d) {
-                return d.name;
-            });
+            .attr("x", (d) => d.children || d._children ? -10 : 10)
+            .attr("text-anchor", (d) => d.children || d._children ? "end" : "start")
+            .text(d => d.name);
 
         // Change the circle fill depending on whether it has children and is collapsed
         node.select("circle.nodeCircle")
             .attr("r", 4.5)
-            .style("fill", function (d) {
-                return d._children ? "lightsteelblue" : "#fff";
-            });
+            .style("fill", (d) => d._children ? "lightsteelblue" : "#fff");
 
         // Transition nodes to their new position.
         var nodeUpdate = node.transition()
             .duration(duration)
-            .attr("transform", function (d) {
-                return "translate(" + d.y + "," + d.x + ")";
-            });
+            .attr("transform", (d) => "translate(" + d.y + "," + d.x + ")");
 
         // Fade the text in
         nodeUpdate.select("text")
@@ -453,9 +428,7 @@ export function treeJSON(treeData) {
         // Transition exiting nodes to the parent's new position.
         var nodeExit = node.exit().transition()
             .duration(duration)
-            .attr("transform", function (d) {
-                return "translate(" + source.y + "," + source.x + ")";
-            })
+            .attr("transform", (d) => `translate(${source.y},${source.x})`)
             .remove();
 
         nodeExit.select("circle")
@@ -466,9 +439,7 @@ export function treeJSON(treeData) {
 
         // Update the links…
         var link = svgGroup.selectAll("path.link")
-            .data(links, function (d) {
-                return d.target.id;
-            });
+            .data(links, (d) => d.target.id);
 
         // Enter any new links at the parent's previous position.
         link.enter().insert("path", "g")
