@@ -86,9 +86,13 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
         .attr("stroke-miterlimit", 1)
         .selectAll("path")
         .data(Y)
+
         .join("path")
         .attr("stroke", (Y, i) => scheme[i % scheme.length])
-        .attr("d", Y => d3.line().x(x).y((d, i) => y(Y[i]))(X));
+        .attr("d", Y => d3.line().x(x).y((d, i) => y(Y[i]))(X))
+        .attr("stroke-width", 20)
+
+        .clone(true).lower().attr('stroke-width', 24).attr('stroke', 'white');
 
     return svg.node();
 }
@@ -111,13 +115,13 @@ function FunPlot() {
     const [xdomain, setxDomain] = React.useState(1);
 
     React.useEffect(() => {
-        ref.current && funplot(ref.current, [Math.sin, Math.cos], { xdomain: [-xdomain * Math.PI, xdomain * Math.PI] });
+        ref.current && funplot(ref.current, [Math.sin, Math.cos, (i: number) => .4 * Math.cos(i * 4)], { xdomain: [-xdomain * Math.PI, xdomain * Math.PI] });
     }, [xdomain]);
     return (
         <div>
-            <svg className="w-64 h-64 bg-yellow-100" ref={ref}>
+            <svg className="w-64 h-32 border-4 border-blue-200 bg-blue-400" ref={ref}>
             </svg>
-            <Slider value={xdomain} onChange={setxDomain} label="xdomain" min={-1} max={50} />
+            <Slider value={xdomain} onChange={setxDomain} label="xdomain" min={0.1} max={15} step={0.1} />
         </div>
     );
 }
