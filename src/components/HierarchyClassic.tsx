@@ -57,7 +57,7 @@ const chaosData: DatumRaw[] = [
 ];
 
 type Datum = DatumRaw & {
-    idNumber: number;
+    idx: number;
     _children: TItem[] | undefined;
 };
 
@@ -69,11 +69,11 @@ type D3Selection<T extends d3.BaseType> = d3.Selection<T, unknown, null, undefin
 //type D3Selection<T extends d3.BaseType> = d3.Selection<T, TItem, null, undefined>;
 
 function getLeftRight<T>(root: d3.HierarchyPointNode<T>): readonly [number, number] {
-    let x0 = Infinity; // left
-    let x1 = -x0; // right
-    root.each((d) => {
-        if (d.x > x1) x1 = d.x;
-        if (d.x < x0) x0 = d.x;
+    let x0 = Infinity;
+    let x1 = -x0;
+    root.eachBefore((d) => {
+        if (d.x < x0) x0 = d.x; // left
+        if (d.x > x1) x1 = d.x; // right
     });
     return [x0, x1] as const;
 }
@@ -120,8 +120,8 @@ function HierarchyClassicRaw() {
             gNodes = mainG.selectChild(':nth-child(2)');
         }
 
-        function graph(rootData: TItem, { label = (d: TItem) => d.data.id, highlight = (d: TItem) => false, marginLeft = 40, } = {}) {
-            const root: TItem = tree(rootData) as TItem;
+        function graph(rootItem: TItem, { label = (d: TItem) => d.data.id, highlight = (d: TItem) => false, marginLeft = 40, } = {}) {
+            const root: TItem = tree(rootItem) as TItem;
             const nodes = root.descendants();
             const links = root.links();
 
@@ -132,11 +132,12 @@ function HierarchyClassicRaw() {
             const margin = { top: 0, right: 0, bottom: 0, left: 0 };
             const height = x1 - x0 + margin.top + margin.bottom;
 
-            const duration = 2500; //d3.event && d3.event.altKey ? 2500 : 250;
+            const duration = 1500; //d3.event && d3.event.altKey ? 2500 : 250;
             const transition = svg.transition()
                 .duration(duration)
-                //.attr("viewBox", [-margin.left, x0 - margin.top, width, height] as any)
-                .attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any)
+                .attr("viewBox", [0, 0, width, height] as any)
+                // .attr("viewBox", [-margin.left, x0 - margin.top, width, height] as any)
+                //.attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any)
                 .tween("resize", (window.ResizeObserver ? null : () => () => svg.dispatch("toggle")) as any) as any;
 
             // lines
@@ -197,7 +198,7 @@ function HierarchyClassicRaw() {
         (chaos as any).x0 = nodeDY / 2;
         (chaos as any).y0 = 0;
         chaos.descendants().forEach((d, i) => {
-            d.data.idNumber = i;
+            d.data.idx = i;
             d.data._children = d.children;
         });
 
