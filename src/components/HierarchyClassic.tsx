@@ -158,7 +158,7 @@ function HierarchyClassicRaw() {
                 .attr("stroke-opacity", 0)
                 .on("click", (event, d) => {
                     d.children = d.children ? undefined : d.data._children;
-                    //graph(d);
+                    graph(d);
                 });
 
             // circle
