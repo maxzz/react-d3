@@ -1,7 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-function funplot(f: Function | Function[] /* either a function or array of functions */, {
+function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a function or array of functions */, {
     xdomain = [-10, +10],
     ydomain,
     marginTop = 20,
@@ -28,7 +28,8 @@ function funplot(f: Function | Function[] /* either a function or array of funct
     const x = d3.scaleLinear(xdomain, [marginLeft + insetLeft, width - marginRight - insetRight]);
     const y = d3.scaleLinear(ydomain, [height - marginBottom - insetBottom, marginTop + insetTop]).nice();
 
-    const svg = d3.create("svg")
+    //const svg = d3.create("svg")
+    const svg = d3.select(svgOrg)
         .attr("viewBox", [0, 0, width, height] as any)
         .style("max-width", `${width}px`);
 
@@ -62,9 +63,15 @@ function funplot(f: Function | Function[] /* either a function or array of funct
 }
 
 function FunPlot() {
+    const ref = React.useRef<SVGSVGElement>(null);
+    React.useEffect(() => {
+        ref.current && funplot(ref.current, Math.sin);
+    }, []);
     return (
         <div>
+            <svg className="w-64 h-64" ref={ref}>
 
+            </svg>
         </div>
     );
 }

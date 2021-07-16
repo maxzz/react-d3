@@ -13,4 +13,7 @@ Coexistence of React with D3.js
 
 * d3-hierarchy
     * [collapsible-tree](https://observablehq.com/@d3/collapsible-tree)
-    
+
+* funplot    
+    [funplot](https://observablehq.com/@mbostock/funplot)
+    [sine-cosine](https://observablehq.com/@mbostock/sine-cosine)

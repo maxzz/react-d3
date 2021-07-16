@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import Footer from './components/Footer';
+import FunPlot from './components/FunPlot/FunPlot';
 import HierarchyClassic from './components/HierarchyClassic';
 import StarD3Interpolated from './components/StarD3Interpolated';
 
@@ -13,6 +14,7 @@ function App() {
                     <div className="mt-4 space-y-4 max-w-5xl flex flex-col items-center">
                         {/* <StarD3Interpolated /> */}
                         {/* <HierarchyClassic /> */}
+                        <FunPlot />
                     </div>
                     {/* Footer */}
                     <div className="self-end">
