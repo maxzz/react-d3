@@ -59,6 +59,8 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
         .attr("viewBox", [0, 0, width, height] as any)
         .style("max-width", `${width}px`);
 
+    svg.selectChildren().remove();
+
     // x lines
     svg.append("g")
         .attr("transform", `translate(0,${height - marginBottom})`)
