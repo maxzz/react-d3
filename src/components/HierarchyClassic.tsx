@@ -114,7 +114,7 @@ function HierarchyClassicRaw() {
             gNodes = mainG.selectChild(':nth-child(2)');
         }
 
-        function graph(rootData: d3.HierarchyNode<TreeItemData>, { label = (d: TItem) => d.data.id, highlight = (d: TItem) => false, marginLeft = 40, } = {}) {
+        function graph(rootData: MyNode, { label = (d: TItem) => d.data.id, highlight = (d: TItem) => false, marginLeft = 40, } = {}) {
             const root: TItem = tree(rootData);
             const nodes = root.descendants();
             const links = root.links();
@@ -147,7 +147,13 @@ function HierarchyClassicRaw() {
             const node = gNodes.selectAll<SVGGElement, TItem>('g').data(nodes);
 
             const nodeEnter = node.enter().append('g')
-                .attr('transform', (d) => `translate(${d.y},${d.x})`);
+                .attr('transform', (d) => `translate(${d.y},${d.x})`)
+                .attr("fill-opacity", 0)
+                .attr("stroke-opacity", 0)
+                .on("click", (event, d) => {
+                    d.children = d.children ? null : d._children;
+                    //graph(d);
+                });
 
             // circle
             nodeEnter.append('circle')
@@ -171,10 +177,30 @@ function HierarchyClassicRaw() {
                 .attr("fill-opacity", 1)
                 .attr("stroke-opacity", 1);
 
+            // Transition exiting nodes to the parent's new position.
+            const nodeExit = node.exit().transition(transition).remove()
+                .attr("transform", d => `translate(${root.y},${root.x})`)
+                .attr("fill-opacity", 0)
+                .attr("stroke-opacity", 0);
+
             return svg.node();
         }
 
-        const chaos: d3.HierarchyNode<TreeItemData> = d3.stratify<TreeItemData>()(chaosData);
+        type MyNode = d3.HierarchyNode<TreeItemData> & {
+            idNumber: number;
+            _children: MyNode[] | undefined;
+        };
+
+        const chaos: MyNode = d3.stratify<TreeItemData>()(chaosData) as MyNode || {};
+
+        (chaos as any).x0 = nodeDY / 2;
+        (chaos as any).y0 = 0;
+        chaos.descendants().forEach((d, i) => {
+          d.idNumber = i;
+          d._children = d.children;
+        });
+      
+
         graph(chaos);
     }, []);
 
