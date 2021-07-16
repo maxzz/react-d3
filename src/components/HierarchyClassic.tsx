@@ -3,12 +3,12 @@ import * as d3 from 'd3';
 
 // Data
 
-type TreeItemData = {
+type Datum = {
     id: string;
     parentId?: string;
 };
 
-const chaosData: TreeItemData[] = [
+const chaosData: Datum[] = [
     { id: 'Chaos' },
     { id: 'Gaia', parentId: 'Chaos' },
     { id: 'Eros', parentId: 'Chaos' },
@@ -56,9 +56,19 @@ const chaosData: TreeItemData[] = [
     { id: 'Uranus 8', parentId: 'Uranus' },
 ];
 
+type NodeDataEx = {
+    idNumber: number;
+    _children: TItem[] | undefined;
+};
+
+//type TItem = d3.HierarchyPointNode<Datum> & NodeDataEx;
+//type MyNode = d3.HierarchyNode<Datum> & NodeDataEx;
+type TItem = d3.HierarchyPointNode<Datum> & NodeDataEx;
+
 // D3 extentions
 
-type D3Selection<T extends d3.BaseType> = d3.Selection<T, unknown, null, undefined>;
+//type D3Selection<T extends d3.BaseType> = d3.Selection<T, unknown, null, undefined>;
+type D3Selection<T extends d3.BaseType> = d3.Selection<T, TItem, null, undefined>;
 
 function getLeftRight<T>(root: d3.HierarchyPointNode<T>): readonly [number, number] {
     let x0 = Infinity; // left
@@ -75,12 +85,10 @@ function HierarchyClassicRaw() {
 
     React.useEffect(() => {
 
-        type TItem = d3.HierarchyPointNode<TreeItemData>;
-
         const width = 300;
         const nodeDX = 12;
         const nodeDY = 70;
-        const tree = d3.tree<TreeItemData>().nodeSize([nodeDX, nodeDY]);
+        const tree = d3.tree<Datum>().nodeSize([nodeDX, nodeDY]);
         const treeLink = d3.linkHorizontal<d3.HierarchyPointLink<TItem>, d3.HierarchyPointNode<TItem>>().x((d: any) => d.y).y((d: any) => d.x);
 
         const svg = d3.select(ref.current)
@@ -114,8 +122,8 @@ function HierarchyClassicRaw() {
             gNodes = mainG.selectChild(':nth-child(2)');
         }
 
-        function graph(rootData: MyNode, { label = (d: TItem) => d.data.id, highlight = (d: TItem) => false, marginLeft = 40, } = {}) {
-            const root: TItem = tree(rootData);
+        function graph(rootData: TItem, { label = (d: TItem) => d.data.id, highlight = (d: TItem) => false, marginLeft = 40, } = {}) {
+            const root: TItem = tree(rootData) as TItem;
             const nodes = root.descendants();
             const links = root.links();
 
@@ -134,7 +142,7 @@ function HierarchyClassicRaw() {
                 .tween("resize", (window.ResizeObserver ? null : () => () => svg.dispatch("toggle")) as any) as any;
 
             // lines
-            const link = gLinks.selectAll('path').data(links);
+            const link = gLinks.selectAll('path').data(links) as any as d3.Selection<d3.BaseType, TItem, SVGGElement, unknown>;
 
             const linkEnter = link.enter().append('path');
 
@@ -186,20 +194,14 @@ function HierarchyClassicRaw() {
             return svg.node();
         }
 
-        type MyNode = d3.HierarchyNode<TreeItemData> & {
-            idNumber: number;
-            _children: MyNode[] | undefined;
-        };
-
-        const chaos: MyNode = d3.stratify<TreeItemData>()(chaosData) as MyNode || {};
+        const chaos: TItem = d3.stratify<Datum>()(chaosData) as TItem || {};
 
         (chaos as any).x0 = nodeDY / 2;
         (chaos as any).y0 = 0;
         chaos.descendants().forEach((d, i) => {
-          d.idNumber = i;
-          d._children = d.children;
+            d.idNumber = i;
+            d._children = d.children;
         });
-      
 
         graph(chaos);
     }, []);
