@@ -1,4 +1,4 @@
-import './Slider.scss';
+//import './Slider.scss'; //does not work this way. later.
 
 export type SliderProps = {
     value: number;

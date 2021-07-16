@@ -59,6 +59,7 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
         .attr("viewBox", [0, 0, width, height] as any)
         .style("max-width", `${width}px`);
 
+    // x lines
     svg.append("g")
         .attr("transform", `translate(0,${height - marginBottom})`)
         .call(d3.axisBottom(x.copy().interpolate(d3.interpolateRound)).ticks(xticks))
@@ -67,6 +68,7 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
             .attr("stroke-opacity", d => d ? 0.1 : 0.4)
             .attr("y1", -height));
 
+    //y lines
     svg.append("g")
         .attr("transform", `translate(${marginLeft},0)`)
         .call(d3.axisLeft(y.copy().interpolate(d3.interpolateRound)).ticks(yticks))
@@ -75,6 +77,7 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
             .attr("stroke-opacity", d => d ? 0.1 : 0.4)
             .attr("x1", width));
 
+    // curves
     svg.append("g")
         .attr("fill", "none")
         .attr("stroke-width", strokeWidth)
@@ -106,13 +109,13 @@ function FunPlot() {
     const [xdomain, setxDomain] = React.useState(1);
 
     React.useEffect(() => {
-        ref.current && funplot(ref.current, [Math.sin, Math.cos], {xdomain: [-xdomain * Math.PI, xdomain * Math.PI]});
-    }, []);
+        ref.current && funplot(ref.current, [Math.sin, Math.cos], { xdomain: [-xdomain * Math.PI, xdomain * Math.PI] });
+    }, [xdomain]);
     return (
         <div>
             <svg className="w-64 h-64 bg-yellow-100" ref={ref}>
             </svg>
-            <Slider value={xdomain} onChange={setxDomain} label="xdomain" min={-1} max={50}/>
+            <Slider value={xdomain} onChange={setxDomain} label="xdomain" min={-1} max={50} />
         </div>
     );
 }
