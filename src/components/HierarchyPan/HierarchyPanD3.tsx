@@ -1,4 +1,7 @@
-treeJSON = d3.json("flare.json", function (error, treeData) {
+//@ts-nocheck
+import * as d3 from 'd3';
+
+export function treeJSON(treeData) {
 
     // Calculate total nodes, max label length
     var totalNodes = 0;
@@ -518,4 +521,4 @@ treeJSON = d3.json("flare.json", function (error, treeData) {
     // Layout the tree initially and center on the root node.
     update(root);
     centerNode(root);
-});
+}
