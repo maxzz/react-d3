@@ -29,19 +29,23 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
     let {
         xdomain = [-10, +10],
         ydomain, // = [-1, +1]
+
         marginTop = 20,
         marginRight = 30,
         marginBottom = 30,
         marginLeft = 40,
+
         inset = 6,
         insetTop = inset,
         insetRight = inset,
         insetBottom = inset,
         insetLeft = inset,
+
         width = 640,
         height = 240,
         xticks = (width - marginRight - marginLeft - insetLeft - insetRight) / 80,
         yticks = (height - marginTop - marginBottom - insetTop - insetBottom) / 40,
+
         scheme = d3.schemeTableau10,
         strokeWidth = 1.5,
         n = width // number of samples
@@ -54,16 +58,15 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
     // }));
     const Y = F.map(f => X.map(f));
     if (ydomain === undefined) {
-        ydomain = d3.extent<number>(Y.flat());
+        let [a = -1, b = 1] = d3.extent<number>(Y.flat());
+        ydomain = [a, b];
     }
     const x = d3.scaleLinear(xdomain, [marginLeft + insetLeft, width - marginRight - insetRight]);
     const y = d3.scaleLinear(ydomain, [height - marginBottom - insetBottom, marginTop + insetTop]).nice();
 
-    //const svg = d3.create("svg")
-    const svg = d3.select(svgOrg)
+    const svg = d3.select(svgOrg) //const svg = d3.create("svg")
         .attr("viewBox", [0, 0, width, height] as any)
         .style("max-width", `${width}px`);
-
     svg.selectChildren().remove();
 
     // x lines
@@ -96,7 +99,13 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
 
         .join("path")
         .attr("stroke", (Y, i) => scheme[i % scheme.length])
-        .attr("d", Y => d3.line().x(x).y((d, i) => y(Y[i]))(X))
+        .attr("d", Y => d3.line<number>()
+            // .x(x)
+            .x((i) => {
+                return x(i);
+            })
+            .y((d, i) => y(Y[i]))(X)
+        )
         .attr("stroke-width", 20)
 
         .clone(true).lower().attr('stroke-width', 24).attr('stroke', 'white');
@@ -122,7 +131,15 @@ function FunPlot() {
     const [xdomain, setxDomain] = React.useState(1);
 
     React.useEffect(() => {
-        ref.current && funplot(ref.current, [Math.sin, Math.cos, (i: number) => .4 * Math.cos(i * 4)], { xdomain: [-xdomain * Math.PI, xdomain * Math.PI] });
+        ref.current && funplot(ref.current,
+            [
+                (i: number) => .1 * i - .5,
+                Math.sin,
+                Math.cos,
+                (i: number) => .4 * Math.cos(i * 4),
+            ],
+            { xdomain: [-xdomain * Math.PI, xdomain * Math.PI] }
+        );
     }, [xdomain]);
     return (
         <div>
