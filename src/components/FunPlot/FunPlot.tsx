@@ -99,13 +99,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
 
         .join("path")
         .attr("stroke", (Y, i) => scheme[i % scheme.length])
-        .attr("d", Y => d3.line<number>()
-            // .x(x)
-            .x((i) => {
-                return x(i);
-            })
-            .y((d, i) => y(Y[i]))(X)
-        )
+        .attr("d", Y => d3.line<number>().x(x).y((d, i) => y(Y[i]))(X))
         .attr("stroke-width", 20)
 
         .clone(true).lower().attr('stroke-width', 24).attr('stroke', 'white');
