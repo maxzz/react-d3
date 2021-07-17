@@ -126,7 +126,9 @@ function HierarchyClassicRaw() {
             const links = root.links();
 
             let [x0, x1] = getLeftRight(root);
-            svg.attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any);
+            svg
+                .style('outline', '1px solid red')
+                .attr('viewBox', [0, 0, width, x1 - x0 + nodeDX * 2] as any);
             mainG.attr('transform', `translate(${marginLeft},${nodeDX - x0})`);
 
             const margin = { top: 0, right: 0, bottom: 0, left: 0 };
@@ -146,6 +148,7 @@ function HierarchyClassicRaw() {
             const linkEnter = link.enter().append('path');
 
             linkEnter
+                .style('outline', '1px solid green')
                 .attr('stroke', (d) => highlight(d.source) && highlight(d.target) ? 'red' : null)
                 .attr('stroke-opacity', (d) => highlight(d.source) && highlight(d.target) ? 1 : null)
                 .attr('d', treeLink as any);
@@ -172,7 +175,6 @@ function HierarchyClassicRaw() {
 
             // text
             nodeEnter.append('text')
-                .style('background-color', 'red')
                 .attr('fill', (d: TItem) => highlight(d) ? 'red' : 'var(--text-color)')
                 .attr('dy', '0.32em')
                 .attr('x', (d: TItem) => d.children ? -6 : 6)
