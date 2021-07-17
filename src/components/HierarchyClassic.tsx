@@ -157,6 +157,7 @@ function HierarchyClassicRaw() {
                 .attr('transform', (d) => `translate(${d.y},${d.x})`)
                 .attr("fill-opacity", 0)
                 .attr("stroke-opacity", 0)
+                .style('outline', '1px solid red')
                 .on("click", (event, d) => {
                     d.children = d.children ? undefined : d.data._children;
                     graph(d);
