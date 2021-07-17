@@ -1,4 +1,4 @@
-export const saveBlobData = (function () {
+export const downloadBlobAsFile = (function () {
     const a = document.createElement("a");
     document.body.appendChild(a);
     a.style.display = 'none';
@@ -12,7 +12,7 @@ export const saveBlobData = (function () {
     };
 }());
 
-export const saveTextData = function (text: string, filename: string) {
+export const downloadTextAsFile = function (text: string, filename: string) {
     let blob = new Blob([text], {type: 'text/plain'});
-    saveBlobData(blob, filename);
+    downloadBlobAsFile(blob, filename);
 };

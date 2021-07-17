@@ -1,6 +1,6 @@
 import React from 'react';
 import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform, randomLcg, randomNormal, curveStep, curveStepAfter } from 'd3';
-import { saveTextData } from '../utils/save-data';
+import { downloadTextAsFile } from '../utils/download-data';
 import { reduceIndentByLast } from '../utils/indentation';
 import { SliderProps } from './Slider';
 
@@ -19,12 +19,12 @@ type RandomizeParams = {
 
 const VIEWBOX_SIZE = 200;
 
-function viewboxString(size: number): string {
+function viewboxCentered(size: number): string {
     return `${-size / 2} ${-size / 2} ${size} ${size}`;
 }
 
 function generateSVG({ path, outerPoints, size }: { path: string; outerPoints: [number, number][]; size: number; }): string {
-    const viewbox = viewboxString(size);
+    const viewbox = viewboxCentered(size);
     const circles = () => outerPoints.map(([x, y]) => `            <circle r="5" cx="${x}" cy="${y}" />`).join('\n');
     let s =
         `<svg viewBox="${viewbox}" width="256px" height="256px" stroke="#8c00ff" strokeWidth="2" fill="#9494e4" xmlns="http://www.w3.org/2000/svg">
@@ -54,13 +54,12 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams): readonly 
         if (inner && outer) {
             points.push([i * step, randomUniform(oRadius, iRadius)()]);
             //points.push([i * step, random(oRadius, iRadius)()]);
-        } else
-            if (outer) {
-                //points.push([i * step, i % 2 === 0 ? random(iRadius, oRadius)() : iRadius]);
-                points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
-            } else {
-                points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
-            }
+        } else if (outer) {
+            //points.push([i * step, i % 2 === 0 ? random(iRadius, oRadius)() : iRadius]);
+            points.push([i * step, i % 2 === 0 ? randomUniform(iRadius, oRadius)() : iRadius]);
+        } else {
+            points.push([i * step, i % 2 === 0 ? oRadius : iRadius]);
+        }
     }
 
     const outerPts: [number, number][] = points.filter((_, idx) => idx % 2 === 0).map(([a, r]) => {
@@ -95,12 +94,12 @@ function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShape
 
     React.useImperativeHandle(ref, () => ({
         save: () => {
-            saveTextData(generateSVG({ path: path[0], outerPoints: showOuter ? path[1] : [], size: VIEWBOX_SIZE }), 'red3.svg');
+            downloadTextAsFile(generateSVG({ path: path[0], outerPoints: showOuter ? path[1] : [], size: VIEWBOX_SIZE }), 'red3.svg');
         }
     }));
 
     return (
-        <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${viewboxString(VIEWBOX_SIZE)}`}>
+        <svg className="" stroke="white" strokeWidth="2" fill="currentColor" viewBox={`${viewboxCentered(VIEWBOX_SIZE)}`}>
             <path className="" d={path[0]} />
 
             {showOuter &&
