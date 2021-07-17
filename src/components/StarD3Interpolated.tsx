@@ -1,7 +1,7 @@
 import React from 'react';
 import { downloadTextAsFile } from '../utils/download-data';
-import { SliderProps } from './Slider';
 import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentered } from '../utils/ngonGenerator';
+import { CheckboxProps, SliderProps } from './ui/ui-props';
 
 const VIEWBOX_SIZE = 200;
 
@@ -56,21 +56,12 @@ function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: Slider
     );
 }
 
-type CheckboxProps = {
-    className?: string;
-    label: string;
-    enabled?: boolean;
-    value: boolean;
-    onChange: (v: boolean) => void;
-};
-
 function Checkbox({ className, label, enabled = true, value, onChange }: CheckboxProps) {
     return (
         <label className={`flex items-center text-sm ${enabled ? '' : 'opacity-50'} ${className}`}>
             <input className="mr-1" type="checkbox" checked={value} onChange={(e) => onChange(e.target.checked)} />
             {label}
         </label>
-
     );
 }
 
