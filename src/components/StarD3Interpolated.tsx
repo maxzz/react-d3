@@ -1,5 +1,5 @@
 import React from 'react';
-import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform, randomLcg, randomNormal } from 'd3';
+import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform, randomLcg, randomNormal, curveStep, curveStepAfter } from 'd3';
 import { saveTextData } from '../utils/save-data';
 import { reduceIndentByLast } from '../utils/indentation';
 import { SliderProps } from './Slider';
@@ -69,8 +69,10 @@ function generatePath(shape: ShapeParams, randomize: RandomizeParams): readonly 
 
     let gen = lineRadial();
     gen = smooth ? gen.curve(curveCatmullRomClosed) : gen.curve(curveLinearClosed);
-
     return [gen(points) || '', outerPts] as const;
+
+    // gen = smooth ? gen.curve(curveStepAfter) : gen.curve(curveLinearClosed);
+    // return [`${gen(points)}${smooth ? 'z': ''}` || '', outerPts] as const;
 }
 
 type InterpolatedShapeProps = {
