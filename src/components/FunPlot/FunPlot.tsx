@@ -28,7 +28,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
 
     let {
         xdomain = [-10, +10],
-        ydomain, // = [-1, +1]
+        ydomain, // = [-2, +2],
 
         marginTop = 20,
         marginRight = 30,
@@ -66,6 +66,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
 
     const svg = d3.select(svgOrg) //const svg = d3.create("svg")
         .attr("viewBox", [0, 0, width, height] as any)
+        //.attr('transform', 'scale(1.2)')
         .style("max-width", `${width}px`);
     svg.selectChildren().remove();
 
@@ -102,7 +103,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
         .attr("d", Y => d3.line<number>().x(x).y((d, i) => y(Y[i]))(X))
         .attr("stroke-width", 20)
 
-        .clone(true).lower().attr('stroke-width', 24).attr('stroke', 'white');
+        .clone(true).lower().attr('stroke-width', 26).attr('stroke', 'white');
 
     return svg.node();
 }
@@ -122,12 +123,13 @@ function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: Slider
 function FunPlot() {
     const ref = React.useRef<SVGSVGElement>(null);
 
-    const [xdomain, setxDomain] = React.useState(1);
+    const [xdomain, setxDomain] = React.useState(2);
 
     React.useEffect(() => {
         ref.current && funplot(ref.current,
             [
                 //(i: number) => .1 * i - .5,
+                //Math.tan,
                 (i: number) => Math.cos(i * 4) * (Math.PI / 10) * i,
                 Math.sin,
                 //Math.cos,
