@@ -127,10 +127,12 @@ function FunPlot() {
     React.useEffect(() => {
         ref.current && funplot(ref.current,
             [
-                (i: number) => .1 * i - .5,
+                //(i: number) => .1 * i - .5,
+                (i: number) => Math.cos(i * 4) * (Math.PI / 10) * i,
                 Math.sin,
-                Math.cos,
-                (i: number) => .4 * Math.cos(i * 4),
+                //Math.cos,
+                //Math.atan,
+                // (i: number) => .4 * Math.cos(i * 4),
             ],
             { xdomain: [-xdomain * Math.PI, xdomain * Math.PI] }
         );
