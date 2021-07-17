@@ -25,7 +25,6 @@ type FunPlotOptions = {
 };
 
 function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: number) => number> /* either a function or array of functions */, options?: FunPlotOptions) {
-
     let {
         xdomain = [-10, +10],
         ydomain, // = [-2, +2],

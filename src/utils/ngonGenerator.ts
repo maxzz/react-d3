@@ -1,4 +1,4 @@
-import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform, randomLcg, randomNormal, curveStep, curveStepAfter } from 'd3';
+import { curveCatmullRomClosed, curveLinearClosed, lineRadial, randomUniform } from 'd3';
 import { reduceIndentByLast } from './indentation';
 
 export type ShapeParams = {
