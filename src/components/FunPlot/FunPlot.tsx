@@ -4,8 +4,8 @@ import { SliderProps } from '../Slider';
 import '../Slider.scss';
 
 type FunPlotOptions = {
-    xdomain?: [number, number] | [undefined, undefined] | [string, string];
-    ydomain?: number;
+    xdomain?: [number, number];
+    ydomain?: [number, number];
     marginTop?: number;
     marginRight?: number;
     marginBottom?: number;
@@ -24,11 +24,11 @@ type FunPlotOptions = {
     n?: number; // number of sample;
 };
 
-function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a function or array of functions */, options?: FunPlotOptions) {
+function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: number) => number> /* either a function or array of functions */, options?: FunPlotOptions) {
 
     let {
         xdomain = [-10, +10],
-        ydomain,
+        ydomain, // = [-1, +1]
         marginTop = 20,
         marginRight = 30,
         marginBottom = 30,
@@ -49,8 +49,13 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
 
     const F = typeof f === "function" ? [f] : Array.from(f);
     const X = d3.range(n).map(d3.scaleLinear([0, n - 1], xdomain));
+    // const Y = F.map(f => X.map(x => {
+    //     return f(x);
+    // }));
     const Y = F.map(f => X.map(f));
-    if (ydomain === undefined) ydomain = d3.extent(Y.flat());
+    if (ydomain === undefined) {
+        ydomain = d3.extent<number>(Y.flat());
+    }
     const x = d3.scaleLinear(xdomain, [marginLeft + insetLeft, width - marginRight - insetRight]);
     const y = d3.scaleLinear(ydomain, [height - marginBottom - insetBottom, marginTop + insetTop]).nice();
 
@@ -66,7 +71,8 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
         .attr("transform", `translate(0,${height - marginBottom})`)
         .call(d3.axisBottom(x.copy().interpolate(d3.interpolateRound)).ticks(xticks))
         .call(g => g.select(".domain").remove())
-        .call(g => g.selectAll(".tick line").clone()
+        .call(g => g.selectAll(".tick line")
+            .clone()
             .attr("stroke-opacity", d => d ? 0.1 : 0.4)
             .attr("y1", -height));
 
@@ -75,7 +81,8 @@ function funplot(svgOrg: SVGSVGElement, f: Function | Function[] /* either a fun
         .attr("transform", `translate(${marginLeft},0)`)
         .call(d3.axisLeft(y.copy().interpolate(d3.interpolateRound)).ticks(yticks))
         .call(g => g.select(".domain").remove())
-        .call(g => g.selectAll(".tick line").clone()
+        .call(g => g.selectAll(".tick line")
+            .clone()
             .attr("stroke-opacity", d => d ? 0.1 : 0.4)
             .attr("x1", width));
 
