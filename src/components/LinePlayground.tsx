@@ -37,14 +37,14 @@ function initial() {
     const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
     function colorScale(d: number | string) { return d === 0 ? '#777' : categoryScale(d as string); }
 
-    type DatumPoint = [number, number];
+    type DatumPoint = [number, number, number];
 
-    const points: DatumPoint[] = [[50, 330], [75, 200], [280, 75], [300, 75], [475, 300], [600, 200]];
+    const points: DatumPoint[] = [[50, 330, 0], [75, 200, 1], [280, 75, 2], [300, 75, 3], [475, 300, 4], [600, 200, 5]];
     let numActivePoints = points.length;
 
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
         .on('drag', function (event: any, d: DatumPoint) {
-            console.log('bb', { d, event, that: this });
+            console.log('bb', d[2], { d, event, that: this });
 
             d[0] = event.x;
             d[1] = event.y;
@@ -102,7 +102,7 @@ function initial() {
         CURVEINFO.forEach(function (d) {
             if (!d.active) return;
             lineGenerator.curve(d.curve);
-            d.lineString = lineGenerator(points.slice(0, numActivePoints)) || '';
+            d.lineString = lineGenerator(points.slice(0, numActivePoints) as any as [number, number][]) || '';
         });
 
         var u = d3.select('svg g')
