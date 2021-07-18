@@ -54,7 +54,7 @@ function initial() {
 
     function updateMenu() {
         var u = d3.select('.menu')
-            .selectAll('div.item')
+            .selectAll<HTMLDivElement, CurveInfo>('div.item')
             .data(CURVEINFO);
 
         u.enter()
@@ -68,7 +68,7 @@ function initial() {
             })
             .on('mouseover', function (d) { updateInfo(d.info); })
             .on('mouseout', function () { updateInfo(''); })
-            .merge(u as any)
+            .merge(u)
             .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
     }
@@ -99,12 +99,12 @@ function initial() {
         });
 
         var u = d3.select('svg g')
-            .selectAll('path')
+            .selectAll<SVGPathElement, CurveInfo>('path')
             .data(CURVEINFO);
 
         u.enter()
             .append('path')
-            .merge(u as any)
+            .merge(u)
             .style('stroke', function (d, i) { return colorScale(i); })
             .attr('d', function (d) { return d.lineString; })
             .style('display', function (d) { return d.active ? 'inline' : 'none'; });
@@ -112,14 +112,14 @@ function initial() {
 
     function updatePoints() {
         var u = d3.select('g')
-            .selectAll('circle')
+            .selectAll<SVGCircleElement, CurveInfo>('circle')
             .data(points.slice(0, numActivePoints));
 
         u.enter()
             .append('circle')
             .attr('r', 4)
 //            .call(drag)
-            .merge(u as any)
+            .merge(u)
             .attr('cx', function (d) { return d[0]; })
             .attr('cy', function (d) { return d[1]; });
 
