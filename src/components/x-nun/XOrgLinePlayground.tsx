@@ -62,6 +62,10 @@ function initial() {
         d3.select('.info .text').text(info);
     }
 
+    function setClass() {
+        console.log('tcall', arguments);
+    }
+
     function updateMenu() {
         var u = d3.select('.menu')
             .selectAll<HTMLDivElement, CurveInfo>('div.item')
@@ -70,7 +74,11 @@ function initial() {
         u.enter()
             .append('div')
             //.classed(`item ${styles.item}`, true)
-            .attr('class', (d) => `item ${styles.item}`)
+            .attr('class', function (d) {
+                console.log('t', this.classList);
+                
+                return `item ${styles.item}`;
+            })
             //.style('clear', function (d) { return d.clear ? 'left' : 'none'; })
             .text(d => d.name)
             .on('click', function (event, d) {
@@ -80,6 +88,7 @@ function initial() {
             .on('mouseover', function (event, d) { updateInfo(d.info); })
             .on('mouseout', function () { updateInfo(''); })
             .merge(u)
+            .call(setClass)
             .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
     }
