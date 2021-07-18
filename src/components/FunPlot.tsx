@@ -110,7 +110,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
 function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: SliderProps) {
     return (
         <div className="flex items-center text-sm text-gray-800">
-            <div className="w-24">{label}</div>
+            <div className="w-16">{label}</div>
             <div className="flex items-center">
                 <input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} min={min} max={max} step={step} />
             </div>
@@ -139,10 +139,12 @@ function FunPlot() {
         );
     }, [xdomain]);
     return (
-        <div className="w-full h-64 border-8 border-blue-200 bg-blue-400">
-            <svg className="w-full h-full" ref={ref}>
-            </svg>
-            <div className="mt-4">
+        <div className="w-full flex flex-col">
+            <div className="w-full h-64 border-8 border-blue-200 bg-blue-400">
+                <svg className="w-full h-full" ref={ref}>
+                </svg>
+            </div>
+            <div className="">
                 <Slider value={xdomain} onChange={setxDomain} label="xdomain" min={0.1} max={15} step={0.1} />
             </div>
         </div>

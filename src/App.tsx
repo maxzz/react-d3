@@ -13,8 +13,8 @@ function App() {
                     {/* Demos */}
                     <div className="mt-4 space-y-4 max-w-5xl flex flex-col items-center z-10">
                         <StarD3Interpolated />
-                        <HierarchyClassic />
                         <FunPlot />
+                        <HierarchyClassic />
                     </div>
                     {/* Footer */}
                     <div className="self-end">
