@@ -116,9 +116,10 @@ function initial() {
         u.enter()
             .append('path')
             .merge(u)
-            .style('stroke', function (d, i) { return colorScale(i); })
-            .attr('d', function (d) { return d.lineString; })
-            .style('display', function (d) { return d.active ? 'inline' : 'none'; });
+            .attr('stroke-width', 7)
+            .style('stroke', (d, i) => colorScale(i))
+            .attr('d', d => d.lineString)
+            .style('display', d => d.active ? 'inline' : 'none');
     }
 
     function updatePoints() {
@@ -129,7 +130,10 @@ function initial() {
         u.enter()
             .append('circle')
             .attr('r', 14)
-            .attr('fill', 'red')
+            .attr('fill', '#ff00005a')
+            .attr('stroke', '#aa0000')
+            .attr('stroke-width', 2)
+            .style('cursor', 'move')
             .call(drag)
             .merge(u)
             .attr('cx', d => d[0])
@@ -154,7 +158,7 @@ function LineEditor() {
     }, []);
     return (
         <div className="">
-            <svg className="bg-yellow-100 border-8 border-blue-400" viewBox="-50 0 800 600" fill="none" stroke="red" strokeWidth="1">
+            <svg className="bg-white border-8 border-blue-400" viewBox="-50 0 800 600" fill="none" stroke="red" strokeWidth="1">
                 <g></g>
             </svg>
 
