@@ -128,12 +128,7 @@ function initial() {
             .data(points.slice(0, numActivePoints));
 
         u.enter()
-            .append('circle')
-            .attr('r', 14)
-            .attr('fill', '#ff00005a')
-            .attr('stroke', '#aa0000')
-            .attr('stroke-width', 2)
-            .style('cursor', 'move')
+            .append('g')
             .call(function (selection) {
                 let g = selection.append('g')
                 g.append('text')
@@ -143,6 +138,12 @@ function initial() {
                 console.log(g);
                 
             })
+            .append('circle')
+            .attr('r', 14)
+            .attr('fill', '#ff00005a')
+            .attr('stroke', '#aa0000')
+            .attr('stroke-width', 2)
+            .style('cursor', 'move')
             .call(drag)
             .merge(u)
             .attr('cx', d => d[0])
