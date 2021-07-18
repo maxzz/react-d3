@@ -1,8 +1,17 @@
-import d3 from 'd3';
 import React from 'react';
+import * as d3 from 'd3';
 
-function Initial() {
-    var curveTypes = [
+function initial() {
+    type CurveTypes = {
+        name: string;
+        curve: d3.CurveFactory | d3.CurveBundleFactory;
+        active: boolean;
+        lineString: string;
+        clear: boolean;
+        info: string;
+    };
+
+    var curveTypes: CurveTypes[] = [
         { name: 'curveLinear', curve: d3.curveLinear, active: true, lineString: '', clear: false, info: 'Interpolates the points using linear segments.' },
         { name: 'curveBasis', curve: d3.curveBasis, active: true, lineString: '', clear: true, info: 'Interpolates the start and end points and approximates the inner points using a B-spline.' },
         { name: 'curveBasisClosed', curve: d3.curveBasisClosed, active: false, lineString: '', clear: false, info: 'Uses a closed B-Spline to approximate the points.' },
@@ -25,20 +34,20 @@ function Initial() {
 
     var lineGenerator = d3.line();
 
-    var categoryScale = d3.scaleOrdinal(d3.schemeCategory10);
-    function colorScale(d) { return d === 0 ? '#777' : categoryScale(d); }
+    var categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
+    function colorScale(d: number | string) { return d === 0 ? '#777' : categoryScale(d as string); }
 
-    var points = [[50, 330], [75, 200], [280, 75], [300, 75], [475, 300], [600, 200]];
+    var points: [number, number][] = [[50, 330], [75, 200], [280, 75], [300, 75], [475, 300], [600, 200]];
     var numActivePoints = points.length;
 
-    var drag = d3.drag()
-        .on('drag', function (d, i) {
-            points[i][0] = d3.event.x;
-            points[i][1] = d3.event.y;
-            update();
-        });
+    // var drag = d3.drag()
+    //     .on('drag', function (d, i) {
+    //         points[i][0] = d3.event.x;
+    //         points[i][1] = d3.event.y;
+    //         update();
+    //     });
 
-    function updateInfo(info) {
+    function updateInfo(info: string) {
         d3.select('.info .default').style('display', info ? 'none' : 'inline');
         d3.select('.info .text').text(info);
     }
@@ -86,7 +95,7 @@ function Initial() {
         curveTypes.forEach(function (d) {
             if (!d.active) return;
             lineGenerator.curve(d.curve);
-            d.lineString = lineGenerator(points.slice(0, numActivePoints));
+            d.lineString = lineGenerator(points.slice(0, numActivePoints)) || '';
         });
 
         var u = d3.select('svg g')
@@ -109,7 +118,7 @@ function Initial() {
         u.enter()
             .append('circle')
             .attr('r', 4)
-            .call(drag)
+            //.call(drag)
             .merge(u)
             .attr('cx', function (d) { return d[0]; })
             .attr('cy', function (d) { return d[1]; });
@@ -128,6 +137,7 @@ function Initial() {
 }
 
 function LineEditor() {
+    initial();
     return (
         <svg>
 
@@ -138,7 +148,7 @@ function LineEditor() {
 function LinePlayground() {
     return (
         <div>
-
+            <LineEditor />
         </div>
     );
 }
