@@ -35,13 +35,13 @@ function FunChartBody() {
     return (
         <svg viewBox="-320 -320 640 640" ref={ref}>
             {pieData.map((d, idx) => (
-                <div key={idx}>
+                <g key={idx}>
                     <path fill="steelblue" d={arcPie(d) || ''}></path>
                     <text fill="white" transform={`translate(${arcPie.centroid(d).join(",")})`} >
-                        <tspan x="0" fontSize="24">${d.data.name}</tspan>
-                        <tspan x="0" fontSize="12" dy="1.3em">${d.value.toLocaleString("en")}</tspan>
+                        <tspan x="-14" fontSize="24">{d.data.name}</tspan>
+                        <tspan x="0" fontSize="12" dy="1.3rem">{d.value.toLocaleString("en")}</tspan>
                     </text>
-                </div>
+                </g>
             ))
             }
         </svg >
@@ -51,7 +51,7 @@ function FunChartBody() {
 function FunPieChart() {
     return (
         <div>
-            <div className="w-32 h-32">
+            <div className="w-96">
                 <FunChartBody />
             </div>
         </div>
