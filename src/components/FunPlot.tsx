@@ -139,10 +139,12 @@ function FunPlot() {
         );
     }, [xdomain]);
     return (
-        <div>
-            <svg className="w-64 h-32 border-4 border-blue-200 bg-blue-400" ref={ref}>
+        <div className="w-full h-64 border-8 border-blue-200 bg-blue-400">
+            <svg className="w-full h-full" ref={ref}>
             </svg>
-            <Slider value={xdomain} onChange={setxDomain} label="xdomain" min={0.1} max={15} step={0.1} />
+            <div className="mt-4">
+                <Slider value={xdomain} onChange={setxDomain} label="xdomain" min={0.1} max={15} step={0.1} />
+            </div>
         </div>
     );
 }
