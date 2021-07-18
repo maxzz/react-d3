@@ -1,6 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
-import { styled } from '@stitches/react';
+import styles from './XOrgLinePlayground.module.scss'
 
 function initial() {
     type CurveInfo = {
@@ -12,7 +12,7 @@ function initial() {
         info: string;
     };
 
-    var CURVEINFO: CurveInfo[] = [
+    const CURVEINFO: CurveInfo[] = [
         { name: 'curveLinear', curve: d3.curveLinear, active: true, lineString: '', clear: false, info: 'Interpolates the points using linear segments.' },
         { name: 'curveBasis', curve: d3.curveBasis, active: true, lineString: '', clear: true, info: 'Interpolates the start and end points and approximates the inner points using a B-spline.' },
         { name: 'curveBasisClosed', curve: d3.curveBasisClosed, active: false, lineString: '', clear: false, info: 'Uses a closed B-Spline to approximate the points.' },
@@ -65,6 +65,7 @@ function initial() {
         u.enter()
             .append('div')
             .classed('item', true)
+            .classed(`${styles.item}`, true)
             .style('clear', function (d) { return d.clear ? 'left' : 'none'; })
             .text(d => d.name)
             .on('click', function (event, d) {
