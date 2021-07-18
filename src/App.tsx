@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import Footer from './components/ui/Footer';
-import FunPlot from './components/FunPlot/FunPlot';
+import FunPlot from './components/FunPlot';
 import HierarchyClassic from './components/HierarchyClassic';
 import StarD3Interpolated from './components/StarD3Interpolated';
 
