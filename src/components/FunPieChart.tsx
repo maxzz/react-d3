@@ -59,7 +59,7 @@ function FunChartBody(props: FunChartBodyProps) {
 function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: SliderProps) {
     return (
         <div className="flex items-center text-sm text-gray-800">
-            <div className="w-16">{label}</div>
+            <div className="w-24">{label}</div>
             <div className="flex items-center">
                 <input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} min={min} max={max} step={step} />
             </div>
@@ -68,13 +68,21 @@ function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: Slider
     );
 }
 
+const RANGES: { [key in keyof FunChartBodyProps]: { min: number; max: number; step: number; } } = {
+    innerRadius: { min: 0, max: 320, step: 1 },
+    outerRadius: { min: 0, max: 320, step: 1 },
+    padRadius: { min: 0, max: 400, step: 1 },
+    padAngle: { min: 0, max: 0.01, step: .001 },
+    cornerRadius: { min: 0, max: 100, step: 1 },
+};
+
 function FunPieChart() {
 
     const [props, setProps] = React.useState({
         innerRadius: 210,
         outerRadius: 310,
         padRadius: 300,
-        padAngle: 2 / 300,
+        padAngle: +(2 / 300).toFixed(3),
         cornerRadius: 8,
     });
 
@@ -82,15 +90,20 @@ function FunPieChart() {
         setProps(prev => ({
             ...prev,
             [name]: value,
-        }))
+        }));
     }
 
     return (
         <div>
             <div className="w-96">
-                <FunChartBody {...props}/>
+                <FunChartBody {...props} />
             </div>
-            <Slider value={props.innerRadius} onChange={(v) => update('innerRadius', v)} label="innerRadius" />
+
+            <Slider value={props.innerRadius} onChange={(v) => update('innerRadius', v)} label="innerRadius" {...RANGES['innerRadius']}/>
+            <Slider value={props.outerRadius} onChange={(v) => update('outerRadius', v)} label="outerRadius" {...RANGES['outerRadius']}/>
+            <Slider value={props.padRadius} onChange={(v) => update('padRadius', v)} label="padRadius" {...RANGES['padRadius']}/>
+            <Slider value={props.padAngle} onChange={(v) => update('padAngle', v)} label="padAngle" {...RANGES['padAngle']}/>
+            <Slider value={props.cornerRadius} onChange={(v) => update('cornerRadius', v)} label="cornerRadius" {...RANGES['cornerRadius']}/>
         </div>
     );
 }
