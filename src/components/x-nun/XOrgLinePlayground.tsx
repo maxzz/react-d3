@@ -158,14 +158,12 @@ function LineEditor() {
                 <g></g>
             </svg>
 
-            <div className="sidebar mt-4 p-2 text-sm bg-white">
-                Curve types:
-                <div className="menu border border-gray-400 rounded"></div>
-                <div className="info w-[30rem] h-28 mt-4 p-2 rounded bg-blue-100">
+            <div className="sidebar mt-4 p-2 rounded-md text-sm bg-white">
+                <a href="https://github.com/d3/d3-shape#curves" target="_blank">D3 curve types to interpolate a set of points:</a>
+                <div className="menu border border-gray-400 rounded overflow-hidden"></div>
+                <div className="info w-[30rem] h-20 mt-4 p-2 text-xs rounded bg-blue-100">
                     <span className="default">
-                        The JavaScript library <a href="https://d3js.org">D3</a> provides a number
-                        of <a href="https://github.com/d3/d3-shape#curves">curve types</a> to interpolate (or approximate) a set of points.
-                        <p>Toggle each of the curve types using the buttons above.</p>
+                        <p>Toggle each of the curve types to activate / deactivate the curve.</p>
                         <p>You can also add/remove/drag the points to change the shape of the curve.</p>
                     </span>
                     <span className="text"></span>
