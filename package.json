@@ -11,6 +11,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@stitches/react": "^0.2.2",
     "autoprefixer": "^10.3.0",
     "d3": "^7.0.0",
     "postcss": "^8.3.5",
