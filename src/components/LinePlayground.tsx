@@ -40,11 +40,27 @@ function initial() {
     const points: [number, number][] = [[50, 330], [75, 200], [280, 75], [300, 75], [475, 300], [600, 200]];
     let numActivePoints = points.length;
 
-    const drag = d3.drag()
-        .on('drag', function (d, i) {
+    const drag = d3.drag<SVGCircleElement, [number, number]>()
+        //.on('drag', function (d, i: number) {
+        //.on('drag', function (event: DragEvent, d: CurveInfo, i: number) {
+
+        // .on('start', function (event: DragEvent, d: [number, number]) {
+        //     console.log('arguments', arguments);
+        // })
+        // .on('end', function (event: DragEvent, d: [number, number]) {
+        //     console.log('arguments', arguments);
+        // })
+        .on('drag', function (event: any, d: [number, number]) {
+            const idx = event.sourceEvent.target?.dataset.id;
+            
+            console.log('bb', idx, {d, event, that: this});
+            
+            d[0] = event.x;
+            d[1] = event.y;
+            
             // points[i][0] = d3.event.x;
             // points[i][1] = d3.event.y;
-            update();
+            // update();
         });
 
     function updateInfo(info: string) {
@@ -112,13 +128,15 @@ function initial() {
 
     function updatePoints() {
         var u = d3.select('g')
-            .selectAll<SVGCircleElement, CurveInfo>('circle')
+            .selectAll<SVGCircleElement, [number, number]>('circle')
             .data(points.slice(0, numActivePoints));
 
         u.enter()
             .append('circle')
-            .attr('r', 4)
-//            .call(drag)
+            .attr('r', 14)
+            .attr('fill', 'red')
+            .attr('data-id', (d, i) => i)
+            .call(drag)
             .merge(u)
             .attr('cx', function (d) { return d[0]; })
             .attr('cy', function (d) { return d[1]; });
