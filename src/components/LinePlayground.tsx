@@ -39,22 +39,15 @@ function initial() {
 
     type DatumPoint = [number, number, number];
 
-    const points: DatumPoint[] = [[50, 330, 0], [75, 200, 1], [280, 75, 2], [300, 75, 3], [475, 300, 4], [600, 200, 5]];
+    //const points: DatumPoint[] = [[50, 330, 0], [75, 200, 1], [280, 75, 2], [300, 75, 3], [475, 300, 4], [600, 200, 5], [600, 300, 6]];
+    const points: DatumPoint[] = [[-30, 350, 0], [150, 350, 1], [150, 70, 2], [375, 70, 3], [375, 350, 4], [670, 150, 5], [670, 350, 6]];
     let numActivePoints = points.length;
 
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
         .on('drag', function (event: any, d: DatumPoint) {
             const idx = d[2];
-            //console.log('bb', idx, { d, event, that: this });
-
             points[idx][0] = event.x;
             points[idx][1] = event.y;
-
-            //console.log('bb', idx, points[idx]);
-            //console.log('bb', idx, points.flat());
-
-            // points[i][0] = d3.event.x;
-            // points[i][1] = d3.event.y;
             update();
         });
 
@@ -134,9 +127,6 @@ function initial() {
             .merge(u)
             .attr('cx', d => d[0])
             .attr('cy', d => d[1]);
-
-        // u.attr('cx', d => d[0]).attr('cy', d => d[1]);
-        // console.log('up');
 
         u.exit().remove();
     }
