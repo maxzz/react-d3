@@ -137,10 +137,12 @@ function initial() {
 }
 
 function LineEditor() {
-    initial();
+    React.useEffect(() => {
+        initial();
+    }, []);
     return (
-        <svg>
-
+        <svg viewBox="0 0 700 600" width="700" height="600">
+            <g></g>
         </svg>
     );
 }
