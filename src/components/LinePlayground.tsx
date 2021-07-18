@@ -44,14 +44,18 @@ function initial() {
 
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
         .on('drag', function (event: any, d: DatumPoint) {
-            console.log('bb', d[2], { d, event, that: this });
+            const idx = d[2];
+            //console.log('bb', idx, { d, event, that: this });
 
-            d[0] = event.x;
-            d[1] = event.y;
+            points[idx][0] = event.x;
+            points[idx][1] = event.y;
+
+            //console.log('bb', idx, points[idx]);
+            //console.log('bb', idx, points.flat());
 
             // points[i][0] = d3.event.x;
             // points[i][1] = d3.event.y;
-            // update();
+            update();
         });
 
     function updateInfo(info: string) {
@@ -128,8 +132,11 @@ function initial() {
             .attr('fill', 'red')
             .call(drag)
             .merge(u)
-            .attr('cx', function (d) { return d[0]; })
-            .attr('cy', function (d) { return d[1]; });
+            .attr('cx', d => d[0])
+            .attr('cy', d => d[1]);
+
+        // u.attr('cx', d => d[0]).attr('cy', d => d[1]);
+        // console.log('up');
 
         u.exit().remove();
     }
