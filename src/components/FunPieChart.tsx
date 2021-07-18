@@ -13,9 +13,9 @@ const FRUITS: Fruit[] = [
     { name: "🍏", count: 8 },
     { name: "🍌", count: 5 },
     { name: "🍐", count: 3 },
-    { name: "🍋", count: 2 },
-    { name: "🍎", count: 1 },
-    { name: "🍉", count: 1 }
+    { name: "🍋", count: 21 },
+    { name: "🍎", count: 11 },
+    { name: "🍉", count: 11 }
 ];
 
 type FunChartBodyProps = {
@@ -45,7 +45,7 @@ function FunChartBody(props: FunChartBodyProps) {
         <svg viewBox="-320 -320 640 640" ref={ref}>
             {pieData.map((d, idx) => (
                 <g key={idx}>
-                    <path fill="steelblue" d={arcPie(d) || ''}></path>
+                    <path fill="#1e40af" stroke="white" d={arcPie(d) || ''}></path>
                     <text fill="white" transform={`translate(${arcPie.centroid(d).join(",")})`} >
                         <tspan x="-14" fontSize="24">{d.data.name}</tspan>
                         <tspan x="0" fontSize="12" dy="1.3rem">{d.value.toLocaleString("en")}</tspan>
@@ -79,7 +79,7 @@ const RANGES: { [key in keyof FunChartBodyProps]: { min: number; max: number; st
 function FunPieChart() {
 
     const [props, setProps] = React.useState({
-        innerRadius: 210,
+        innerRadius: 100,
         outerRadius: 310,
         padRadius: 300,
         padAngle: +(2 / 300).toFixed(3),
@@ -94,8 +94,8 @@ function FunPieChart() {
     }
 
     return (
-        <div>
-            <div className="w-96">
+        <div className="w-full">
+            <div className="w-full border-8 border-blue-200 bg-blue-400" style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}>
                 <FunChartBody {...props} />
             </div>
 
