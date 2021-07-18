@@ -5,7 +5,7 @@ import FunPlot from './components/FunPlot';
 import HierarchyClassic from './components/HierarchyClassic';
 import StarD3Interpolated from './components/StarD3Interpolated';
 import FunPieChart from './components/FunPieChart';
-import LinePlayground from './components/LinePlayground';
+import LinePlayground from './components/x-nun/XOrgLinePlayground';
 
 function App() {
     return (

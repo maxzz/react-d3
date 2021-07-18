@@ -20,3 +20,7 @@ Coexistence of React with D3.js
 
 * charts
     [d3-shape](https://observablehq.com/@d3/learn-d3-shapes?collection=@d3/learn-d3#:~:text=Computing%20arc%20angles)
+
+* curves
+    [D3 curve explorer](https://bl.ocks.org/d3indepth/raw/b6d4845973089bc1012dec1674d3aff8/)
+    
