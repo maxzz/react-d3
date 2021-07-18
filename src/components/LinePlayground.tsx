@@ -32,20 +32,20 @@ function initial() {
         { name: 'curveStepBefore', curve: d3.curveStepBefore, active: false, lineString: '', clear: false, info: 'Interpolates the points with alternating horizontal and vertical linear segments. The y value changes before the x value.' }
     ];
 
-    var lineGenerator = d3.line();
+    const lineGenerator = d3.line();
 
-    var categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
+    const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
     function colorScale(d: number | string) { return d === 0 ? '#777' : categoryScale(d as string); }
 
-    var points: [number, number][] = [[50, 330], [75, 200], [280, 75], [300, 75], [475, 300], [600, 200]];
-    var numActivePoints = points.length;
+    const points: [number, number][] = [[50, 330], [75, 200], [280, 75], [300, 75], [475, 300], [600, 200]];
+    let numActivePoints = points.length;
 
-    // var drag = d3.drag()
-    //     .on('drag', function (d, i) {
-    //         points[i][0] = d3.event.x;
-    //         points[i][1] = d3.event.y;
-    //         update();
-    //     });
+    const drag = d3.drag()
+        .on('drag', function (d, i) {
+            // points[i][0] = d3.event.x;
+            // points[i][1] = d3.event.y;
+            update();
+        });
 
     function updateInfo(info: string) {
         d3.select('.info .default').style('display', info ? 'none' : 'inline');
@@ -118,7 +118,7 @@ function initial() {
         u.enter()
             .append('circle')
             .attr('r', 4)
-            //.call(drag)
+//            .call(drag)
             .merge(u as any)
             .attr('cx', function (d) { return d[0]; })
             .attr('cy', function (d) { return d[1]; });
@@ -142,7 +142,7 @@ function LineEditor() {
     }, []);
     return (
         <div className="">
-            <svg className="bg-yellow-100" viewBox="0 0 700 600" width="500" height="300">
+            <svg className="bg-yellow-100" viewBox="0 0 700 600" width="500" height="300" fill="none" stroke="red" strokeWidth="1">
                 <g></g>
             </svg>
             <div className="sidebar text-sm">
