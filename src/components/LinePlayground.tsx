@@ -146,11 +146,12 @@ function LineEditor() {
         initial();
     }, []);
     return (
-        <div className="">
-            <svg className="bg-yellow-100" viewBox="0 0 700 600" width="500" height="300" fill="none" stroke="red" strokeWidth="1">
+        <div className="w-96">
+            <svg className="bg-yellow-100" viewBox="-50 0 800 600" fill="none" stroke="red" strokeWidth="1">
                 <g></g>
             </svg>
-            <div className="sidebar text-sm w-60">
+
+            <div className="sidebar text-sm">
                 <div className="menu"></div>
                 <div className="info">
                     <span className="default">
@@ -171,7 +172,7 @@ function LineEditor() {
 
 function LinePlayground() {
     return (
-        <div>
+        <div className="border-8 border-blue-400">
             <LineEditor />
         </div>
     );
