@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 
 function initial() {
-    type CurveTypes = {
+    type CurveType = {
         name: string;
         curve: d3.CurveFactory | d3.CurveBundleFactory;
         active: boolean;
@@ -11,7 +11,7 @@ function initial() {
         info: string;
     };
 
-    var CURVETYPES: CurveTypes[] = [
+    var CURVETYPES: CurveType[] = [
         { name: 'curveLinear', curve: d3.curveLinear, active: true, lineString: '', clear: false, info: 'Interpolates the points using linear segments.' },
         { name: 'curveBasis', curve: d3.curveBasis, active: true, lineString: '', clear: true, info: 'Interpolates the start and end points and approximates the inner points using a B-spline.' },
         { name: 'curveBasisClosed', curve: d3.curveBasisClosed, active: false, lineString: '', clear: false, info: 'Uses a closed B-Spline to approximate the points.' },
@@ -61,7 +61,7 @@ function initial() {
             .append('div')
             .classed('item', true)
             .style('clear', function (d) { return d.clear ? 'left' : 'none'; })
-            .text(function (d) { return d.name; })
+            .text(d => d.name)
             .on('click', function (d) {
                 d.active = !d.active;
                 update();
@@ -142,7 +142,7 @@ function LineEditor() {
     }, []);
     return (
         <div className="">
-            <svg viewBox="0 0 700 600" width="500" height="300">
+            <svg className="bg-yellow-100" viewBox="0 0 700 600" width="500" height="300">
                 <g></g>
             </svg>
             <div className="sidebar text-sm">
