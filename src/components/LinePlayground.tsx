@@ -68,7 +68,7 @@ function initial() {
             })
             .on('mouseover', function (d) { updateInfo(d.info); })
             .on('mouseout', function () { updateInfo(''); })
-            .merge(u)
+            .merge(u as any)
             .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
     }
@@ -104,7 +104,7 @@ function initial() {
 
         u.enter()
             .append('path')
-            .merge(u)
+            .merge(u as any)
             .style('stroke', function (d, i) { return colorScale(i); })
             .attr('d', function (d) { return d.lineString; })
             .style('display', function (d) { return d.active ? 'inline' : 'none'; });
@@ -119,7 +119,7 @@ function initial() {
             .append('circle')
             .attr('r', 4)
             //.call(drag)
-            .merge(u)
+            .merge(u as any)
             .attr('cx', function (d) { return d[0]; })
             .attr('cy', function (d) { return d[1]; });
 
