@@ -2,6 +2,7 @@ import React from 'react';
 import { downloadTextAsFile } from '../utils/download-data';
 import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentered } from '../utils/ngonGenerator';
 import { CheckboxProps, SliderProps } from './ui/ui-props';
+import './ui/Slider.scss';
 
 const VIEWBOX_SIZE = 200;
 
