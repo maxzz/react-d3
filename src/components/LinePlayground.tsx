@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 
 function initial() {
-    type CurveType = {
+    type CurveInfo = {
         name: string;
         curve: d3.CurveFactory | d3.CurveBundleFactory;
         active: boolean;
@@ -11,7 +11,7 @@ function initial() {
         info: string;
     };
 
-    var CURVETYPES: CurveType[] = [
+    var CURVEINFO: CurveInfo[] = [
         { name: 'curveLinear', curve: d3.curveLinear, active: true, lineString: '', clear: false, info: 'Interpolates the points using linear segments.' },
         { name: 'curveBasis', curve: d3.curveBasis, active: true, lineString: '', clear: true, info: 'Interpolates the start and end points and approximates the inner points using a B-spline.' },
         { name: 'curveBasisClosed', curve: d3.curveBasisClosed, active: false, lineString: '', clear: false, info: 'Uses a closed B-Spline to approximate the points.' },
@@ -55,7 +55,7 @@ function initial() {
     function updateMenu() {
         var u = d3.select('.menu')
             .selectAll('div.item')
-            .data(CURVETYPES);
+            .data(CURVEINFO);
 
         u.enter()
             .append('div')
@@ -92,7 +92,7 @@ function initial() {
     }
 
     function updateLines() {
-        CURVETYPES.forEach(function (d) {
+        CURVEINFO.forEach(function (d) {
             if (!d.active) return;
             lineGenerator.curve(d.curve);
             d.lineString = lineGenerator(points.slice(0, numActivePoints)) || '';
@@ -100,7 +100,7 @@ function initial() {
 
         var u = d3.select('svg g')
             .selectAll('path')
-            .data(CURVETYPES);
+            .data(CURVEINFO);
 
         u.enter()
             .append('path')
