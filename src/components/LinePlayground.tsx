@@ -11,7 +11,7 @@ function initial() {
         info: string;
     };
 
-    var curveTypes: CurveTypes[] = [
+    var CURVETYPES: CurveTypes[] = [
         { name: 'curveLinear', curve: d3.curveLinear, active: true, lineString: '', clear: false, info: 'Interpolates the points using linear segments.' },
         { name: 'curveBasis', curve: d3.curveBasis, active: true, lineString: '', clear: true, info: 'Interpolates the start and end points and approximates the inner points using a B-spline.' },
         { name: 'curveBasisClosed', curve: d3.curveBasisClosed, active: false, lineString: '', clear: false, info: 'Uses a closed B-Spline to approximate the points.' },
@@ -55,7 +55,7 @@ function initial() {
     function updateMenu() {
         var u = d3.select('.menu')
             .selectAll('div.item')
-            .data(curveTypes);
+            .data(CURVETYPES);
 
         u.enter()
             .append('div')
@@ -92,7 +92,7 @@ function initial() {
     }
 
     function updateLines() {
-        curveTypes.forEach(function (d) {
+        CURVETYPES.forEach(function (d) {
             if (!d.active) return;
             lineGenerator.curve(d.curve);
             d.lineString = lineGenerator(points.slice(0, numActivePoints)) || '';
@@ -100,7 +100,7 @@ function initial() {
 
         var u = d3.select('svg g')
             .selectAll('path')
-            .data(curveTypes);
+            .data(CURVETYPES);
 
         u.enter()
             .append('path')
@@ -141,9 +141,15 @@ function LineEditor() {
         initial();
     }, []);
     return (
-        <svg viewBox="0 0 700 600" width="700" height="600">
-            <g></g>
-        </svg>
+        <div className="">
+            <svg viewBox="0 0 700 600" width="500" height="600">
+                <g></g>
+            </svg>
+            <div className="sidebar">
+                <div className="menu">
+                </div>
+            </div>
+        </div>
     );
 }
 
