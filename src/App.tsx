@@ -5,6 +5,7 @@ import FunPlot from './components/FunPlot';
 import HierarchyClassic from './components/HierarchyClassic';
 import StarD3Interpolated from './components/StarD3Interpolated';
 import FunPieChart from './components/FunPieChart';
+import LinePlayground from './components/LinePlayground';
 
 function App() {
     return (
@@ -14,7 +15,8 @@ function App() {
                     {/* Demos */}
                     <div className="mt-4 space-y-4 max-w-5xl flex flex-col items-center z-10">
                         <StarD3Interpolated />
-                        <FunPieChart />
+                        <LinePlayground />
+                        {/* <FunPieChart /> */}
                         {/* <FunPlot /> */}
                         {/* <HierarchyClassic /> */}
                     </div>
