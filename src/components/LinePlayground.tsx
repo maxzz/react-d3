@@ -142,10 +142,10 @@ function LineEditor() {
     }, []);
     return (
         <div className="">
-            <svg viewBox="0 0 700 600" width="500" height="600">
+            <svg viewBox="0 0 700 600" width="500" height="300">
                 <g></g>
             </svg>
-            <div className="sidebar">
+            <div className="sidebar text-sm">
                 <div className="menu">
                 </div>
             </div>
