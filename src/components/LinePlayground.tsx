@@ -66,11 +66,11 @@ function initial() {
             .classed('item', true)
             .style('clear', function (d) { return d.clear ? 'left' : 'none'; })
             .text(d => d.name)
-            .on('click', function (d) {
+            .on('click', function (event, d) {
                 d.active = !d.active;
                 update();
             })
-            .on('mouseover', function (d) { updateInfo(d.info); })
+            .on('mouseover', function (event, d) { updateInfo(d.info); })
             .on('mouseout', function () { updateInfo(''); })
             .merge(u)
             .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
@@ -150,8 +150,19 @@ function LineEditor() {
             <svg className="bg-yellow-100" viewBox="0 0 700 600" width="500" height="300" fill="none" stroke="red" strokeWidth="1">
                 <g></g>
             </svg>
-            <div className="sidebar text-sm">
-                <div className="menu">
+            <div className="sidebar text-sm w-60">
+                <div className="menu"></div>
+                <div className="info">
+                    <span className="default">
+                        The JavaScript library
+                        <a href="https://d3js.org">D3</a>
+                        provides a number of
+                        <a href="https://github.com/d3/d3-shape#curves">curve types</a>
+                        to interpolate (or approximate) a set of points.
+                        Toggle each of the curve types using the buttons above.
+                        You can also add/remove/drag the points to change the shape of the curve.
+                    </span>
+                    <span className="text"></span>
                 </div>
             </div>
         </div>
