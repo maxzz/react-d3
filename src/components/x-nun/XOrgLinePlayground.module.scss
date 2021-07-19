@@ -6,3 +6,10 @@
 .itemBegingroup {
     border-top: 1px solid gray;
 }
+
+.circle {
+    fill: #ff00005a;
+    stroke: #aa0000;
+    stroke-width: 2;
+    cursor: move;
+}

@@ -53,8 +53,6 @@ function initial() {
             const xy = d3.pointer(event, this)
             points[idx][0] = Math.round(xy[0]);
             points[idx][1] = Math.round(xy[1]);
-            // points[idx][0] = Math.round(+event.x);
-            // points[idx][1] = Math.round(+event.y);
             updatePointsInfo(d);
             update();
         })
@@ -88,7 +86,6 @@ function initial() {
         u.enter()
             .append('div')
             .attr('class', d => `item ${styles.item} ${d.group ? styles.itemBegingroup : ''}`)
-            //.style('clear', function (d) { return d.clear ? 'left' : 'none'; })
             .text(d => d.name)
             .on('click', function (event, d) {
                 d.active = !d.active;
@@ -161,11 +158,8 @@ function initial() {
                     .text(d => d[2] + 1);
             })
             .append('circle')
+            .attr('class', `${styles.circle}`)
             .attr('r', 14)
-            .attr('fill', '#ff00005a')
-            .attr('stroke', '#aa0000')
-            .attr('stroke-width', 2)
-            .style('cursor', 'move')
             .call(drag)
             .merge(u)
             .attr('cx', d => d[0])
