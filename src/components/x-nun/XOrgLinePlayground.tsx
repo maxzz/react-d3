@@ -50,11 +50,11 @@ function initial() {
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
         .on('drag', function (event: any, d: DatumPoint) {
             const idx = d[2];
-            // const xy = d3.pointer(event)
-            // points[idx][0] = Math.round(xy[0]);
-            // points[idx][1] = Math.round(xy[1]);
-            points[idx][0] = Math.round(+event.x);
-            points[idx][1] = Math.round(+event.y);
+            const xy = d3.pointer(event, this)
+            points[idx][0] = Math.round(xy[0]);
+            points[idx][1] = Math.round(xy[1]);
+            // points[idx][0] = Math.round(+event.x);
+            // points[idx][1] = Math.round(+event.y);
             updatePointsInfo(d);
             update();
         })
