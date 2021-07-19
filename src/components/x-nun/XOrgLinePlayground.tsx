@@ -45,8 +45,7 @@ function initial() {
 
     type DatumPoint = [number, number, number];
 
-    //const points: DatumPoint[] = [[50, 330, 0], [75, 200, 1], [280, 75, 2], [300, 75, 3], [475, 300, 4], [600, 200, 5], [600, 300, 6]];
-    const points: DatumPoint[] = [[-30, 350, 0], [150, 350, 1], [150, 70, 2], [375, 70, 3], [375, 350, 4], [670, 150, 5], [670, 350, 6]];
+    const points: DatumPoint[] = [[45,313.33,0],[145,410,1],[150,70,2],[310,65,3],[306.67,371.67,4],[450,160,5],[451.67,480,6]];
     let numActivePoints = points.length;
 
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
