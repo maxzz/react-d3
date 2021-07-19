@@ -184,7 +184,7 @@ function LineEditor() {
         initial();
     }, []);
     return (
-        <div className="">
+        <div className="scale-75">
             <svg className="bg-white border-8 border-blue-400" viewBox="0 0 500 500" fill="none" stroke="red" strokeWidth="1">
                 <g></g>
             </svg>
