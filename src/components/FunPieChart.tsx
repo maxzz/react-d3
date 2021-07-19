@@ -94,7 +94,7 @@ function FunPieChart() {
     }
 
     return (
-        <div className="w-full">
+        <div className="w-[30rem]">
             <div className="w-full border-8 border-blue-200 bg-blue-400" style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}>
                 <FunChartBody {...props} />
             </div>

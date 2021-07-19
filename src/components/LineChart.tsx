@@ -102,7 +102,7 @@ function LineChartBody() {
 
 function LineChart() {
     return (
-        <div className='w-full h-full border-8 border-blue-200 bg-blue-400'>
+        <div className='w-[30rem] border-8 border-blue-200 bg-blue-400'>
             <LineChartBody />
         </div>
     );

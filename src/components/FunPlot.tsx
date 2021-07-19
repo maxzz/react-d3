@@ -139,7 +139,7 @@ function FunPlot() {
         );
     }, [xdomain]);
     return (
-        <div className="w-full flex flex-col">
+        <div className="w-[30rem] flex flex-col">
             <div className="w-full h-64 border-8 border-blue-200 bg-blue-400">
                 <svg className="w-full h-full" ref={ref}>
                 </svg>
