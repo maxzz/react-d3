@@ -130,13 +130,12 @@ function initial() {
         u.enter()
             .append('g')
             .call(function (selection) {
-                let g = selection.append('g')
-                g.append('text')
-                .append('tsapn')
-                .attr('x', 0)
-                .text('1')
-                console.log(g);
-                
+                selection
+                    .append('text')
+                    .append('tspan')
+                    .attr('x', d => d[0] - 16)
+                    .attr('y', d => d[1] - 16)
+                    .text(d => d[2]);
             })
             .append('circle')
             .attr('r', 14)
