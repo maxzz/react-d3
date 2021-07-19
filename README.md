@@ -18,9 +18,9 @@ Coexistence of React with D3.js
     [funplot](https://observablehq.com/@mbostock/funplot)
     [sine-cosine](https://observablehq.com/@mbostock/sine-cosine)
 
-* charts
+* Charts
     [d3-shape](https://observablehq.com/@d3/learn-d3-shapes?collection=@d3/learn-d3#:~:text=Computing%20arc%20angles)
+    [D3 v5 Line Chart](https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89)
 
-* curves
+* Curves
     [D3 curve explorer](https://bl.ocks.org/d3indepth/raw/b6d4845973089bc1012dec1674d3aff8/)
-    

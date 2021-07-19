@@ -8,9 +8,9 @@ function D3World(svgRoot: SVGSVGElement) {
         return;
     }
 
+    const width = 440;
+    const height = 200;
     const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-    const width = parent.clientWidth - margin.left - margin.right;
-    const height = parent.clientHeight - margin.top - margin.bottom;
 
     type Datum = {
         y: number;
@@ -19,8 +19,8 @@ function D3World(svgRoot: SVGSVGElement) {
     const nDataPoints = 21;
     const dataset = d3.range(nDataPoints).map((d) => ({ 'y': d3.randomUniform(1)() }));
 
-    const xScale = d3.scaleLinear().domain([0, nDataPoints - 1]).range([0, width]);
-    const yScale = d3.scaleLinear().domain([0, 1]).range([height, 0]).nice();
+    const xScale = d3.scaleLinear().domain([0, nDataPoints - 1]).range([0, width - margin.left - margin.right]);
+    const yScale = d3.scaleLinear().domain([0, 1]).range([height - margin.top - margin.bottom, 0]).nice();
 
     const lineGen = d3.line<Datum>()
         .x((d, i) => xScale(i))
@@ -30,15 +30,14 @@ function D3World(svgRoot: SVGSVGElement) {
     console.log(svg);
 
     const g = svg
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
+        .attr('viewBox', [0, 0, width, height] as any)
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
     // Call the x axis in a group tag
     g.append('g')
         .attr('class', 'x axis')
-        .attr('transform', `translate(0,${height})`)
+        .attr('transform', `translate(0,${height - margin.bottom - margin.top})`)
         .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
 
     // Call the y axis in a group tag
@@ -74,7 +73,6 @@ function D3World(svgRoot: SVGSVGElement) {
             //this.attr('class', 'focus');
         })
         .on('mouseout', function () {
-
         });
 }
 
