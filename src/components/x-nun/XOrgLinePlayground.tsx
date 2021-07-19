@@ -68,6 +68,17 @@ function initial() {
     }
 
     function updatePointsInfo(current?: DatumPoint) {
+        if (current) {
+            let s = points.map(d => {
+                if (d === current) {
+                    return `<b>${JSON.stringify(d)}</b>`
+                } else {
+                    return JSON.stringify(d);
+                }
+            })
+            d3.select('.info .points').html(`${s.join(',')}`);
+            return;
+        }
         d3.select('.info .points').text(`${JSON.stringify(points)}`);
     }
 
