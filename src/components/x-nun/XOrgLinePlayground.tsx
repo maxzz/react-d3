@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import styles from './XOrgLinePlayground.module.scss';
 
-function initial() {
+function initial(mainGroup: SVGGElement) {
     type CurveInfo = {
         name: string;
         curve: d3.CurveFactory | d3.CurveBundleFactory;
@@ -50,7 +50,7 @@ function initial() {
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
         .on('drag', function (event: any, d: DatumPoint) {
             const idx = d[2];
-            const xy = d3.pointer(event, this)
+            const xy = d3.pointer(event, this);
             points[idx][0] = Math.round(xy[0]);
             points[idx][1] = Math.round(xy[1]);
             updatePointsInfo(d);
@@ -124,7 +124,8 @@ function initial() {
             }
         });
 
-        let u = d3.select('svg g')
+        let u = d3.select(mainGroup)
+            // let u = d3.select('svg g')
             .selectAll<SVGPathElement, CurveInfo>('path')
             .data(CURVEINFO);
 
@@ -138,11 +139,13 @@ function initial() {
     }
 
     function updatePoints() {
-        let u = d3.select('g')
+        let u = d3.select(mainGroup)
+            // let u = d3.select('g')
             .selectAll<SVGCircleElement, DatumPoint>('circle')
             .data(points.slice(0, numActivePoints));
 
-        let t = d3.select('g')
+        let t = d3.select(mainGroup)
+            // let t = d3.select('g')
             .selectAll<SVGTextElement, DatumPoint>('text')
             .data(points.slice(0, numActivePoints));
 
@@ -180,13 +183,14 @@ function initial() {
 }
 
 function LineEditor() {
+    const ref = React.useRef<SVGGElement>(null);
     React.useEffect(() => {
-        initial();
+        ref.current && initial(ref.current);
     }, []);
     return (
-        <div className="scale-75">
+        <div className=""> {/* scale-75 */}
             <svg className="bg-white border-8 border-blue-400" viewBox="0 0 500 500" fill="none" stroke="red" strokeWidth="1">
-                <g></g>
+                <g ref={ref}></g>
             </svg>
 
             <div className="sidebar mt-4 p-2 rounded-md text-sm bg-white">
