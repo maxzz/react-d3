@@ -63,7 +63,7 @@ function initial() {
     }
 
     function updateMenu() {
-        var u = d3.select('.menu')
+        let u = d3.select('.menu')
             .selectAll<HTMLDivElement, CurveInfo>('div.item')
             .data(CURVEINFO);
 
@@ -109,7 +109,7 @@ function initial() {
             }
         });
 
-        var u = d3.select('svg g')
+        let u = d3.select('svg g')
             .selectAll<SVGPathElement, CurveInfo>('path')
             .data(CURVEINFO);
 
@@ -123,8 +123,12 @@ function initial() {
     }
 
     function updatePoints() {
-        var u = d3.select('g')
+        let u = d3.select('g')
             .selectAll<SVGCircleElement, DatumPoint>('circle')
+            .data(points.slice(0, numActivePoints));
+
+        let t = d3.select('g')
+            .selectAll<SVGTextElement, DatumPoint>('text')
             .data(points.slice(0, numActivePoints));
 
         u.enter()
@@ -133,6 +137,7 @@ function initial() {
                 selection
                     .append('text')
                     .append('tspan')
+                    .merge(t)
                     .attr('x', d => d[0] - 16)
                     .attr('y', d => d[1] - 16)
                     .text(d => d[2]);
