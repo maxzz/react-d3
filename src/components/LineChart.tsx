@@ -2,8 +2,8 @@ import React from 'react';
 import * as d3 from 'd3';
 
 function D3World() {
-    var svg = d3.select("svg");
-    const parent = (svg.node() as HTMLDivElement)?.parentElement;
+    let svg = d3.select<SVGSVGElement, Datum>('svg');
+    const parent = svg.node()?.parentElement;
     if (!parent) {
         return;
     }
@@ -17,7 +17,7 @@ function D3World() {
     };
 
     const nDataPoints = 21;
-    const dataset = d3.range(nDataPoints).map((d) => ({ "y": d3.randomUniform(1)() }));
+    const dataset = d3.range(nDataPoints).map((d) => ({ 'y': d3.randomUniform(1)() }));
 
     const xScale = d3.scaleLinear().domain([0, nDataPoints - 1]).range([0, width]);
     const yScale = d3.scaleLinear().domain([0, 1]).range([height, 0]);
@@ -27,46 +27,48 @@ function D3World() {
         .y((d) => yScale(d.y))
         .curve(d3.curveMonotoneX);
 
-    svg
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+    console.log(svg);
+
+    const g = svg
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
 
     // Call the x axis in a group tag
-    svg.append("g")
-        .attr("class", "x-axis")
-        .attr("transform", `translate(0,${height})`)
+    g.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', `translate(0,${height})`)
         .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
 
     // Call the y axis in a group tag
-    svg.append("g")
-        .attr("class", "y-axis")
+    g.append('g')
+        .attr('class', 'y axis')
         .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
 
     // Append the path, bind the data, and call the line generator 
-    svg.append("path")
+    g.append('path')
         .datum(dataset) // 10. Binds data to the line 
-        .attr("class", "line")
-        .attr('fill', "none")
+        .attr('class', 'line')
+        .attr('fill', 'none')
         .attr('stroke', 'red')
         .attr('stroke-width', 1)
-        .attr("d", lineGen); // Calls the line generator 
+        .attr('d', lineGen); // Calls the line generator 
 
     // Dots
-    svg.selectAll<SVGCircleElement, Datum>(".dot")
+    g.selectAll<SVGCircleElement, Datum>('.dot')
         .data(dataset)
-        .enter().append("circle") // Uses the enter().append() method
+        .enter().append('circle') // Uses the enter().append() method
         .attr('fill', '#4cd88f')
-        .attr("class", "dot") // Assign a class for styling
-        .attr("cx", (d, i) => xScale(i))
-        .attr("cy", (d) => yScale(d.y))
-        .attr("r", 5)
-        .on("mouseover", function (event, d) {
+        .attr('class', 'dot') // Assign a class for styling
+        .attr('cx', (d, i) => xScale(i))
+        .attr('cy', (d) => yScale(d.y))
+        .attr('r', 5)
+        .on('mouseover', function (event, d) {
             console.log(event);
             //this.attr('class', 'focus');
         })
-        .on("mouseout", function () {
+        .on('mouseout', function () {
 
         });
 }
@@ -84,7 +86,7 @@ function LineChartBody() {
 
 function LineChart() {
     return (
-        <div className="w-96 h-64">
+        <div className='w-96 h-64 border-8 border-blue-200 bg-blue-400'>
             <LineChartBody />
         </div>
     );
