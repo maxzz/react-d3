@@ -1,8 +1,8 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-function D3World() {
-    let svg = d3.select<SVGSVGElement, Datum>('svg');
+function D3World(svgRoot: SVGSVGElement) {
+    let svg = d3.select<SVGSVGElement, Datum>(svgRoot);
     const parent = svg.node()?.parentElement;
     if (!parent) {
         return;
@@ -20,7 +20,7 @@ function D3World() {
     const dataset = d3.range(nDataPoints).map((d) => ({ 'y': d3.randomUniform(1)() }));
 
     const xScale = d3.scaleLinear().domain([0, nDataPoints - 1]).range([0, width]);
-    const yScale = d3.scaleLinear().domain([0, 1]).range([height, 0]);
+    const yScale = d3.scaleLinear().domain([0, 1]).range([height, 0]).nice();
 
     const lineGen = d3.line<Datum>()
         .x((d, i) => xScale(i))
@@ -51,19 +51,24 @@ function D3World() {
         .datum(dataset) // 10. Binds data to the line 
         .attr('class', 'line')
         .attr('fill', 'none')
-        .attr('stroke', 'red')
+        .attr('stroke', 'blue')
         .attr('stroke-width', 1)
-        .attr('d', lineGen); // Calls the line generator 
+        .attr('d', lineGen) // Calls the line generator 
+        .clone(true).lower()
+        .attr('stroke', '#c58b36')
+        .attr('stroke-width', 4);
 
     // Dots
     g.selectAll<SVGCircleElement, Datum>('.dot')
         .data(dataset)
         .enter().append('circle') // Uses the enter().append() method
-        .attr('fill', '#4cd88f')
         .attr('class', 'dot') // Assign a class for styling
+        .attr('fill', '#4cb3d8c9')
+        .attr('stroke', 'blue')
+        .attr('stroke-width', 1)
         .attr('cx', (d, i) => xScale(i))
         .attr('cy', (d) => yScale(d.y))
-        .attr('r', 5)
+        .attr('r', 4)
         .on('mouseover', function (event, d) {
             console.log(event);
             //this.attr('class', 'focus');
@@ -74,11 +79,12 @@ function D3World() {
 }
 
 function LineChartBody() {
+    const ref = React.useRef<SVGSVGElement>(null);
     React.useEffect(() => {
-        D3World();
+        ref.current && D3World(ref.current);
     }, []);
     return (
-        <svg>
+        <svg ref={ref}>
 
         </svg>
     );
@@ -86,7 +92,7 @@ function LineChartBody() {
 
 function LineChart() {
     return (
-        <div className='w-96 h-64 border-8 border-blue-200 bg-blue-400'>
+        <div className='w-full h-full border-8 border-blue-200 bg-blue-400'>
             <LineChartBody />
         </div>
     );
