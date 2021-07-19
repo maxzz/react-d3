@@ -21,7 +21,7 @@ function initial() {
         { name: 'curveCardinal (tension=0.5)', curve: d3.curveCardinal.tension(0.5), active: false, lineString: '', group: false, info: "Interpolates the points using a cubic B-spline. A tension parameter determines how 'taut' the curve is. As tension approaches 1 the segments become linear." },
         { name: 'curveCardinal (tension=1)', curve: d3.curveCardinal.tension(1), active: false, lineString: '', group: false, info: "Interpolates the points using a cubic B-spline. A tension parameter determines how 'taut' the curve is. As tension approaches 1 the segments become linear." },
 
-        { name: 'curveCatmullRom (α=0)', curve: d3.curveCatmullRom.alpha(0), active: false, lineString: '', group: true, info: 'Similar to curveCardinal (tension=0) but with a parameter α that determines the parameterisation used to interpolate the points. If α=0 the parameterisation is uniform.' },
+        { name: 'curveCatmullRom (α=0)', curve: d3.curveCatmullRom.alpha(0), active: true, lineString: '', group: true, info: 'Similar to curveCardinal (tension=0) but with a parameter α that determines the parameterisation used to interpolate the points. If α=0 the parameterisation is uniform.' },
         { name: 'curveCatmullRom (α=0.5)', curve: d3.curveCatmullRom.alpha(0.5), active: false, lineString: '', group: false, info: 'Similar to curveCardinal (tension=0) but with a parameter α that determines the parameterisation used to interpolate the points. If α=0.5 the parameterisation is centripetal and self intersecting loops are avoided.' },
         { name: 'curveCatmullRom (α=1)', curve: d3.curveCatmullRom.alpha(1), active: false, lineString: '', group: false, info: 'Similar to curveCardinal (tension=0) but with a parameter α that determines the parameterisation used to interpolate the points. If α=1 the parameterisation is chordal.' },
 
@@ -34,7 +34,7 @@ function initial() {
         { name: 'curveStepBefore', curve: d3.curveStepBefore, active: false, lineString: '', group: false, info: 'Interpolates the points with alternating horizontal and vertical linear segments. The y value changes before the x value.' },
 
         { name: 'curveLinear', curve: d3.curveLinear, active: true, lineString: '', group: true, info: 'Interpolates the points using linear segments.' },
-        { name: 'curveBasis', curve: d3.curveBasis, active: true, lineString: '', group: true, info: 'Interpolates the start and end points and approximates the inner points using a B-spline.' },
+        { name: 'curveBasis', curve: d3.curveBasis, active: false, lineString: '', group: true, info: 'Interpolates the start and end points and approximates the inner points using a B-spline.' },
         { name: 'curveBasisClosed', curve: d3.curveBasisClosed, active: false, lineString: '', group: false, info: 'Uses a closed B-Spline to approximate the points.' },
     ];
 
@@ -45,14 +45,14 @@ function initial() {
 
     type DatumPoint = [number, number, number];
 
-    const points: DatumPoint[] = [[45,313.33,0],[145,410,1],[150,70,2],[310,65,3],[306.67,371.67,4],[450,160,5],[451.67,480,6]];
+    const points: DatumPoint[] = [[-16,290,0],[92,429,1],[92,65,2],[246,65,3],[252,346,4],[391,175,5],[399,468,6]];
     let numActivePoints = points.length;
 
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
         .on('drag', function (event: any, d: DatumPoint) {
             const idx = d[2];
-            points[idx][0] = +(+event.x).toFixed(2);
-            points[idx][1] = +(+event.y).toFixed(2);
+            points[idx][0] = Math.round(+event.x);
+            points[idx][1] = Math.round(+event.y);
             update();
         })
         .on('end', () => {
@@ -176,7 +176,7 @@ function LineEditor() {
     }, []);
     return (
         <div className="">
-            <svg className="bg-white border-8 border-blue-400" viewBox="-50 0 800 600" fill="none" stroke="red" strokeWidth="1">
+            <svg className="bg-white border-8 border-blue-400" viewBox="-50 0 500 500" fill="none" stroke="red" strokeWidth="1">
                 <g></g>
             </svg>
 
