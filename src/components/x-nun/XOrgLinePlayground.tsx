@@ -39,7 +39,7 @@ function initial() {
     ];
 
     type DatumPoint = [number, number, number];
-    const points: DatumPoint[] = [[-16, 290, 0], [92, 429, 1], [92, 65, 2], [246, 65, 3], [252, 346, 4], [391, 175, 5], [399, 468, 6]];
+    const points: DatumPoint[] = [[46,179,0],[123,404,1],[123,56,2],[292,56,3],[292,274,4],[456,163,5],[463,473,6]];
     let numActivePoints = points.length;
 
     const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
@@ -55,17 +55,20 @@ function initial() {
             // points[idx][1] = Math.round(xy[1]);
             points[idx][0] = Math.round(+event.x);
             points[idx][1] = Math.round(+event.y);
+            updatePointsInfo(d);
             update();
         })
         .on('end', () => {
-            console.log('done');
-            let info = `${JSON.stringify(points)}`;
-            d3.select('.info .points').text(info);
+            updatePointsInfo();
         });
 
     function updateInfo(info: string) {
         d3.select('.info .default').style('display', info ? 'none' : 'inline');
         d3.select('.info .text').text(info);
+    }
+
+    function updatePointsInfo(current?: DatumPoint) {
+        d3.select('.info .points').text(`${JSON.stringify(points)}`);
     }
 
     function updateMenu() {
@@ -169,6 +172,7 @@ function initial() {
         updatePoints();
     }
 
+    updatePointsInfo();
     update();
 }
 
@@ -178,14 +182,14 @@ function LineEditor() {
     }, []);
     return (
         <div className="">
-            <svg className="bg-white border-8 border-blue-400" viewBox="-50 0 500 500" fill="none" stroke="red" strokeWidth="1">
+            <svg className="bg-white border-8 border-blue-400" viewBox="0 0 500 500" fill="none" stroke="red" strokeWidth="1">
                 <g></g>
             </svg>
 
             <div className="sidebar mt-4 p-2 rounded-md text-sm bg-white">
                 <a href="https://github.com/d3/d3-shape#curves" target="_blank">D3 curve types to interpolate a set of points:</a>
                 <div className="menu border border-gray-400 rounded overflow-hidden"></div>
-                <div className="info w-[30rem] h-20 mt-4 p-2 text-xs rounded bg-blue-100">
+                <div className="info w-[30rem] h-20 mt-4 p-2 text-xs rounded bg-blue-100 flex flex-col justify-between">
                     <span className="default">
                         <p>Toggle each of the curve types to activate / deactivate the curve.</p>
                         <p>You can also add/remove/drag the points to change the shape of the curve.</p>
