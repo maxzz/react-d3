@@ -45,23 +45,16 @@ function initial() {
     const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
     function colorScale(d: number | string) { return d === 0 ? '#777' : categoryScale(d as string); }
 
-    const xScale = d3.scaleLinear().range([0, 300]).domain(d3.extent<DatumPoint, number>(points, d => d[0]) as [number, number]);
-    const yScale = d3.scaleLinear().range([0, 300]).domain(d3.extent<DatumPoint, number>(points, d => d[1]) as [number, number]);
-
-    const lineGenerator = d3.line()
-        .x(d => xScale(d[0]))
-        .y(d => yScale(d[1]));
+    const lineGenerator = d3.line();
 
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
         .on('drag', function (event: any, d: DatumPoint) {
             const idx = d[2];
-            const xy = d3.pointer(event)
-            points[idx][0] = Math.round(xy[0]);
-            points[idx][1] = Math.round(xy[1]);
-            // points[idx][0] = Math.round(+event.x);
-            // points[idx][1] = Math.round(+event.y);
-            console.log(xy);
-            
+            // const xy = d3.pointer(event)
+            // points[idx][0] = Math.round(xy[0]);
+            // points[idx][1] = Math.round(xy[1]);
+            points[idx][0] = Math.round(+event.x);
+            points[idx][1] = Math.round(+event.y);
             update();
         })
         .on('end', () => {
@@ -151,8 +144,8 @@ function initial() {
                     .append('text')
                     .append('tspan')
                     .merge(t)
-                    .attr('x', d => xScale(d[0] - 24))
-                    .attr('y', d => yScale(d[1] - 16))
+                    .attr('x', d => d[0] - 24)
+                    .attr('y', d => d[1] - 16)
                     .text(d => d[2] + 1);
             })
             .append('circle')
@@ -163,8 +156,8 @@ function initial() {
             .style('cursor', 'move')
             .call(drag)
             .merge(u)
-            .attr('cx', d => xScale(d[0]))
-            .attr('cy', d => yScale(d[1]));
+            .attr('cx', d => d[0])
+            .attr('cy', d => d[1]);
 
         u.exit().remove();
     }
