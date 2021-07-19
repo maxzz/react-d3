@@ -11,6 +11,15 @@ function D3World(svgRoot: SVGSVGElement) {
     const width = 440;
     const height = 200;
     const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+    const insetAll = 6;
+    const inset = {
+        top: insetAll,
+        right: insetAll,
+        bottom: insetAll,
+        left: insetAll,
+    };
+    const xticks = (width - margin.right - margin.left - inset.left - inset.right) / 80;
+    const yticks = (height - margin.top - margin.bottom - inset.top - inset.bottom) / 40;
 
     type Datum = {
         y: number;
@@ -19,8 +28,8 @@ function D3World(svgRoot: SVGSVGElement) {
     const nDataPoints = 21;
     const dataset = d3.range(nDataPoints).map((d) => ({ 'y': d3.randomUniform(1)() }));
 
-    const xScale = d3.scaleLinear().domain([0, nDataPoints - 1]).range([0, width - margin.left - margin.right]);
-    const yScale = d3.scaleLinear().domain([0, 1]).range([height - margin.top - margin.bottom, 0]).nice();
+    const xScale = d3.scaleLinear().domain([0, nDataPoints - 1]).range([margin.left + inset.right, width - margin.right - inset.right]);
+    const yScale = d3.scaleLinear().domain([0, 1]).range([height - margin.bottom - inset.bottom, margin.top + inset.top]).nice();
 
     const lineGen = d3.line<Datum>()
         .x((d, i) => xScale(i))
@@ -32,18 +41,21 @@ function D3World(svgRoot: SVGSVGElement) {
     const g = svg
         .attr('viewBox', [0, 0, width, height] as any)
         .append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`);
+        //.attr('transform', `translate(${margin.left},${margin.top})`);
 
     // Call the x axis in a group tag
     g.append('g')
         .attr('class', 'x axis')
-        .attr('transform', `translate(0,${height - margin.bottom - margin.top})`)
+        .attr('transform', `translate(0,${height - margin.bottom})`)
+        //.call(d3.axisBottom(xScale.copy().interpolate(d3.interpolateRound)).ticks(xticks));
         .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
 
     // Call the y axis in a group tag
     g.append('g')
         .attr('class', 'y axis')
-        .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+        .attr("transform", `translate(${margin.left},0)`)
+        //.call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+        .call(d3.axisLeft(yScale.copy().interpolate(d3.interpolateRound)).ticks(yticks)); // Create an axis component with d3.axisLeft
 
     // Append the path, bind the data, and call the line generator 
     g.append('path')

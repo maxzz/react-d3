@@ -69,7 +69,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
         .style("max-width", `${width}px`);
     svg.selectChildren().remove();
 
-    // x lines
+    // x axis
     svg.append("g")
         .attr("transform", `translate(0,${height - marginBottom})`)
         .call(d3.axisBottom(x.copy().interpolate(d3.interpolateRound)).ticks(xticks))
@@ -79,7 +79,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
             .attr("stroke-opacity", d => d ? 0.1 : 0.4)
             .attr("y1", -height));
 
-    //y lines
+    // y axis
     svg.append("g")
         .attr("transform", `translate(${marginLeft},0)`)
         .call(d3.axisLeft(y.copy().interpolate(d3.interpolateRound)).ticks(yticks))
