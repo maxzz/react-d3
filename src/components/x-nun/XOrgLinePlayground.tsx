@@ -38,27 +38,31 @@ function initial() {
         { name: 'curveBasisClosed', curve: d3.curveBasisClosed, active: false, lineString: '', group: false, info: 'Uses a closed B-Spline to approximate the points.' },
     ];
 
-    const lineGenerator = d3.line();
+    type DatumPoint = [number, number, number];
+    const points: DatumPoint[] = [[-16, 290, 0], [92, 429, 1], [92, 65, 2], [246, 65, 3], [252, 346, 4], [391, 175, 5], [399, 468, 6]];
+    let numActivePoints = points.length;
 
     const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
     function colorScale(d: number | string) { return d === 0 ? '#777' : categoryScale(d as string); }
 
-    type DatumPoint = [number, number, number];
+    const xScale = d3.scaleLinear().range([0, 300]).domain(d3.extent<DatumPoint, number>(points, d => d[0]) as [number, number]);
+    const yScale = d3.scaleLinear().range([0, 300]).domain(d3.extent<DatumPoint, number>(points, d => d[1]) as [number, number]);
 
-    const points: DatumPoint[] = [[-16,290,0],[92,429,1],[92,65,2],[246,65,3],[252,346,4],[391,175,5],[399,468,6]];
-    let numActivePoints = points.length;
+    const lineGenerator = d3.line()
+        .x(d => xScale(d[0]))
+        .y(d => yScale(d[1]));
 
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
         .on('drag', function (event: any, d: DatumPoint) {
             const idx = d[2];
-            points[idx][0] = Math.round(+event.x);
-            points[idx][1] = Math.round(+event.y);
+            points[idx][0] = xScale(Math.round(+event.x));
+            points[idx][1] = yScale(Math.round(+event.y));
             update();
         })
         .on('end', () => {
             console.log('done');
             let info = `${JSON.stringify(points)}`;
-            d3.select('.info .points').text(info);    
+            d3.select('.info .points').text(info);
         });
 
     function updateInfo(info: string) {
@@ -142,8 +146,8 @@ function initial() {
                     .append('text')
                     .append('tspan')
                     .merge(t)
-                    .attr('x', d => d[0] - 24)
-                    .attr('y', d => d[1] - 16)
+                    .attr('x', d => xScale(d[0] - 24))
+                    .attr('y', d => yScale(d[1] - 16))
                     .text(d => d[2] + 1);
             })
             .append('circle')
@@ -154,8 +158,8 @@ function initial() {
             .style('cursor', 'move')
             .call(drag)
             .merge(u)
-            .attr('cx', d => d[0])
-            .attr('cy', d => d[1]);
+            .attr('cx', d => xScale(d[0]))
+            .attr('cy', d => yScale(d[1]));
 
         u.exit().remove();
     }
