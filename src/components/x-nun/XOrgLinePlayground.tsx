@@ -39,7 +39,7 @@ function initial() {
     ];
 
     type DatumPoint = [number, number, number];
-    const points: DatumPoint[] = [[46,179,0],[123,404,1],[123,56,2],[292,56,3],[292,274,4],[456,163,5],[463,473,6]];
+    const points: DatumPoint[] = [[46, 179, 0], [123, 404, 1], [123, 56, 2], [292, 56, 3], [292, 274, 4], [456, 163, 5], [463, 473, 6]];
     let numActivePoints = points.length;
 
     const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
@@ -70,16 +70,14 @@ function initial() {
     function updatePointsInfo(current?: DatumPoint) {
         if (current) {
             let s = points.map(d => {
-                if (d === current) {
-                    return `<b>${JSON.stringify(d)}</b>`
-                } else {
-                    return JSON.stringify(d);
-                }
-            })
-            d3.select('.info .points').html(`${s.join(',')}`);
-            return;
+                let pt = JSON.stringify(d);
+                return d === current ? `<b>${pt}</b>` : pt;
+            }).join(',');
+            d3.select('.info .points').html(s);
         }
-        d3.select('.info .points').text(`${JSON.stringify(points)}`);
+        else {
+            d3.select('.info .points').text(`${JSON.stringify(points)}`);
+        }
     }
 
     function updateMenu() {
