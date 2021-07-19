@@ -52,9 +52,14 @@ function initial() {
     const drag = d3.drag<SVGCircleElement, DatumPoint>()
         .on('drag', function (event: any, d: DatumPoint) {
             const idx = d[2];
-            points[idx][0] = event.x;
-            points[idx][1] = event.y;
+            points[idx][0] = +(+event.x).toFixed(2);
+            points[idx][1] = +(+event.y).toFixed(2);
             update();
+        })
+        .on('end', () => {
+            console.log('done');
+            let info = `${JSON.stringify(points)}`;
+            d3.select('.info .points').text(info);    
         });
 
     function updateInfo(info: string) {
@@ -185,6 +190,7 @@ function LineEditor() {
                         <p>You can also add/remove/drag the points to change the shape of the curve.</p>
                     </span>
                     <span className="text"></span>
+                    <span className="points"></span>
                 </div>
             </div>
         </div>
