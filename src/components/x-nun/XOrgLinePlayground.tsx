@@ -138,9 +138,9 @@ function initial() {
                     .append('text')
                     .append('tspan')
                     .merge(t)
-                    .attr('x', d => d[0] - 16)
+                    .attr('x', d => d[0] - 24)
                     .attr('y', d => d[1] - 16)
-                    .text(d => d[2]);
+                    .text(d => d[2] + 1);
             })
             .append('circle')
             .attr('r', 14)
