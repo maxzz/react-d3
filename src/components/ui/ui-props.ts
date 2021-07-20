@@ -3,10 +3,11 @@
 export type SliderProps = {
     value: number;
     onChange: (v: number) => void;
-    label: string;
     min?: number;
     max?: number;
     step?: number;
+    label: string;
+    labelWidth?: string;
 };
 
 export type CheckboxProps = {
