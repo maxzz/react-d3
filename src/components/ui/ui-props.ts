@@ -1,3 +1,4 @@
+import React from 'react';
 //import './Slider.scss'; // TODO: does not work this way. later.
 
 export type SliderProps = {
@@ -8,6 +9,8 @@ export type SliderProps = {
     step?: number;
     label: string;
     labelWidth?: string;
+    lStyles?: React.CSSProperties; // styles for label before the main input control
+    rStyles?: React.CSSProperties; // styles for number after the main input control
 };
 
 export type CheckboxProps = {
