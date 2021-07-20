@@ -1,5 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
+import { IconRefresh } from './ui/ActionButtons';
 
 function D3World(svgRoot: SVGSVGElement) {
     let svg = d3.select<SVGSVGElement, Datum>(svgRoot);
@@ -36,12 +37,12 @@ function D3World(svgRoot: SVGSVGElement) {
         .y((d) => yScale(d.y))
         .curve(d3.curveMonotoneX);
 
-    console.log(svg);
+    svg.selectChildren().remove();
 
     const g = svg
         .attr('viewBox', [0, 0, width, height] as any)
-        .append('g')
-        //.attr('transform', `translate(${margin.left},${margin.top})`);
+        .append('g');
+    //.attr('transform', `translate(${margin.left},${margin.top})`);
 
     // Call the x axis in a group tag
     g.append('g')
@@ -88,22 +89,41 @@ function D3World(svgRoot: SVGSVGElement) {
         });
 }
 
-function LineChartBody() {
-    const ref = React.useRef<SVGSVGElement>(null);
+type LineChartBodyApi = {
+    update: () => void;
+};
+
+function LineChartBodyRaw(_: React.PropsWithChildren<any>, ref: React.Ref<LineChartBodyApi>) {
+    const svgRef = React.useRef<SVGSVGElement>(null);
     React.useEffect(() => {
-        ref.current && D3World(ref.current);
+        svgRef.current && D3World(svgRef.current);
     }, []);
+    React.useImperativeHandle(ref, () => ({
+        update() {
+            svgRef.current && D3World(svgRef.current);
+        }
+    }));
     return (
-        <svg ref={ref}>
+        <svg ref={svgRef}>
 
         </svg>
     );
 }
 
+const LineChartBody = React.forwardRef(LineChartBodyRaw);
+
 function LineChart() {
+    const api = React.useRef<LineChartBodyApi>(null);
     return (
         <div className='w-[30rem] border-8 border-blue-200 bg-blue-400'>
-            <LineChartBody />
+            <div className="">
+                <LineChartBody ref={api} />
+                <button onClick={() => {
+                    api.current?.update();
+                }}>
+                    <IconRefresh />
+                </button>
+            </div>
         </div>
     );
 }
