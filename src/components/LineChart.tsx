@@ -11,15 +11,15 @@ function D3World(svgRoot: SVGSVGElement) {
 
     const width = 440;
     const height = 200;
-    const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-    const insetAll = 6;
+    const margin = { top: 20, right: 20, bottom: 20, left: 40 };
+    const insetAll = 0;
     const inset = {
         top: insetAll,
         right: insetAll,
         bottom: insetAll,
         left: insetAll,
     };
-    const xticks = (width - margin.right - margin.left - inset.left - inset.right) / 80;
+    const xticks = (width - margin.right - margin.left - inset.left - inset.right) / 40;
     const yticks = (height - margin.top - margin.bottom - inset.top - inset.bottom) / 40;
 
     type Datum = {
@@ -46,14 +46,14 @@ function D3World(svgRoot: SVGSVGElement) {
 
     // Call the x axis in a group tag
     g.append('g')
-        .attr('class', 'x axis')
+        .attr('class', 'x-axis')
         .attr('transform', `translate(0,${height - margin.bottom})`)
         //.call(d3.axisBottom(xScale.copy().interpolate(d3.interpolateRound)).ticks(xticks));
-        .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
+        .call(d3.axisBottom(xScale.copy().interpolate(d3.interpolateRound)).ticks(xticks)); // Create an axis component with d3.axisBottom
 
     // Call the y axis in a group tag
     g.append('g')
-        .attr('class', 'y axis')
+        .attr('class', 'y-axis')
         .attr("transform", `translate(${margin.left},0)`)
         //.call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
         .call(d3.axisLeft(yScale.copy().interpolate(d3.interpolateRound)).ticks(yticks)); // Create an axis component with d3.axisLeft
@@ -118,7 +118,7 @@ function LineChart() {
         <div className='w-[30rem] border-8 border-blue-200 bg-blue-400'>
             <div className="">
                 <LineChartBody ref={api} />
-                <button onClick={() => {
+                <button className="ml-4 mb-2 border rounded border-blue-800 hover:bg-blue-500 active:bg-blue-500 active:scale-[.97]" onClick={() => {
                     api.current?.update();
                 }}>
                     <IconRefresh />
