@@ -10,7 +10,7 @@ import LineChart from './components/LineChart';
 
 function App() {
     return (
-        <div className="h-screen">
+        <div className="min-h-screen">
             <div className="h-full overflow-y-auto bg-green-50 bg-gradient-to-tl from-green-500 to-cyan-500">
                 <div className="w-full h-full flex flex-col justify-between items-center">
                     {/* Demos */}
