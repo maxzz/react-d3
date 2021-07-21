@@ -95,14 +95,17 @@ type LineChartBodyApi = {
 
 function LineChartBodyRaw(_: React.PropsWithChildren<any>, ref: React.Ref<LineChartBodyApi>) {
     const svgRef = React.useRef<SVGSVGElement>(null);
+
     React.useEffect(() => {
         svgRef.current && D3World(svgRef.current);
     }, []);
+
     React.useImperativeHandle(ref, () => ({
         update() {
             svgRef.current && D3World(svgRef.current);
         }
     }));
+
     return (
         <svg ref={svgRef}>
 
@@ -115,12 +118,15 @@ const LineChartBody = React.forwardRef(LineChartBodyRaw);
 function LineChart() {
     const api = React.useRef<LineChartBodyApi>(null);
     return (
-        <div className='w-[30rem] border-8 border-blue-200 bg-blue-400'>
+        <div className='w-[30rem] border-8 border-blue-200 bg-blue-400'
+            style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}
+        >
             <div className="">
                 <LineChartBody ref={api} />
-                <button className="ml-4 mb-2 border rounded border-blue-800 hover:bg-blue-500 active:bg-blue-500 active:scale-[.97]" onClick={() => {
-                    api.current?.update();
-                }}>
+                <button className="ml-4 mb-2 h-6 w-6 p-1 border rounded border-blue-800 hover:bg-blue-500 active:bg-blue-500 active:scale-[.97]"
+                    style={{ boxShadow: '#00000019 0 0 1px 1px' }}
+                    onClick={() => api.current?.update()}
+                >
                     <IconRefresh />
                 </button>
             </div>

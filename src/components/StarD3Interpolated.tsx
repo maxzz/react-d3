@@ -128,7 +128,7 @@ function StarD3Interpolated() {
                     {/* Actions */}
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
                         <button
-                            className="rounded border border-gray-500 p-1 text-green-900 bg-green-100 active:scale-[0.97]"
+                            className="w-7 h-7 p-1 rounded border border-gray-500 text-green-900 bg-green-100 active:scale-[0.97]"
                             style={{ boxShadow: '#0000001f 1px 1px 1px 1px' }}
                             onClick={() => genCb?.current?.save()}
                             title="Save SVG"
@@ -136,7 +136,7 @@ function StarD3Interpolated() {
                             <IconSave />
                         </button>
                         <button
-                            className="rounded border border-gray-500 p-1 text-green-900 bg-green-100 active:scale-[0.97]"
+                            className="w-7 h-7 p-1 rounded border border-gray-500 text-green-900 bg-green-100 active:scale-[0.97]"
                             style={{ boxShadow: '#0000001f 1px 1px 1px 1px' }}
                             onClick={() => setUpdate(v => v + 1)}
                             title="Update"
