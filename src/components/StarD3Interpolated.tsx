@@ -4,7 +4,7 @@ import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentere
 import { CheckboxProps, SliderProps } from './ui/ui-props';
 import './ui/Slider.scss';
 import { IconRefresh, IconSave } from './ui/ActionButtons';
-import { default as Checkbox2 } from './ui/Checkbox';
+// import { default as Checkbox2 } from './ui/Checkbox';
 
 const VIEWBOX_SIZE = 200;
 
@@ -122,7 +122,7 @@ function StarD3Interpolated() {
                 </div>
                 {/* Options */}
                 <div className="relative">
-                    <Checkbox2 label={'Smooth lines'} />
+                    {/* <Checkbox2 label={'Smooth lines'} /> */}
                     <Checkbox className="" label="Smooth lines" value={smooth} onChange={setSmooth} />
                     <Checkbox className="" label="Randomize outer and inner radius" value={iRandom} onChange={onRandomBoth} />
                     <Checkbox className="" label="Randomize outer radius" value={oRandom} onChange={onRandomOuter} />

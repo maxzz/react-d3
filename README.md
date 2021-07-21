@@ -24,3 +24,6 @@ Coexistence of React with D3.js
 
 * Curves
     [D3 curve explorer](https://bl.ocks.org/d3indepth/raw/b6d4845973089bc1012dec1674d3aff8/)
+
+* Custom UI
+    [checkbox](https://codepen.io/enbee81/pen/oNWZBbb)
