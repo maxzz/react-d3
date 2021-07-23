@@ -28,10 +28,11 @@ function AxisX({ direction }: AxisProps) {
 }
 
 const datum = d3.range(100).map(_ => [Math.random(), Math.random()]);
+type Datum = typeof datum;
 
-function ScatterPlot({ data }: { data: typeof datum; }) {
-    const xSale = d3.scaleLinear().domain([0, 1]).range([0, 200]);
-    const ySale = d3.scaleLinear().domain([0, 1]).range([0, 200]);
+function ScatterPlot({ data, width, height }: { data: Datum; width: number, height: number; }) {
+    const xSale = d3.scaleLinear().domain([0, 1]).range([0, width]);
+    const ySale = d3.scaleLinear().domain([0, 1]).range([0, height]);
     return (
         <g>
             {data.map(item => (
@@ -42,11 +43,20 @@ function ScatterPlot({ data }: { data: typeof datum; }) {
 }
 
 function MotionBallTransition() {
+    const WIDTH = 400;
+    const HEIGHT = 300;
+
+    const inner = 10;
+    const margin = { left: inner, top: inner, right: inner, bottom: inner };
+    const innerWidth = WIDTH - margin.left - margin.right;
+    const innerHeight = HEIGHT - margin.top - margin.right;
     return (
         <div className="bg-blue-400">
-            <svg>
+            <svg width={WIDTH} height={HEIGHT}>
                 <AxisX direction="axisLeft" />
-                <ScatterPlot data={datum} />
+                <g transform={`translate(${margin.left},${margin.top})`}>
+                    <ScatterPlot data={datum} width={innerWidth} height={innerHeight} />
+                </g>
             </svg>
         </div>
     );
