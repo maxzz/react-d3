@@ -7,6 +7,7 @@ import StarD3Interpolated from './components/StarD3Interpolated';
 import FunPieChart from './components/FunPieChart';
 import LinePlayground from './components/x-nun/XOrgLinePlayground';
 import LineChart from './components/LineChart';
+import MotionBallTransition from './components/MotionBallTransition';
 
 function App() {
     return (
@@ -15,10 +16,11 @@ function App() {
                 <div className="w-full h-full flex flex-col justify-between items-center">
                     {/* Demos */}
                     <div className="mt-4 space-y-4 max-w-5xl min-w-[30rem] flex flex-col flex-wrap items-center z-10">
-                        <StarD3Interpolated />
-                        <FunPlot />
-                        <LineChart />
-                        <FunPieChart />
+                        {/* <StarD3Interpolated /> */}
+                        {/* <FunPlot /> */}
+                        <MotionBallTransition />
+                        {/* <LineChart /> */}
+                        {/* <FunPieChart /> */}
                         {/* <LinePlayground /> */}
                         {/* <HierarchyClassic /> */}
                     </div>
