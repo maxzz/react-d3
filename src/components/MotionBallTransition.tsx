@@ -22,7 +22,7 @@ function AxisX({ direction }: AxisProps) {
     }
 
     return (
-        <g ref={gEl} transform={`translate(30,0)`}>
+        <g ref={gEl} transform={`translate(30,0)`} style={{ outline: '1px solid red' }}>
         </g>
     );
 }
@@ -35,6 +35,7 @@ function ScatterPlot({ data, width, height }: { data: Datum; width: number, heig
     const ySale = d3.scaleLinear().domain([0, 1]).range([0, height]);
     return (
         <g>
+            <rect width={width} height={height} fill="#f707" />
             {data.map(item => (
                 <circle cx={xSale(item[0])} cy={ySale(item[1])} r="5" />
             ))}
@@ -54,7 +55,7 @@ function MotionBallTransition() {
         <div className="bg-blue-400">
             <svg width={WIDTH} height={HEIGHT}>
                 <AxisX direction="axisLeft" />
-                <g transform={`translate(${margin.left},${margin.top})`}>
+                <g transform={`translate(${margin.left},${margin.top})`} style={{ outline: '1px solid red' }}>
                     <ScatterPlot data={datum} width={innerWidth} height={innerHeight} />
                 </g>
             </svg>
