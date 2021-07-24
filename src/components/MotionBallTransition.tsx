@@ -6,7 +6,7 @@ type AxisProps = {
     scale: Scale;
 };
 
-type Scale = d3.ScaleLinear<number, number>;
+type Scale = d3.ScaleLinear<number, number, never>;
 
 function AxisX({ direction, scale, ...style }: AxisProps | React.SVGProps<SVGGElement> ) {
     const gEl = useRef<SVGGElement>(null);
