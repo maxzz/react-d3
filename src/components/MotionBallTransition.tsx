@@ -24,7 +24,7 @@ function AxisX({ direction, scale, attrs = {} }: AxisProps) {
     }
 
     return (
-        <g ref={gEl} {...attrs} style={{ outline: '1px solid red' }}>
+        <g ref={gEl} {...attrs} > {/* style={{ outline: '1px solid red' }} */}
         </g>
     );
 }
@@ -35,7 +35,7 @@ type Datum = typeof datum;
 function ScatterPlot({ data, width, height, xScale, yScale }: { data: Datum; width: number, height: number; xScale: Scale; yScale: Scale; }) {
     return (
         <g>
-            <rect width={width} height={height} fill="#f707" />
+            <rect width={width} height={height} fill="rgb(147, 197, 253)" /> {/* #f707 */}
             {data.map(item => (
                 <circle cx={xScale(item[0])} cy={yScale(item[1])} r="5" />
             ))}
@@ -60,7 +60,8 @@ function MotionBallTransition() {
             <svg width={WIDTH} height={HEIGHT}>
                 <AxisX attrs={{transform: `translate(${margin.left},${margin.top})`}} direction="axisLeft" scale={yScale} />
                 <AxisX attrs={{transform: `translate(${margin.left},${margin.top + innerHeight})`}} direction="axisBottom" scale={xScale} />
-                <g transform={`translate(${margin.left},${margin.top})`} style={{ outline: '1px solid red' }}>
+
+                <g transform={`translate(${margin.left},${margin.top})`} > {/* style={{ outline: '1px solid red' }} */}
                     <ScatterPlot data={datum} width={innerWidth} height={innerHeight} xScale={xScale} yScale={yScale} />
                 </g>
             </svg>
