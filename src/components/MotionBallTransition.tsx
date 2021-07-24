@@ -29,7 +29,7 @@ function AxisX({ direction, scale, attrs = {} }: AxisProps) {
     );
 }
 
-const datum = d3.range(100).map(_ => [Math.random(), Math.random()]);
+const datum = d3.range(200).map(_ => [Math.random(), Math.random()]);
 type Datum = typeof datum;
 
 function ScatterPlot({ data, width, height, xScale, yScale }: { data: Datum; width: number, height: number; xScale: Scale; yScale: Scale; }) {
@@ -37,7 +37,7 @@ function ScatterPlot({ data, width, height, xScale, yScale }: { data: Datum; wid
         <g>
             <rect width={width} height={height} fill="rgb(147, 197, 253)" /> {/* #f707 */}
             {data.map(item => (
-                <circle cx={xScale(item[0])} cy={yScale(item[1])} r="5" />
+                <circle cx={xScale(item[0])} cy={yScale(item[1])} r="3" fill='#fff' stroke="rebeccapurple" strokeWidth={1} />
             ))}
         </g>
     );
