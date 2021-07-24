@@ -47,7 +47,7 @@ function MotionBallTransition() {
     const WIDTH = 400;
     const HEIGHT = 300;
 
-    const inner = 10;
+    const inner = 30;
     const margin = { left: inner, top: inner, right: inner, bottom: inner };
     const innerWidth = WIDTH - margin.left - margin.right;
     const innerHeight = HEIGHT - margin.top - margin.right;
@@ -58,7 +58,8 @@ function MotionBallTransition() {
     return (
         <div className="bg-blue-400">
             <svg width={WIDTH} height={HEIGHT}>
-                <AxisX attrs={{transform: `translate(40,${margin.top})`}} direction="axisLeft" scale={xScale} />
+                <AxisX attrs={{transform: `translate(${margin.left},${margin.top})`}} direction="axisLeft" scale={yScale} />
+                <AxisX attrs={{transform: `translate(${margin.left},${margin.top + innerHeight})`}} direction="axisBottom" scale={xScale} />
                 <g transform={`translate(${margin.left},${margin.top})`} style={{ outline: '1px solid red' }}>
                     <ScatterPlot data={datum} width={innerWidth} height={innerHeight} xScale={xScale} yScale={yScale} />
                 </g>
