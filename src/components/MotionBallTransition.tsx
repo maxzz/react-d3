@@ -53,13 +53,13 @@ function MotionBallTransition() {
     const innerHeight = HEIGHT - margin.top - margin.right;
 
     const xScale = d3.scaleLinear().domain([0, 1]).range([0, innerWidth]);
-    const yScale = d3.scaleLinear().domain([0, 1]).range([0, innerHeight]);
+    const yScale = d3.scaleLinear().domain([0, 1]).range([innerHeight, 0]);
 
     return (
         <div className="bg-blue-400">
             <svg width={WIDTH} height={HEIGHT}>
-                <AxisX attrs={{transform: `translate(${margin.left},${margin.top})`}} direction="axisLeft" scale={yScale} />
-                <AxisX attrs={{transform: `translate(${margin.left},${margin.top + innerHeight})`}} direction="axisBottom" scale={xScale} />
+                <AxisX attrs={{ transform: `translate(${margin.left},${margin.top})` }} direction="axisLeft" scale={yScale} />
+                <AxisX attrs={{ transform: `translate(${margin.left},${margin.top + innerHeight})` }} direction="axisBottom" scale={xScale} />
 
                 <g transform={`translate(${margin.left},${margin.top})`} > {/* style={{ outline: '1px solid red' }} */}
                     <ScatterPlot data={datum} width={innerWidth} height={innerHeight} xScale={xScale} yScale={yScale} />
