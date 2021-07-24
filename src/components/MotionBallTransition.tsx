@@ -4,11 +4,11 @@ import * as d3 from 'd3';
 type AxisProps = {
     direction: 'axisLeft' | 'axisRight' | 'axisTop' | 'axisBottom';
     scale: Scale;
-};
+} & React.SVGAttributes<SVGGElement>;
 
-type Scale = d3.ScaleLinear<number, number, never>;
+type Scale = d3.ScaleLinear<number, number>;
 
-function AxisX({ direction, scale, ...style }: AxisProps | React.SVGProps<SVGGElement> ) {
+function AxisX({ direction, scale, ...style }: AxisProps) {
     const gEl = useRef<SVGGElement>(null);
 
     useEffect(() => {
@@ -17,9 +17,7 @@ function AxisX({ direction, scale, ...style }: AxisProps | React.SVGProps<SVGGEl
 
     function d3render() {
         if (gEl.current) {
-            let xScale = d3.scaleLinear().domain([0, 1]).range([0, 200]);
-            let axisX = d3[direction](xScale);
-
+            let axisX = d3[direction](scale);
             d3.select(gEl.current).call(axisX);
         }
     }
