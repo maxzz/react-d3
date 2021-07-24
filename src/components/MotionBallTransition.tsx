@@ -8,7 +8,7 @@ type AxisProps = {
 
 type Scale = d3.ScaleLinear<number, number>;
 
-function AxisX({ direction, scale }: AxisProps) {
+function AxisX({ direction, scale, ...style }: AxisProps | React.SVGProps<SVGGElement> ) {
     const gEl = useRef<SVGGElement>(null);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ function AxisX({ direction, scale }: AxisProps) {
     }
 
     return (
-        <g ref={gEl} transform={`translate(30,0)`} style={{ outline: '1px solid red' }}>
+        <g ref={gEl} {...style} style={{ outline: '1px solid red' }}>
         </g>
     );
 }
@@ -59,7 +59,7 @@ function MotionBallTransition() {
     return (
         <div className="bg-blue-400">
             <svg width={WIDTH} height={HEIGHT}>
-                <AxisX direction="axisLeft" scale={xScale} />
+                <AxisX transform={`translate(40,${margin.top})`} direction="axisLeft" scale={xScale} />
                 <g transform={`translate(${margin.left},${margin.top})`} style={{ outline: '1px solid red' }}>
                     <ScatterPlot data={datum} width={innerWidth} height={innerHeight} xScale={xScale} yScale={yScale} />
                 </g>
