@@ -34,8 +34,9 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
         domain[0] =  0;
 
         const xScale = d3.scaleBand().domain(DATA.map((_, i) => `${i}`)).range([margin.left, margin.left + innerWidth]).paddingInner(.2);
-        const yScale = d3.scaleLinear().domain(domain).range([0, innerHeight - bandTop]);
+        //const yScale = d3.scaleLinear().domain(domain).range([0, innerHeight - bandTop]);
         //const yScale = d3.scaleLinear().domain(domain).range([margin.top + innerHeight, margin.top]);
+        const yScale = d3.scaleLinear().domain(domain).range([bandTop, margin.top + innerHeight - bandTop]);
 
         const svg = d3.select(svgEl);
         //svg.selectAll('g').remove();
