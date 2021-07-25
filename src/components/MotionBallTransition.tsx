@@ -4,8 +4,7 @@ import { css } from '@stitches/react';
 import { IconRefresh } from './ui/ActionButtons';
 
 type Datum = number;
-//let DATA = d3.range(130).map(_ => Math.random());
-let DATA = d3.range(13).map((_, i) => i / 5);
+let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
 console.log(DATA);
 
 const style = css({
@@ -32,6 +31,7 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
 
     function bars(svgEl: SVGSVGElement) {
         const domain = d3.extent(DATA, d => d) as [number, number];
+        domain[0] =  0;
 
         const xScale = d3.scaleBand().domain(DATA.map((_, i) => `${i}`)).range([margin.left, margin.left + innerWidth]).paddingInner(.2);
         const yScale = d3.scaleLinear().domain(domain).range([0, innerHeight - bandTop]);
@@ -60,13 +60,15 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
                 // .style('opacity', 1)
                 .attr('x', x)
                 .attr('y', y + 40)
-                .text(d);
+                .text(`${x} x ${y} => ${d}`);
         }
 
         function mouseOut(this: d3.BaseType, event: Event, d: number): void {
             console.log('mouse out');
             g.selectAll('.hint').remove();
         }
+
+        g.style('outline', '1px solid red');
 
         const bars = g
             .selectAll('.bar')
