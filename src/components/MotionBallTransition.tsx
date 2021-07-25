@@ -33,7 +33,7 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
     function bars(svgEl: SVGSVGElement) {
         const domain = d3.extent(DATA, d => d) as [number, number];
 
-        const xScale = d3.scaleBand().domain(DATA.map((_, i) => `${i}`)).range([margin.left, margin.left + innerWidth]).paddingInner(.7);
+        const xScale = d3.scaleBand().domain(DATA.map((_, i) => `${i}`)).range([margin.left, margin.left + innerWidth]).paddingInner(.2);
         const yScale = d3.scaleLinear().domain(domain).range([0, innerHeight - bandTop]);
         //const yScale = d3.scaleLinear().domain(domain).range([margin.top + innerHeight, margin.top]);
 
@@ -46,11 +46,35 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
             g = svg.select('g');
         }
 
+        function mouseOver(this: d3.BaseType, event: MouseEvent, d: number): void {
+            const [x, y] = d3.pointer(event, this);
+            console.log('mouse in', x, y);
+
+            g.append('text')
+                .attr('class', 'hint')
+                // .attr('x', x)
+                // .attr('y', y)
+                // .style('opacity', 0)
+                // .transition()
+                // .duration(400)
+                // .style('opacity', 1)
+                .attr('x', x)
+                .attr('y', y + 40)
+                .text(d);
+        }
+
+        function mouseOut(this: d3.BaseType, event: Event, d: number): void {
+            console.log('mouse out');
+            g.selectAll('.hint').remove();
+        }
+
         const bars = g
             .selectAll('.bar')
             .data(DATA)
             .join('rect')
             .attr('class', `bar ${style()}`)
+            .on('mouseover', mouseOver)
+            .on('mouseout', mouseOut)
 
             .attr('x', (d, i): number => xScale('' + i) || 0)
             .attr('y', d => bandTop)
