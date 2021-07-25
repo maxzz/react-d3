@@ -52,11 +52,10 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
             .join('rect')
             .attr('class', `bar ${style()}`)
 
-            .transition()
-            .duration(400)
-
             .attr('x', (d, i): number => xScale('' + i) || 0)
             .attr('y', d => bandTop)
+            .transition()
+            .duration(400)
             .attr('width', xScale.bandwidth())
             .attr('height', d => yScale(d));
     }
