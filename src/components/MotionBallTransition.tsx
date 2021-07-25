@@ -62,7 +62,8 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
 
     React.useImperativeHandle(refAPI, () => ({
         update: () => {
-            DATA = d3.range(13).map(_ => Math.random());
+            const total = d3.randomInt(5, 50)();
+            DATA = d3.range(total).map(_ => Math.random());
             refSvg.current && bars(refSvg.current);
         }
     }));
