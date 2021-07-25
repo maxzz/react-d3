@@ -29,7 +29,7 @@ const bandTop = margin.top + 50;
 
 function bars(svgEl: SVGSVGElement, DATA: Datum[]) {
     const domain = d3.extent(DATA, d => d) as [number, number];
-    domain[0] =  0;
+    domain[0] = 0;
 
     const xScale = d3.scaleBand().domain(DATA.map((_, i) => `${i}`)).range([margin.left, margin.left + innerWidth]).paddingInner(.2);
     const yScale = d3.scaleLinear().domain(domain).range([bandTop, margin.top + innerHeight - bandTop]);
@@ -72,20 +72,27 @@ function bars(svgEl: SVGSVGElement, DATA: Datum[]) {
         .attr('height', d => yScale(d));
 }
 
-const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
+type BodyProps = {
+    sorted?: boolean;
+};
+
+const Body = React.forwardRef(function ({ sorted = false }: BodyProps, refAPI: React.Ref<API>) {
     const refSvg = React.useRef<SVGSVGElement>(null);
+
+    React.useEffect(() => {
+        refSvg.current && bars(refSvg.current, DATA);
+    }, []);
 
     React.useImperativeHandle(refAPI, () => ({
         update: () => {
             const total = d3.randomInt(5, 20)();
             DATA = d3.range(total).map(_ => Math.random());
+            if (sorted) {
+                DATA.sort((a, b) => d3.ascending(a, b));
+            }
             refSvg.current && bars(refSvg.current, DATA);
         }
     }));
-
-    React.useEffect(() => {
-        refSvg.current && bars(refSvg.current, DATA);
-    }, []);
 
     return (
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} ref={refSvg}>
@@ -99,7 +106,7 @@ function MotionBallTransition() {
     return (
         <div className="w-[30rem]">
             <div className="bg-blue-400">
-                <Body ref={ref} />
+                <Body ref={ref} sorted={sorted} />
             </div>
             <div className="flex space-x-2">
                 <button className="mt-1 p-0.5 w-6 h-6 border rounded border-gray-400 active:scale-[.97]"
