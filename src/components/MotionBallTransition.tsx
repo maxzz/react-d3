@@ -39,23 +39,14 @@ function Body() {
 
         const bars = g
             .selectAll('.bar')
-            .data(DATA);
-
-        bars.enter()
-            .append('rect')
+            .data(DATA)
+            .join('rect')
             .attr('class', `bar ${style()}`)
 
             .attr('x', (d, i): number => xScale('' + i) || 0)
             .attr('y', d => 0)
             .attr('width', xScale.bandwidth())
             .attr('height', d => yScale(d));
-
-        // .attr('x', (d, i): number => xScale('' + i) || 0)
-        //     .attr('y', d => yScale(d))
-        //     .attr('width', xScale.bandwidth())
-        //     .attr('height', d => yScale(d));
-
-        bars.exit().remove();
     }
 
     React.useEffect(() => {
