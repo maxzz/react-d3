@@ -2,6 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import { css } from '@stitches/react';
 import { IconRefresh } from './ui/ActionButtons';
+import Checkbox from './ui/Checkbox';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
@@ -20,7 +21,7 @@ type API = {
 const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
     const refSvg = React.useRef<SVGSVGElement>(null);
 
-    const WIDTH = 300;
+    const WIDTH = 600;
     const HEIGHT = 300;
 
     const margin = { left: 20, top: 20, right: 20, bottom: 20 };
@@ -87,23 +88,27 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
     }, []);
 
     return (
-        <svg width={WIDTH} height={HEIGHT} viewBox={`0 0 ${WIDTH} ${HEIGHT}`} ref={refSvg}>
+        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} ref={refSvg}>
         </svg>
     );
 });
 
 function MotionBallTransition() {
     const ref = React.useRef<API>(null);
+    const [sorted, setSorted] = React.useState(false);
     return (
-        <div className="">
+        <div className="w-[30rem]">
             <div className="bg-blue-400">
                 <Body ref={ref} />
             </div>
-            <button className="mt-1 p-0.5 w-6 h-6 border rounded border-gray-400 active:scale-[.97]"
-                onClick={() => ref.current?.update()}
-            >
-                <IconRefresh />
-            </button>
+            <div className="flex space-x-2">
+                <button className="mt-1 p-0.5 w-6 h-6 border rounded border-gray-400 active:scale-[.97]"
+                    onClick={() => ref.current?.update()}
+                >
+                    <IconRefresh />
+                </button>
+                <Checkbox label="Sorted" checked={sorted} onChange={setSorted} />
+            </div>
         </div>
     );
 }
