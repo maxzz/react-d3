@@ -3,10 +3,9 @@ import * as d3 from 'd3';
 import { css } from '@stitches/react';
 
 type Datum = number;
-//const DATA = d3.range(130).map(_ => Math.random());
-const DATA = d3.range(13).map((_, i) => i / 5);
+//let DATA = d3.range(130).map(_ => Math.random());
+let DATA = d3.range(13).map((_, i) => i / 5);
 console.log(DATA);
-
 
 const style = css({
     fill: '#5993da',
@@ -14,8 +13,12 @@ const style = css({
     strokeWidth: '1',
 });
 
-function Body() {
-    const ref = React.useRef<SVGSVGElement>(null);
+type API = {
+    update: () => void;
+};
+
+const Body = React.forwardRef(function Body(props, refAPI: React.Ref<API>) {
+    const refSvg = React.useRef<SVGSVGElement>(null);
 
     const WIDTH = 300;
     const HEIGHT = 300;
@@ -33,9 +36,13 @@ function Body() {
 
     function bars(svgEl: SVGSVGElement) {
         const svg = d3.select(svgEl);
-        svg.selectAll('g').remove();
+        //svg.selectAll('g').remove();
 
-        const g = svg.append('g');
+        let g = svg.select('g');
+        if (g.empty()) {
+            svg.append('g');
+            g = svg.select('g');
+        }
 
         const bars = g
             .selectAll('.bar')
@@ -49,20 +56,32 @@ function Body() {
             .attr('height', d => yScale(d));
     }
 
+    React.useImperativeHandle(refAPI, () => ({
+        update: () => {
+            console.log('33');
+            DATA = d3.range(13).map(_ => Math.random());
+            refSvg.current && bars(refSvg.current);
+        }
+    }));
+
     React.useEffect(() => {
-        ref.current && bars(ref.current);
+        refSvg.current && bars(refSvg.current);
     }, []);
 
     return (
-        <svg width={WIDTH} height={HEIGHT} viewBox={`0 0 ${WIDTH} ${HEIGHT}`} ref={ref}>
+        <svg width={WIDTH} height={HEIGHT} viewBox={`0 0 ${WIDTH} ${HEIGHT}`} ref={refSvg}>
         </svg>
     );
-}
+});
 
 function MotionBallTransition() {
+    const ref = React.useRef<API>(null);
     return (
-        <div className="bg-blue-400">
-            <Body />
+        <div className="">
+            <div className="bg-blue-400">
+                <Body ref={ref} />
+            </div>
+            <button className="mt-1 px-2 pb-1 border rounded border-gray-400 active:scale-[.97]" onClick={() => ref.current?.update()}>update</button>
         </div>
     );
 }
