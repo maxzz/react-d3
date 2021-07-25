@@ -3,11 +3,13 @@ import * as d3 from 'd3';
 import { css } from '@stitches/react';
 
 type Datum = number;
-//const DATA = d3.range(100).map(_ => Math.random());
-const DATA = d3.range(3).map((_, i) => i/2);
+//const DATA = d3.range(130).map(_ => Math.random());
+const DATA = d3.range(13).map((_, i) => i / 5);
+console.log(DATA);
+
 
 const style = css({
-    fill: 'none',
+    fill: '#5993da',
     stroke: 'white',
     strokeWidth: '1',
 });
@@ -23,23 +25,37 @@ function Body() {
     const innerWidth = WIDTH - margin.left - margin.right;
     const innerHeight = HEIGHT - margin.top - margin.bottom;
 
-    const xScale = d3.scaleBand().domain(DATA.map((_, i) => `${i}`)).range([margin.left, margin.left + innerWidth]).paddingInner(.1);
-    const yScale = d3.scaleLinear().domain([0, 1]).range([margin.top + innerHeight, margin.top]);
+    const domain = d3.extent(DATA, d => d) as [number, number];
+
+    const xScale = d3.scaleBand().domain(DATA.map((_, i) => `${i}`)).range([margin.left, margin.left + innerWidth]).paddingInner(.7);
+    const yScale = d3.scaleLinear().domain(domain).range([margin.top, margin.top + innerHeight]);
+    //const yScale = d3.scaleLinear().domain(domain).range([margin.top + innerHeight, margin.top]);
 
     function bars(svgEl: SVGSVGElement) {
         const svg = d3.select(svgEl);
         svg.selectAll('g').remove();
-        
-        const g = svg.append('g')
+
+        const g = svg.append('g');
+
+        const bars = g
             .selectAll('.bar')
-            .data(DATA)
-            .enter()
+            .data(DATA);
+
+        bars.enter()
             .append('rect')
             .attr('class', `bar ${style()}`)
+
             .attr('x', (d, i): number => xScale('' + i) || 0)
-            .attr('y', d => yScale(d))
+            .attr('y', d => 0)
             .attr('width', xScale.bandwidth())
-            .attr('height', d => HEIGHT - yScale(d));
+            .attr('height', d => yScale(d));
+
+        // .attr('x', (d, i): number => xScale('' + i) || 0)
+        //     .attr('y', d => yScale(d))
+        //     .attr('width', xScale.bandwidth())
+        //     .attr('height', d => yScale(d));
+
+        bars.exit().remove();
     }
 
     React.useEffect(() => {
