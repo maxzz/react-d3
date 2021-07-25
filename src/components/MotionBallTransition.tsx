@@ -3,6 +3,8 @@ import * as d3 from 'd3';
 import { css } from '@stitches/react';
 import { IconRefresh } from './ui/ActionButtons';
 import Checkbox from './ui/Checkbox';
+import Slider from './ui/SimpleSlider';
+import './ui/Slider.scss';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
@@ -74,14 +76,28 @@ function bars(svgEl: SVGSVGElement, DATA: Datum[]) {
 
 type BodyProps = {
     sorted?: boolean;
+    nBars?: number;
 };
 
-const Body = React.forwardRef(function ({ sorted = false }: BodyProps, refAPI: React.Ref<API>) {
+const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProps, refAPI: React.Ref<API>) {
     const refSvg = React.useRef<SVGSVGElement>(null);
 
+    // React.useEffect(() => {
+    //     refSvg.current && bars(refSvg.current, DATA);
+    // }, []);
+
     React.useEffect(() => {
+        genData(sorted, nBars);
         refSvg.current && bars(refSvg.current, DATA);
-    }, []);
+    }, [nBars]);
+
+    function genData(sorted: boolean, nBars: number) {
+        //const total = d3.randomInt(5, 20)();
+        DATA = d3.range(nBars).map(_ => Math.random());
+        if (sorted) {
+            DATA.sort((a, b) => d3.ascending(a, b));
+        }
+    }
 
     React.useImperativeHandle(refAPI, () => ({
         update: () => {
@@ -103,10 +119,11 @@ const Body = React.forwardRef(function ({ sorted = false }: BodyProps, refAPI: R
 function MotionBallTransition() {
     const ref = React.useRef<API>(null);
     const [sorted, setSorted] = React.useState(false);
+    const [nBars, setNBars] = React.useState(14);
     return (
         <div className="w-[30rem]">
             <div className="bg-blue-400">
-                <Body ref={ref} sorted={sorted} />
+                <Body ref={ref} sorted={sorted} nBars={nBars} />
             </div>
             <div className="flex space-x-2">
                 <button className="mt-1 p-0.5 w-6 h-6 border rounded border-gray-400 active:scale-[.97]"
@@ -115,6 +132,7 @@ function MotionBallTransition() {
                     <IconRefresh />
                 </button>
                 <Checkbox label="Sorted" checked={sorted} onChange={setSorted} />
+                <Slider label="N Bars" labelWidth="3.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={20} />
             </div>
         </div>
     );
