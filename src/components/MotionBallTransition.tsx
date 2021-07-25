@@ -5,7 +5,7 @@ import { IconRefresh } from './ui/ActionButtons';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
-console.log(DATA);
+//console.log(DATA);
 
 const style = css({
     fill: '#5993da',
@@ -34,8 +34,6 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
         domain[0] =  0;
 
         const xScale = d3.scaleBand().domain(DATA.map((_, i) => `${i}`)).range([margin.left, margin.left + innerWidth]).paddingInner(.2);
-        //const yScale = d3.scaleLinear().domain(domain).range([0, innerHeight - bandTop]);
-        //const yScale = d3.scaleLinear().domain(domain).range([margin.top + innerHeight, margin.top]);
         const yScale = d3.scaleLinear().domain(domain).range([bandTop, margin.top + innerHeight - bandTop]);
 
         const svg = d3.select(svgEl);
@@ -49,29 +47,18 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
 
         function mouseOver(this: d3.BaseType, event: MouseEvent, d: number): void {
             const [x, y] = d3.pointer(event, this);
-            console.log('mouse in', x, y);
-
             g.append('text')
                 .attr('class', 'hint')
-                // .attr('x', x)
-                // .attr('y', y)
-                // .style('opacity', 0)
-                // .transition()
-                // .duration(400)
-                // .style('opacity', 1)
                 .attr('x', x)
-                .attr('y', y + 40)
+                .attr('y', y + 20)
                 .text(`${x} x ${y} => ${d}`);
         }
 
         function mouseOut(this: d3.BaseType, event: Event, d: number): void {
-            console.log('mouse out');
             g.selectAll('.hint').remove();
         }
 
-        g.style('outline', '1px solid red');
-
-        const bars = g
+        g
             .selectAll('.bar')
             .data(DATA)
             .join('rect')
@@ -89,7 +76,7 @@ const Body = React.forwardRef(function (_props, refAPI: React.Ref<API>) {
 
     React.useImperativeHandle(refAPI, () => ({
         update: () => {
-            const total = d3.randomInt(5, 50)();
+            const total = d3.randomInt(5, 20)();
             DATA = d3.range(total).map(_ => Math.random());
             refSvg.current && bars(refSvg.current);
         }
