@@ -2,9 +2,9 @@ import React from 'react';
 import * as d3 from 'd3';
 import { css } from '@stitches/react';
 import { IconRefresh } from './ui/ActionButtons';
-import Checkbox from './ui/BigCheckbox';
 import Slider from './ui/SimpleSlider';
 import './ui/Slider.scss';
+import CheckboxStyles from './ui/CheckboxSmall.module.scss';
 import CheckboxSmall from './ui/CheckboxSmall';
 
 type Datum = number;
@@ -126,14 +126,14 @@ function MotionBallTransition() {
             <div className="bg-blue-400">
                 <Body ref={ref} sorted={sorted} nBars={nBars} />
             </div>
-            <div className="flex space-x-2">
-                <button className="mt-1 p-0.5 w-6 h-6 border rounded border-gray-400 active:scale-[.97]"
+            <div className="mt-1 flex space-x-2">
+                <button className="p-0.5 w-6 h-6 border rounded border-gray-400 active:scale-[.97]"
                     onClick={() => ref.current?.update()}
                 >
                     <IconRefresh />
                 </button>
-                <Slider label="N Bars" labelWidth="3.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={20} />
-                <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} />
+                <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
+                <Slider label="N Bars" labelWidth="3.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
             </div>
         </div>
     );
