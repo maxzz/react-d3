@@ -5,19 +5,19 @@
     display: flex;
     align-items: center;
 
-    &__input {
+    .input {
         position: absolute;
         width: 1.375em;
         height: 1.375em;
         opacity: 0;
         cursor: pointer;
 
-        &:checked + #{$block}__icon .tick {
+        &:checked + .icon .tick {
             stroke-dashoffset: 0;
         }
     }
 
-    &__icon {
+    .icon {
         width: 1.375em;
         height: 1.375em;
         flex-shrink: 0;
@@ -30,7 +30,7 @@
         }
     }
 
-    &__label {
+    .text {
         margin-left: 0.5em;
     }
 }
