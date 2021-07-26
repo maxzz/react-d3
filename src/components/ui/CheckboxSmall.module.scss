@@ -1,6 +1,7 @@
 .checkbox {
     $block: &;
-    $size: 1.375em;
+    $size: 0.9em;
+    // $size: 1.375em;
 
     cursor: pointer;
     display: flex;
@@ -25,18 +26,26 @@
         overflow: visible;
 
         .frame {
-            fill: #FFF;
-            stroke: #006F94;
+            fill: #ffffff70;
+            stroke: #006f94;
         }
 
         .tick {
+            stroke: #6ea340;
+            fill: none;
+            stroke-linecap: round;
+            stroke-width: 4;
+
             stroke-dasharray: 20px;
             stroke-dashoffset: 20px;
-            transition: stroke-dashoffset 0.2s ease-out;
+            transition: stroke-dashoffset 0.1s ease-out;
         }
     }
 
     .text {
         margin-left: 0.5em;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        user-select: none;
     }
 }
