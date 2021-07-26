@@ -1,6 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
-import { css } from '@stitches/react';
+import { css, styled } from '@stitches/react';
 import { IconRefresh } from './ui/ActionButtons';
 // import Checkbox from './ui/Checkbox';
 import Slider from './ui/SimpleSlider';
@@ -155,20 +155,52 @@ const styles2 = css({
 
 console.log('------------------');
 console.log(styles2());
+console.log('........');
 console.log({...styles2});
 
+const CheckboxLabel = styled('label', {
+    'cursor': 'pointer',
+    'display': 'flex',
+    'align-items': 'center',
+
+    '&__input': {
+        "position": "absolute",
+        "width": "1.375em",
+        "height": "1.375em",
+        "opacity": "0",
+        "cursor": "pointer",
+
+        '&:checked + &__icon .tick': {
+            'stroke-dashoffset': '0',
+        }
+    },
+
+});
+
+const CheckboxInput = styled('input', {
+});
+
+const CheckboxSpan = styled('span', {
+});
 
 function Checkbox({ label, checked, onChange }: { label: string, checked: boolean, onChange: (value: boolean) => void; }) {
     return (
-        <label className={`flex items-center relative cursor-pointer ${styles2()}`}>
-            <input className="absolute w-[1.375em] h-[1.375em] opacity-0 cursor-pointer" type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} />
-            <svg className="checkbox__icon w-14 h-14" viewBox="0 0 22 22">
+        <CheckboxLabel className={`${styles2()}`}>
+        {/* <CheckboxLabel className={`flex items-center relative cursor-pointer ${styles2()}`}> */}
+             {/* css={{}} */}
+            <CheckboxInput type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} />
+            {/* <CheckboxInput className="absolute w-[1.375em] h-[1.375em] opacity-0 cursor-pointer" type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} /> */}
+
+            {/* <svg className="checkbox__icon w-14 h-14" viewBox="0 0 22 22">
                 <rect width="100%" height="100%" x=".5" y=".5" fill="#FFF" stroke="#006F94" rx="3" />
-                {/* <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#006F94" rx="3" /> */}
+                
                 <path className="" stroke="#6EA340" fill="none" strokeLinecap="round" strokeWidth="4" d="M4 10l5 5 9-9" />
-            </svg>
-            <span className="checkbox__label">{label}</span>
-        </label>
+            </svg> */}
+
+            {/* <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#006F94" rx="3" /> */}
+
+            <CheckboxSpan className={`${styles2()}__label`}>{label}</CheckboxSpan>
+        </CheckboxLabel>
     );
 }
 
