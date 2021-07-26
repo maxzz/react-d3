@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import { css } from '@stitches/react';
 import { IconRefresh } from './ui/ActionButtons';
-import Checkbox from './ui/Checkbox';
+// import Checkbox from './ui/Checkbox';
 import Slider from './ui/SimpleSlider';
 import './ui/Slider.scss';
 
@@ -116,6 +116,20 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProp
     );
 });
 
+function Checkbox({label, checked, onChange}: {label: string, checked: boolean, onChange: (value: boolean) => void}) {
+    return (
+        <label className="flex items-center relative cursor-pointer">
+            <input className="absolute w-[1.375em] h-[1.375em] opacity-0 cursor-pointer" type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} />
+            <svg className="checkbox__icon w-14 h-14" viewBox="0 0 22 22">
+                <rect width="100%" height="100%" x=".5" y=".5" fill="#FFF" stroke="#006F94" rx="3" />
+                {/* <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#006F94" rx="3" /> */}
+                <path className="" stroke="#6EA340" fill="none" strokeLinecap="round" strokeWidth="4" d="M4 10l5 5 9-9" />
+            </svg>
+            <span className="checkbox__label">{label}</span>
+        </label>
+    );
+}
+
 function MotionBallTransition() {
     const ref = React.useRef<API>(null);
     const [sorted, setSorted] = React.useState(false);
@@ -132,6 +146,7 @@ function MotionBallTransition() {
                     <IconRefresh />
                 </button>
                 <Checkbox label="Sorted" checked={sorted} onChange={setSorted} />
+                {/* <Checkbox label="Sorted" checked={sorted} onChange={setSorted} /> */}
                 <Slider label="N Bars" labelWidth="3.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={20} />
             </div>
         </div>
