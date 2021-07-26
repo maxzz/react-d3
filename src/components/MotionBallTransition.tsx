@@ -132,8 +132,8 @@ function MotionBallTransition() {
                 >
                     <IconRefresh />
                 </button>
-                <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} />
                 <Slider label="N Bars" labelWidth="3.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={20} />
+                <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} />
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 .checkbox {
     $block: &;
+    $size: 1.375em;
 
     cursor: pointer;
     display: flex;
@@ -7,8 +8,8 @@
 
     .input {
         position: absolute;
-        width: 1.375em;
-        height: 1.375em;
+        width: $size;
+        height: $size;
         opacity: 0;
         cursor: pointer;
 
@@ -18,10 +19,15 @@
     }
 
     .icon {
-        width: 1.375em;
-        height: 1.375em;
+        width: $size;
+        height: $size;
         flex-shrink: 0;
         overflow: visible;
+
+        .frame {
+            fill: #FFF;
+            stroke: #006F94;
+        }
 
         .tick {
             stroke-dasharray: 20px;
