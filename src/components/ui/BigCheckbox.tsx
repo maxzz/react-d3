@@ -1,5 +1,5 @@
 import React from 'react';
-import './Checkbox.scss';
+import './BigCheckbox.scss';
 
 function Checkbox({label, checked, onChange}: {label: string, checked: boolean, onChange: (value: boolean) => void}) {
     return (
