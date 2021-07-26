@@ -116,9 +116,51 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProp
     );
 });
 
-function Checkbox({label, checked, onChange}: {label: string, checked: boolean, onChange: (value: boolean) => void}) {
+const styles2 = css({
+    'checkbox': {
+        'cursor': 'pointer',
+        'display': 'flex',
+        'align-items': 'center',
+
+        '&__input': {
+            "position": "absolute",
+            "width": "1.375em",
+            "height": "1.375em",
+            "opacity": "0",
+            "cursor": "pointer",
+
+            '&:checked + &__icon .tick': {
+                'stroke-dashoffset': '0',
+            }
+        },
+    
+        '&__icon': {
+            "width": "1.375em",
+            "height": "1.375em",
+            "flexShrink": "0",
+            "overflow": "visible",
+
+            '.tick': {
+                "strokeDasharray": "20px",
+                "strokeDashoffset": "20px",
+                "transition": "stroke-dashoffset 0.2s ease-out",
+            }
+        },
+
+        '&__label': {
+            'margin-left': '0.5em',
+        }
+    }
+});
+
+console.log('------------------');
+console.log(styles2());
+console.log({...styles2});
+
+
+function Checkbox({ label, checked, onChange }: { label: string, checked: boolean, onChange: (value: boolean) => void; }) {
     return (
-        <label className="flex items-center relative cursor-pointer">
+        <label className={`flex items-center relative cursor-pointer ${styles2()}`}>
             <input className="absolute w-[1.375em] h-[1.375em] opacity-0 cursor-pointer" type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} />
             <svg className="checkbox__icon w-14 h-14" viewBox="0 0 22 22">
                 <rect width="100%" height="100%" x=".5" y=".5" fill="#FFF" stroke="#006F94" rx="3" />
