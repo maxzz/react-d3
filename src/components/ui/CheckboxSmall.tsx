@@ -1,0 +1,20 @@
+import React from 'react';
+import styles from './CheckboxSmall.module.scss';
+
+function CheckboxSmall({label, checked, onChange}: {label: string, checked: boolean, onChange: (value: boolean) => void}) {
+    console.log('styile4', styles);
+    
+    return (
+        <label className={`${styles.checkbox}`}>
+            <input className={`${styles.checkbox__input}`} type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} />
+            <svg className={`${styles.checkbox__icon}`} viewBox="0 0 22 22">
+                <rect width="100%" height="100%" x=".5" y=".5" fill="#FFF" stroke="#006F94" rx="3" />
+                {/* <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#006F94" rx="3" /> */}
+                <path className={`${styles.tick}`} stroke="#6EA340" fill="none" strokeLinecap="round" strokeWidth="4" d="M4 10l5 5 9-9" />
+            </svg>
+            <span className={`${styles.checkbox__label}`}>{label}</span>
+        </label>
+    );
+}
+
+export default CheckboxSmall;

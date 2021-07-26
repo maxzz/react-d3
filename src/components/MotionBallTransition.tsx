@@ -5,6 +5,7 @@ import { IconRefresh } from './ui/ActionButtons';
 import Checkbox from './ui/BigCheckbox';
 import Slider from './ui/SimpleSlider';
 import './ui/Slider.scss';
+import CheckboxSmall from './ui/CheckboxSmall';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
@@ -131,7 +132,7 @@ function MotionBallTransition() {
                 >
                     <IconRefresh />
                 </button>
-                <Checkbox label="Sorted" checked={sorted} onChange={setSorted} />
+                <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} />
                 <Slider label="N Bars" labelWidth="3.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={20} />
             </div>
         </div>
