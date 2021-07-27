@@ -2,6 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import './ui/slider/Slider.scss';
 import { SliderProps } from './ui/ui-props';
+import Slider from './ui/slider/SliderSimple';
 
 type FunPlotOptions = {
     xdomain?: [number, number];
@@ -107,17 +108,17 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
     return svg.node();
 }
 
-function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: SliderProps) {
-    return (
-        <div className="flex items-center text-sm text-gray-800">
-            <div className="w-16">{label}</div>
-            <div className="flex items-center">
-                <input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} min={min} max={max} step={step} />
-            </div>
-            <div className="min-w-[2rem] text-right">{value}</div>
-        </div>
-    );
-}
+// function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: SliderProps) {
+//     return (
+//         <div className="flex items-center text-sm text-gray-800">
+//             <div className="w-16">{label}</div>
+//             <div className="flex items-center">
+//                 <input className="ui-slider" type="range" value={value} onChange={(e) => onChange(+e.target.value)} min={min} max={max} step={step} />
+//             </div>
+//             <div className="min-w-[2rem] text-right">{value}</div>
+//         </div>
+//     );
+// }
 
 function FunPlot() {
     const ref = React.useRef<SVGSVGElement>(null);
@@ -145,7 +146,7 @@ function FunPlot() {
                 </svg>
             </div>
             <div className="">
-                <Slider value={xdomain} onChange={setxDomain} label="xdomain" min={0.1} max={15} step={0.1} />
+                <Slider value={xdomain} onChange={setxDomain} label="X domain" labelWidth="5rem" min={0.1} max={15} step={0.1} />
             </div>
         </div>
     );
