@@ -6,8 +6,8 @@ import Slider from './ui/slider/SliderSimple';
 import './ui/slider/Slider.scss';
 import CheckboxStyles from './ui/checkbox/CheckboxSmall.module.scss';
 import CheckboxSmall from './ui/checkbox/CheckboxSmall';
-import TwCheckboxStitches from './ui/checkbox/CheckboxTwStitches';
-import TwCheckboxStitchesCss from './ui/checkbox/CheckboxTwStitchesCss';
+import CheckboxTwStitches from './ui/checkbox/CheckboxTwStitches';
+import CheckboxTwStitchesCss from './ui/checkbox/CheckboxTwStitchesCss';
 import CheckboxTw from './ui/checkbox/CheckboxTw';
 
 type Datum = number;
@@ -134,12 +134,11 @@ function MotionBallTransition() {
                     <IconRefresh />
                 </button>
 
-                {/* <TwCheckboxStitches label="Sorted" checked={sorted} onChange={setSorted}/>
-                <TwCheckboxStitchesCss label="Sorted" checked={sorted} onChange={setSorted} /> */}
+                {/* <CheckboxTwStitches label="Sorted" checked={sorted} onChange={setSorted}/>
+                <CheckboxTwStitchesCss label="Sorted" checked={sorted} onChange={setSorted} />
+                <CheckboxTw label="Sorted" checked={sorted} onChange={setSorted} /> */}
 
-                <CheckboxTw label="Sorted" checked={sorted} onChange={setSorted} />
-
-                <Slider label="# of bars" labelWidth="4.3rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
+                <Slider label="Bars" labelWidth="2.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
                 <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
             </div>
         </div>

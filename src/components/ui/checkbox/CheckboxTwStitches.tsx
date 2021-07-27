@@ -13,7 +13,7 @@ const TwCheckbox = styled('input', {
     }
 });
 
-function TwCheckboxStitches(props: CheckboxProps) {
+function CheckboxTwStitches(props: CheckboxProps) {
     return (
         <label className="flex items-center select-none cursor-pointer">
             <TwCheckbox type="checkbox"
@@ -31,4 +31,4 @@ function TwCheckboxStitches(props: CheckboxProps) {
     );
 }
 
-export default TwCheckboxStitches;
+export default CheckboxTwStitches;

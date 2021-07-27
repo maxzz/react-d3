@@ -13,7 +13,7 @@ const twCheckboxTick = css({
     }
 });
 
-function TwCheckboxStitchesCss(props: CheckboxProps) {
+function CheckboxTwStitchesCss(props: CheckboxProps) {
     return (
         <label className="flex items-center space-x-3">
             <input type="checkbox"
@@ -30,4 +30,4 @@ function TwCheckboxStitchesCss(props: CheckboxProps) {
     );
 }
 
-export default TwCheckboxStitchesCss;
+export default CheckboxTwStitchesCss;
