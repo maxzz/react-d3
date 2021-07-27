@@ -19,10 +19,10 @@ function App() {
                         <StarD3Interpolated />
                         <FunPlot />
                         <MotionBallTransition />
-                        <LineChart />
+                        {/* <LineChart />
                         <FunPieChart />
                         <LinePlayground />
-                        <HierarchyClassic />
+                        <HierarchyClassic /> */}
                     </div>
                     {/* Footer */}
                     <div className="self-end">

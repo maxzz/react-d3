@@ -9,6 +9,7 @@ import CheckboxSmall from './ui/checkbox/CheckboxSmall';
 import CheckboxTwStitches from './ui/checkbox/CheckboxTwStitches';
 import CheckboxTwStitchesCss from './ui/checkbox/CheckboxTwStitchesCss';
 import CheckboxTw from './ui/checkbox/CheckboxTw';
+import ButtonQuick from './ButtonQuick';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
@@ -126,13 +127,14 @@ function MotionBallTransition() {
                 <Body ref={ref} sorted={sorted} nBars={nBars} />
             </div>
             <div className="mt-2 flex items-center space-x-4">
-                <button
+                {/* <button
                     className="p-0.5 w-6 h-6 flex-none bg-green-100 hover:bg-green-200 border rounded border-[#006f94] active:scale-[.97]"
                     style={{ boxShadow: '#0000001f 1px 1px 1px 1px' }}
                     onClick={() => ref.current?.update()}
                 >
                     <IconRefresh />
-                </button>
+                </button> */}
+                <ButtonQuick onClick={() => ref.current?.update()} />
 
                 {/* <CheckboxTwStitches label="Sorted" checked={sorted} onChange={setSorted}/>
                 <CheckboxTwStitchesCss label="Sorted" checked={sorted} onChange={setSorted} />
