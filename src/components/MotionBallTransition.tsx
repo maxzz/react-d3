@@ -117,6 +117,7 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProp
     );
 });
 
+//https://tailwindcss.com/docs/hover-focus-and-other-states#checked
 // const checkboxTick = css({
 //     .form-tick:checked {
 //         background-image: url(data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e);
@@ -128,6 +129,17 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProp
 //     }    
 // });
 
+const twCheckboxTick = css({
+
+        'backgroundImage': "url(data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e)",
+        'borderColor': 'transparent',
+        'backgroundColor': 'currentColor',
+        'backgroundSize': '100% 100%',
+        'backgroundPosition': '50%',
+        'backgroundRepeat': 'no-repeat',
+
+})
+
 function MotionBallTransition() {
     const ref = React.useRef<API>(null);
     const [sorted, setSorted] = React.useState(false);
@@ -137,23 +149,23 @@ function MotionBallTransition() {
             <div className="bg-blue-400">
                 <Body ref={ref} sorted={sorted} nBars={nBars} />
             </div>
-            <div className="mt-1 flex space-x-2">
-                <button className="p-0.5 w-6 h-6 border rounded border-gray-400 active:scale-[.97]"
+            <div className="mt-1 flex space-x-4">
+                <button className="p-0.5 w-6 h-6 border rounded border-[#006f94] active:scale-[.97]"
                     onClick={() => ref.current?.update()}
                 >
                     <IconRefresh />
                 </button>
 
-                {/* <label className="flex items-center space-x-3">
+                <label className="flex items-center space-x-3">
                     <input 
                         type="checkbox" name="checked-demo" value="1" 
-                        className="form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none" 
+                        className={`checked:[${twCheckboxTick()}] form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none`} 
                     />
                     <span className="text-gray-900 font-medium">Option 1</span>
-                </label> */}
+                </label>
 
                 <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
-                <Slider label="N Bars" labelWidth="3.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
+                <Slider label="# of bars" labelWidth="4.3rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
             </div>
         </div>
     );
