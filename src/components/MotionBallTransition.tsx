@@ -131,17 +131,6 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProp
 // });
 
 const twCheckboxTick = css({
-
-    'backgroundImage': `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e")`,
-    'borderColor': 'transparent',
-    'backgroundColor': 'currentColor',
-    'backgroundSize': '100% 100%',
-    'backgroundPosition': '50%',
-    'backgroundRepeat': 'no-repeat',
-
-});
-
-const TwCheckbox = styled('input', {
     '&:checked': {
         'backgroundImage': `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e")`,
         'borderColor': 'transparent',
@@ -161,12 +150,6 @@ function MotionBallTransition() {
             <div className="border rounded border-green-200 shadow">
                 <Body ref={ref} sorted={sorted} nBars={nBars} />
             </div>
-            <div className="w-40 h-40 border border-yellow-600"
-                style={{
-                    //background: 'red',
-                    backgroundImage: `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e")`
-                }}
-            ></div>
             <div className="mt-2 flex items-center space-x-4">
                 <button className="p-0.5 w-6 h-6 flex-none border rounded border-[#006f94] active:scale-[.97]"
                     onClick={() => ref.current?.update()}
@@ -177,18 +160,10 @@ function MotionBallTransition() {
                 <TwCheckboxStitches label="Sorted" value={sorted} onChange={setSorted}/>
 
                 {/* <label className="flex items-center space-x-3">
-                    <TwCheckbox type="checkbox"
-                        className={
-                            `h-5 w-5 appearance-none rounded-md
-                            text-green-600 bg-[#ffffff70] border border-gray-300
-                            checked:bg-blue-600 checked:border-transparent focus:outline-none`
-                        }
-                        checked={sorted} onChange={(event) => setSorted(event.target.checked)}
-                    />
-                    {/* <input 
+                    <input 
                         type="checkbox" name="checked-demo" value="1" 
                         className={`checked:[${twCheckboxTick()}] form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none`} 
-                    /> * /}
+                    />
                     <span className="text-gray-900 font-medium">Option 1</span>
                 </label> */}
 
