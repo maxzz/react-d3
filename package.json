@@ -5,7 +5,8 @@
   "description": "Coexistence of React with D3.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build-w-check": "tsc && vite build",
+    "build": "vite build",
     "serve": "vite preview",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d dist"
