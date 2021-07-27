@@ -133,11 +133,11 @@ function MotionBallTransition() {
                     <IconRefresh />
                 </button>
 
-                <TwCheckboxStitches label="Sorted" checked={sorted} onChange={setSorted}/>
-                <TwCheckboxStitchesCss label="Sorted" checked={sorted} onChange={setSorted} />
+                {/* <TwCheckboxStitches label="Sorted" checked={sorted} onChange={setSorted}/>
+                <TwCheckboxStitchesCss label="Sorted" checked={sorted} onChange={setSorted} /> */}
 
-                <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
                 <Slider label="# of bars" labelWidth="4.3rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
+                <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
             </div>
         </div>
     );
