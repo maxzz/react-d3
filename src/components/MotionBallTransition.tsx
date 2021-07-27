@@ -1,11 +1,12 @@
 import React from 'react';
 import * as d3 from 'd3';
 import { css } from '@stitches/react';
-import Slider from './ui/slider/SliderSimple';
-import './ui/slider/Slider.scss';
+//import SliderSimple from './ui/slider/SliderSimple';
+//import './ui/slider/Slider.scss';
 import CheckboxStyles from './ui/checkbox/CheckboxSmall.module.scss';
 import CheckboxSmall from './ui/checkbox/CheckboxSmall';
 import ButtonQuick from './ButtonQuick';
+import Slider from './ui/slider/Slider';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
