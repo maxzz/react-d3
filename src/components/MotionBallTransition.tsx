@@ -157,15 +157,15 @@ function MotionBallTransition() {
                     <IconRefresh />
                 </button>
 
-                <TwCheckboxStitches label="Sorted" value={sorted} onChange={setSorted}/>
+                {/* <TwCheckboxStitches label="Sorted" value={sorted} onChange={setSorted}/> */}
 
-                {/* <label className="flex items-center space-x-3">
+                <label className="flex items-center space-x-3">
                     <input 
                         type="checkbox" name="checked-demo" value="1" 
-                        className={`checked:[${twCheckboxTick()}] form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none`} 
+                        className={`${twCheckboxTick()} form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none`} 
                     />
-                    <span className="text-gray-900 font-medium">Option 1</span>
-                </label> */}
+                    <span className="text-gray-900 font-medium">Sorted</span>
+                </label>
 
                 <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
                 <Slider label="# of bars" labelWidth="4.3rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
