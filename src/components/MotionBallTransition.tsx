@@ -123,7 +123,7 @@ function MotionBallTransition() {
                 <Body ref={ref} sorted={sorted} nBars={nBars} />
             </div>
             <div className="mt-2 flex items-center space-x-4">
-                <ButtonQuick onClick={() => ref.current?.update()} />
+                <ButtonQuick title="Update view" onClick={() => ref.current?.update()} />
 
                 <Slider label="Bars" labelWidth="2.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
                 <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />

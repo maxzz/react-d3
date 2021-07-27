@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconRefresh } from './ui/ButtonIcons';
 
-function ButtonQuick({ icon = <IconRefresh />, onClick, classes = '' }: { icon?: React.ReactNode, onClick: () => void; classes?: string; }) {
+function ButtonQuick({ icon = <IconRefresh />, onClick, classes = '', title }: { icon?: React.ReactNode, onClick: () => void; classes?: string; title?: string }) {
     return (
         <button
             className={`p-0.5 w-6 h-6 flex-none
@@ -12,6 +12,7 @@ function ButtonQuick({ icon = <IconRefresh />, onClick, classes = '' }: { icon?:
             }
             style={{ boxShadow: '#0000001f 1px 1px 1px 1px' }}
             onClick={onClick}
+            title={title}
         >
             {icon}
         </button>

@@ -130,8 +130,8 @@ function StarD3Interpolated() {
                     <Checkbox label="Show outer points" checked={showOuter} onChange={setShowOuter} />
                     {/* Actions */}
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
-                        <ButtonQuick classes="w-7 h-7" icon={<IconSave />} onClick={() => genCb?.current?.save()} />
-                        <ButtonQuick classes="w-7 h-7" icon={<IconRefresh />} onClick={() => setUpdate(v => v + 1)} />
+                        <ButtonQuick classes="w-7 h-7" title="Save SVG" icon={<IconSave />} onClick={() => genCb?.current?.save()} />
+                        <ButtonQuick classes="w-7 h-7" title="Update view" icon={<IconRefresh />} onClick={() => setUpdate(v => v + 1)} />
                     </div>
                 </div>
             </div>
