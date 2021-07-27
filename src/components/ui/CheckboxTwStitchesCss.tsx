@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from '@stitches/react';
-import { CheckboxProps } from './ui/ui-props';
+import { CheckboxProps } from './ui-props';
 
 const twCheckboxTick = css({
     '&:checked': {
@@ -22,7 +22,7 @@ function TwCheckboxStitchesCss(props: CheckboxProps) {
                     border-gray-300 checked:bg-blue-600 checked:border-transparent
                     focus:outline-none`
                 }
-                checked={props.value}
+                checked={props.checked}
                 onChange={(event) => props.onChange(event.target.checked)}
             />
             <span className="text-gray-900 font-medium">Sorted</span>

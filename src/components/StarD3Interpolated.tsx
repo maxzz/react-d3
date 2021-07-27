@@ -59,7 +59,7 @@ function Slider({ value, onChange, label, min = 0, max = 100, step = 1 }: Slider
     );
 }
 
-function Checkbox({ className, label, enabled = true, value, onChange }: CheckboxProps) {
+function Checkbox({ className, label, enabled = true, checked: value, onChange }: CheckboxProps) {
     return (
         <label className={`flex items-center text-sm ${enabled ? '' : 'opacity-50'} ${className}`}>
             <input className="mr-1" type="checkbox" checked={value} onChange={(e) => onChange(e.target.checked)} />
@@ -123,10 +123,10 @@ function StarD3Interpolated() {
                 {/* Options */}
                 <div className="relative">
                     {/* <Checkbox2 label={'Smooth lines'} /> */}
-                    <Checkbox className="" label="Smooth lines" value={smooth} onChange={setSmooth} />
-                    <Checkbox className="" label="Randomize outer and inner radius" value={iRandom} onChange={onRandomBoth} />
-                    <Checkbox className="" label="Randomize outer radius" value={oRandom} onChange={onRandomOuter} />
-                    <Checkbox className="" label="Show outer points" value={showOuter} onChange={setShowOuter} />
+                    <Checkbox label="Smooth lines" checked={smooth} onChange={setSmooth} />
+                    <Checkbox label="Randomize outer and inner radius" checked={iRandom} onChange={onRandomBoth} />
+                    <Checkbox label="Randomize outer radius" checked={oRandom} onChange={onRandomOuter} />
+                    <Checkbox label="Show outer points" checked={showOuter} onChange={setShowOuter} />
                     {/* Actions */}
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
                         <button

@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@stitches/react';
 import { CheckboxProps } from './ui-props';
 
+//https://tailwindcss.com/docs/hover-focus-and-other-states#checked
 const TwCheckbox = styled('input', {
     '&:checked': {
         'backgroundImage': `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e")`,
@@ -23,7 +24,7 @@ function TwCheckboxStitches(props: CheckboxProps) {
                     checked:bg-blue-600 checked:border-transparent 
                     focus:outline-none`
                 }
-                checked={props.value}
+                checked={props.checked}
                 onChange={(event) => props.onChange(event.target.checked)}
             />
             <span className="ml-1 text-sm text-gray-900">{props.label}</span>

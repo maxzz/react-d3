@@ -6,8 +6,8 @@ import Slider from './ui/SimpleSlider';
 import './ui/Slider.scss';
 import CheckboxStyles from './ui/CheckboxSmall.module.scss';
 import CheckboxSmall from './ui/CheckboxSmall';
-import TwCheckboxStitches from './ui/TwCheckboxStitches';
-import TwCheckboxStitchesCss from './TwCheckboxStitchesCss';
+import TwCheckboxStitches from './ui/CheckboxTwStitches';
+import TwCheckboxStitchesCss from './ui/CheckboxTwStitchesCss';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
@@ -119,18 +119,6 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProp
     );
 });
 
-//https://tailwindcss.com/docs/hover-focus-and-other-states#checked
-// const checkboxTick = css({
-//     .form-tick:checked {
-//         background-image: url(data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e);
-//         border-color: transparent;
-//         background-color: currentColor;
-//         background-size: 100% 100%;
-//         background-position: 50%;
-//         background-repeat: no-repeat;
-//     }    
-// });
-
 function MotionBallTransition() {
     const ref = React.useRef<API>(null);
     const [sorted, setSorted] = React.useState(false);
@@ -147,8 +135,8 @@ function MotionBallTransition() {
                     <IconRefresh />
                 </button>
 
-                <TwCheckboxStitches label="Sorted" value={sorted} onChange={setSorted}/>
-                <TwCheckboxStitchesCss label="Sorted" value={sorted} onChange={setSorted} />
+                <TwCheckboxStitches label="Sorted" checked={sorted} onChange={setSorted}/>
+                <TwCheckboxStitchesCss label="Sorted" checked={sorted} onChange={setSorted} />
 
                 <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
                 <Slider label="# of bars" labelWidth="4.3rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
