@@ -18,29 +18,4 @@ function ButtonQuick({ icon = <IconRefresh />, onClick, classes = '' }: { icon?:
     );
 }
 
-        {/* <button
-            className="w-7 h-7 p-1 
-              bg-green-100 hover:bg-green-200 
-                border rounded border-gray-500
-               text-green-900 
-                active:scale-[0.97]"
-            style={{ boxShadow: '#0000001f 1px 1px 1px 1px' }}
-            onClick={() => genCb?.current?.save()}
-            title="Save SVG"
-        >
-            <IconSave />
-        </button> */}
-        {/* <button
-            className="w-7 h-7 p-1 
-              bg-green-100  hover:bg-green-200 
-                border rounded border-gray-500
-               text-green-900 
-                active:scale-[0.97]"
-            style={{ boxShadow: '#0000001f 1px 1px 1px 1px' }}
-            onClick={() => setUpdate(v => v + 1)}
-            title="Update"
-        >
-            <IconRefresh />
-        </button> */}
-
 export default ButtonQuick;

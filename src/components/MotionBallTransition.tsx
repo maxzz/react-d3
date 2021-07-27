@@ -1,14 +1,10 @@
 import React from 'react';
 import * as d3 from 'd3';
 import { css } from '@stitches/react';
-import { IconRefresh } from './ui/ButtonIcons';
 import Slider from './ui/slider/SliderSimple';
 import './ui/slider/Slider.scss';
 import CheckboxStyles from './ui/checkbox/CheckboxSmall.module.scss';
 import CheckboxSmall from './ui/checkbox/CheckboxSmall';
-import CheckboxTwStitches from './ui/checkbox/CheckboxTwStitches';
-import CheckboxTwStitchesCss from './ui/checkbox/CheckboxTwStitchesCss';
-import CheckboxTw from './ui/checkbox/CheckboxTw';
 import ButtonQuick from './ButtonQuick';
 
 type Datum = number;
@@ -127,18 +123,7 @@ function MotionBallTransition() {
                 <Body ref={ref} sorted={sorted} nBars={nBars} />
             </div>
             <div className="mt-2 flex items-center space-x-4">
-                {/* <button
-                    className="p-0.5 w-6 h-6 flex-none bg-green-100 hover:bg-green-200 border rounded border-[#006f94] active:scale-[.97]"
-                    style={{ boxShadow: '#0000001f 1px 1px 1px 1px' }}
-                    onClick={() => ref.current?.update()}
-                >
-                    <IconRefresh />
-                </button> */}
                 <ButtonQuick onClick={() => ref.current?.update()} />
-
-                {/* <CheckboxTwStitches label="Sorted" checked={sorted} onChange={setSorted}/>
-                <CheckboxTwStitchesCss label="Sorted" checked={sorted} onChange={setSorted} />
-                <CheckboxTw label="Sorted" checked={sorted} onChange={setSorted} /> */}
 
                 <Slider label="Bars" labelWidth="2.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
                 <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
