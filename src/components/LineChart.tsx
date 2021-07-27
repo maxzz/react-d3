@@ -1,6 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
-import { IconRefresh } from './ui/ActionButtons';
+import { IconRefresh } from './ui/ButtonIcons';
 
 function D3World(svgRoot: SVGSVGElement) {
     let svg = d3.select<SVGSVGElement, Datum>(svgRoot);

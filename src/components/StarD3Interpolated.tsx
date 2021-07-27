@@ -2,8 +2,8 @@ import React from 'react';
 import { downloadTextAsFile } from '../utils/download-data';
 import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentered } from '../utils/ngonGenerator';
 import { CheckboxProps, SliderProps } from './ui/ui-props';
-import './ui/Slider.scss';
-import { IconRefresh, IconSave } from './ui/ActionButtons';
+import './ui/slider/Slider.scss';
+import { IconRefresh, IconSave } from './ui/ButtonIcons';
 // import { default as Checkbox2 } from './ui/Checkbox';
 
 const VIEWBOX_SIZE = 200;

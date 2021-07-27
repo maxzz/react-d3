@@ -1,13 +1,13 @@
 import React from 'react';
 import * as d3 from 'd3';
-import { css, styled } from '@stitches/react';
-import { IconRefresh } from './ui/ActionButtons';
-import Slider from './ui/SimpleSlider';
-import './ui/Slider.scss';
-import CheckboxStyles from './ui/CheckboxSmall.module.scss';
-import CheckboxSmall from './ui/CheckboxSmall';
-import TwCheckboxStitches from './ui/CheckboxTwStitches';
-import TwCheckboxStitchesCss from './ui/CheckboxTwStitchesCss';
+import { css } from '@stitches/react';
+import { IconRefresh } from './ui/ButtonIcons';
+import Slider from './ui/slider/SliderSimple';
+import './ui/slider/Slider.scss';
+import CheckboxStyles from './ui/checkbox/CheckboxSmall.module.scss';
+import CheckboxSmall from './ui/checkbox/CheckboxSmall';
+import TwCheckboxStitches from './ui/checkbox/CheckboxTwStitches';
+import TwCheckboxStitchesCss from './ui/checkbox/CheckboxTwStitchesCss';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
@@ -40,8 +40,8 @@ function bars(svgEl: SVGSVGElement, DATA: Datum[]) {
     const yScale = d3.scaleLinear().domain(domain).range([bandTop, margin.top + innerHeight - bandTop]);
 
     const svg = d3.select(svgEl);
-    //svg.selectAll('g').remove();
 
+    //svg.selectAll('g').remove();
     let g = svg.select('g');
     if (g.empty()) {
         svg.append('g');
@@ -84,10 +84,6 @@ type BodyProps = {
 
 const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProps, refAPI: React.Ref<API>) {
     const refSvg = React.useRef<SVGSVGElement>(null);
-
-    // React.useEffect(() => {
-    //     refSvg.current && bars(refSvg.current, DATA);
-    // }, []);
 
     React.useEffect(() => {
         genData(sorted, nBars);
