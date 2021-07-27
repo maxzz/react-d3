@@ -6,6 +6,7 @@ import Slider from './ui/SimpleSlider';
 import './ui/Slider.scss';
 import CheckboxStyles from './ui/CheckboxSmall.module.scss';
 import CheckboxSmall from './ui/CheckboxSmall';
+import TwCheckboxStitches from './ui/TwCheckboxStitches';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
@@ -166,14 +167,16 @@ function MotionBallTransition() {
                     backgroundImage: `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e")`
                 }}
             ></div>
-            <div className="mt-2 flex space-x-4">
-                <button className="p-0.5 w-6 h-6 border rounded border-[#006f94] active:scale-[.97]"
+            <div className="mt-2 flex items-center space-x-4">
+                <button className="p-0.5 w-6 h-6 flex-none border rounded border-[#006f94] active:scale-[.97]"
                     onClick={() => ref.current?.update()}
                 >
                     <IconRefresh />
                 </button>
 
-                <label className="flex items-center space-x-3">
+                <TwCheckboxStitches label="Sorted" value={sorted} onChange={setSorted}/>
+
+                {/* <label className="flex items-center space-x-3">
                     <TwCheckbox type="checkbox"
                         className={
                             `h-5 w-5 appearance-none rounded-md
@@ -185,9 +188,9 @@ function MotionBallTransition() {
                     {/* <input 
                         type="checkbox" name="checked-demo" value="1" 
                         className={`checked:[${twCheckboxTick()}] form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none`} 
-                    /> */}
+                    /> * /}
                     <span className="text-gray-900 font-medium">Option 1</span>
-                </label>
+                </label> */}
 
                 <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
                 <Slider label="# of bars" labelWidth="4.3rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
