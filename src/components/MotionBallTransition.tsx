@@ -1,6 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
-import { css } from '@stitches/react';
+import { css, styled } from '@stitches/react';
 import { IconRefresh } from './ui/ActionButtons';
 import Slider from './ui/SimpleSlider';
 import './ui/Slider.scss';
@@ -131,14 +131,26 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProp
 
 const twCheckboxTick = css({
 
+    'backgroundImage': "url(data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e)",
+    'borderColor': 'transparent',
+    'backgroundColor': 'currentColor',
+    'backgroundSize': '100% 100%',
+    'backgroundPosition': '50%',
+    'backgroundRepeat': 'no-repeat',
+
+});
+
+const TwCheckbox = styled('input', {
+    'backgroundColor': 'red',
+    '&:checked': {
         'backgroundImage': "url(data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e)",
         'borderColor': 'transparent',
-        'backgroundColor': 'currentColor',
+        'backgroundColor': 'green',
         'backgroundSize': '100% 100%',
         'backgroundPosition': '50%',
         'backgroundRepeat': 'no-repeat',
-
-})
+    }
+});
 
 function MotionBallTransition() {
     const ref = React.useRef<API>(null);
@@ -146,10 +158,16 @@ function MotionBallTransition() {
     const [nBars, setNBars] = React.useState(14);
     return (
         <div className="w-[30rem]">
-            <div className="bg-blue-400">
+            <div className="border rounded border-green-200 shadow">
                 <Body ref={ref} sorted={sorted} nBars={nBars} />
             </div>
-            <div className="mt-1 flex space-x-4">
+            <div className="w-40 h-40 border border-yellow-600"
+                style={{
+                    //background: 'red',
+                    backgroundImage: `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e")`
+                }}
+            ></div>
+            <div className="mt-2 flex space-x-4">
                 <button className="p-0.5 w-6 h-6 border rounded border-[#006f94] active:scale-[.97]"
                     onClick={() => ref.current?.update()}
                 >
@@ -157,10 +175,12 @@ function MotionBallTransition() {
                 </button>
 
                 <label className="flex items-center space-x-3">
-                    <input 
+                    <TwCheckbox type="checkbox"
+                        className={`form-tick appearance-none h-6 w-6 border-4 border-green-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none`} />
+                    {/* <input 
                         type="checkbox" name="checked-demo" value="1" 
                         className={`checked:[${twCheckboxTick()}] form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none`} 
-                    />
+                    /> */}
                     <span className="text-gray-900 font-medium">Option 1</span>
                 </label>
 
