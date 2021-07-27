@@ -4,6 +4,7 @@ import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentere
 import { CheckboxProps, SliderProps } from './ui/ui-props';
 import './ui/slider/Slider.scss';
 import { IconRefresh, IconSave } from './ui/ButtonIcons';
+import ButtonQuick from './ButtonQuick';
 // import { default as Checkbox2 } from './ui/Checkbox';
 
 const VIEWBOX_SIZE = 200;
@@ -129,22 +130,24 @@ function StarD3Interpolated() {
                     <Checkbox label="Show outer points" checked={showOuter} onChange={setShowOuter} />
                     {/* Actions */}
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
-                        <button
+                        {/* <button
                             className="w-7 h-7 p-1 rounded border border-gray-500 text-green-900 bg-green-100 hover:bg-green-200 active:scale-[0.97]"
                             style={{ boxShadow: '#0000001f 1px 1px 1px 1px' }}
                             onClick={() => genCb?.current?.save()}
                             title="Save SVG"
                         >
                             <IconSave />
-                        </button>
-                        <button
+                        </button> */}
+                        <ButtonQuick icon={<IconSave />} onClick={() => genCb?.current?.save()} />
+                        <ButtonQuick icon={<IconRefresh />} onClick={() => setUpdate(v => v + 1)} />
+                        {/* <button
                             className="w-7 h-7 p-1 rounded border border-gray-500 text-green-900 bg-green-100 hover:bg-green-200 active:scale-[0.97]"
                             style={{ boxShadow: '#0000001f 1px 1px 1px 1px' }}
                             onClick={() => setUpdate(v => v + 1)}
                             title="Update"
                         >
                             <IconRefresh />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>
