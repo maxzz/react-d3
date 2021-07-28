@@ -114,10 +114,10 @@ type YFunction = (x: number) => number;
 const FUNCTIONS: Record<string, YFunction> = {
     //(i: number) => .1 * i - .5,
     //Math.tan,
-    'cos-sin': (i: number) => Math.cos(i * 4) * (Math.PI / 10) * i,
+    'cos-sin': (x: number) => Math.cos(x * 4) * (Math.PI / 10) * x,
     'sin': Math.sin,
     //Math.cos,
-    //Math.atan,
+    'atan': Math.atan,
     // (i: number) => .4 * Math.cos(i * 4),
 
 };
@@ -132,6 +132,7 @@ function FunPlot() {
     const [functions, setFunctions] = React.useState<Record<string, boolean>>({
         'cos-sin': true,
         'sin': true,
+        'atan': true,
     });
 
     function upadteFunction(name: string, value: boolean) {
@@ -146,17 +147,6 @@ function FunPlot() {
 
 
         ref.current && funplot(ref.current,
-
-            /*             [
-                            //(i: number) => .1 * i - .5,
-                            //Math.tan,
-                            (i: number) => Math.cos(i * 4) * (Math.PI / 10) * i,
-                            Math.sin,
-                            //Math.cos,
-                            //Math.atan,
-                            // (i: number) => .4 * Math.cos(i * 4),
-                        ],
-             */
             functionsToShow,
             {
                 xdomain: [-xdomain * Math.PI, xdomain * Math.PI],
@@ -178,7 +168,9 @@ function FunPlot() {
                     <Slider labelWidth="5.5rem" value={strokeWidthOuter} onChange={setStrokeWidthOuter} label="Outer stroke" min={0.1} max={40} step={0.1} />
                 </div>
                 <div className="">
-                    <Checkbox label="Math.sin(x)" checked={functions['sin']} onChange={(value) => upadteFunction('sin', value)} />
+                    <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={functions['cos-sin']} onChange={(value) => upadteFunction('cos-sin', value)} />
+                    <Checkbox label="sin(x)" checked={functions['sin']} onChange={(value) => upadteFunction('sin', value)} />
+                    <Checkbox label="atan(x)" checked={functions['atan']} onChange={(value) => upadteFunction('atan', value)} />
                 </div>
             </div>
         </div>
