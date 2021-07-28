@@ -116,9 +116,9 @@ const FUNCTIONS: Record<string, YFunction> = {
     //Math.tan,
     'cos-sin': (x: number) => Math.cos(x * 4) * (Math.PI / 10) * x,
     'sin': Math.sin,
-    //Math.cos,
+    'cos': Math.cos,
     'atan': Math.atan,
-    // (i: number) => .4 * Math.cos(i * 4),
+    'cos4': (x: number) => .4 * Math.cos(x * 4),
 
 };
 
@@ -132,7 +132,9 @@ function FunPlot() {
     const [functions, setFunctions] = React.useState<Record<string, boolean>>({
         'cos-sin': true,
         'sin': true,
+        'cos': true,
         'atan': true,
+        'cos4': true,
     });
 
     function upadteFunction(name: string, value: boolean) {
@@ -170,7 +172,9 @@ function FunPlot() {
                 <div className="">
                     <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={functions['cos-sin']} onChange={(value) => upadteFunction('cos-sin', value)} />
                     <Checkbox label="sin(x)" checked={functions['sin']} onChange={(value) => upadteFunction('sin', value)} />
+                    <Checkbox label="cos(x)" checked={functions['cos']} onChange={(value) => upadteFunction('cos', value)} />
                     <Checkbox label="atan(x)" checked={functions['atan']} onChange={(value) => upadteFunction('atan', value)} />
+                    <Checkbox label=".4 * cos(x * 4)" checked={functions['cos4']} onChange={(value) => upadteFunction('cos4', value)} />
                 </div>
             </div>
         </div>
