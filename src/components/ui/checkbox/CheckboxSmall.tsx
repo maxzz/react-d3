@@ -1,13 +1,14 @@
 import React from 'react';
+import CheckboxStyles from './CheckboxSmall.module.scss';
 
 export type CheckboxSmallProps = {
     label: string,
     checked: boolean,
     onChange: (value: boolean) => void;
-    styles: CSSModuleClasses;
+    styles?: CSSModuleClasses;
 };
 
-function CheckboxSmall({ label, checked, onChange, styles }: CheckboxSmallProps) {
+function CheckboxSmall({ label, checked, onChange, styles = CheckboxStyles }: CheckboxSmallProps) {
     const { checkbox, input, icon, frame, tick, text } = styles;
     return (
         <label className={checkbox}>
