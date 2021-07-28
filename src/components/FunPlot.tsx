@@ -112,14 +112,14 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
 type YFunction = (x: number) => number;
 
 const FUNCTIONS: Record<string, YFunction> = {
-    'const': (i: number) => .1 * i - .5,
     'cos-sin': (x: number) => Math.cos(x * 4) * (Math.PI / 10) * x,
+    
     'sin': Math.sin,
     'cos': Math.cos,
     'tan': Math.tan,
     'atan': Math.atan,
     'cos4': (x: number) => .4 * Math.cos(x * 4),
-
+    'const': (i: number) => .1 * i - .5,
 };
 
 function FunPlot() {
@@ -130,13 +130,13 @@ function FunPlot() {
     const [strokeWidthOuter, setStrokeWidthOuter] = React.useState(26);
 
     const [functions, setFunctions] = React.useState<Record<string, boolean>>({
-        'const': true,
-        'cos-sin': true,
         'sin': true,
-        'cos': true,
-        'tan': true,
-        'atan': true,
-        'cos4': true,
+        'cos': false,
+        'tan': false,
+        'atan': false,
+        'cos-sin': true,
+        'cos4': false,
+        'const': false,
     });
 
     function upadteFunction(name: string, value: boolean) {
@@ -172,13 +172,13 @@ function FunPlot() {
                     <Slider labelWidth="5.5rem" value={strokeWidthOuter} onChange={setStrokeWidthOuter} label="Outer stroke" min={0.1} max={40} step={0.1} />
                 </div>
                 <div className="">
-                    <Checkbox label=".1 * x - .5" checked={functions['const']} onChange={(value) => upadteFunction('const', value)} />
-                    <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={functions['cos-sin']} onChange={(value) => upadteFunction('cos-sin', value)} />
                     <Checkbox label="sin(x)" checked={functions['sin']} onChange={(value) => upadteFunction('sin', value)} />
                     <Checkbox label="cos(x)" checked={functions['cos']} onChange={(value) => upadteFunction('cos', value)} />
                     <Checkbox label="tan(x)" checked={functions['tan']} onChange={(value) => upadteFunction('tan', value)} />
                     <Checkbox label="atan(x)" checked={functions['atan']} onChange={(value) => upadteFunction('atan', value)} />
+                    <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={functions['cos-sin']} onChange={(value) => upadteFunction('cos-sin', value)} />
                     <Checkbox label=".4 * cos(x * 4)" checked={functions['cos4']} onChange={(value) => upadteFunction('cos4', value)} />
+                    <Checkbox label=".1 * x - .5" checked={functions['const']} onChange={(value) => upadteFunction('const', value)} />
                 </div>
             </div>
         </div>
