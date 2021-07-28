@@ -113,7 +113,7 @@ type YFunction = (x: number) => number;
 
 const FUNCTIONS: Record<string, YFunction> = {
     'cos-sin': (x: number) => Math.cos(x * 4) * (Math.PI / 10) * x,
-    
+
     'sin': Math.sin,
     'cos': Math.cos,
     'tan': Math.tan,
@@ -186,3 +186,7 @@ function FunPlot() {
 }
 
 export default FunPlot;
+
+//TODO: probably not recalculate the y domain when toggle functions
+//TODO: fixed color for each function
+//TODO: take up less space for checkboxes
