@@ -2,6 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import Slider from './ui/slider/Slider';
 import Checkbox from './ui/checkbox/Checkbox';
+import CheckboxJw from './ui/checkbox/CheckboxJw';
 
 type FunPlotOptions = {
     xdomain?: [number, number];
@@ -149,7 +150,6 @@ function FunPlot() {
     React.useEffect(() => {
         const functionsToShow = Object.keys(FUNCTIONS).map((fName) => functions[fName] && FUNCTIONS[fName]).filter(Boolean) as Exclude<YFunction, boolean>[];
 
-
         ref.current && funplot(ref.current,
             functionsToShow,
             {
@@ -179,6 +179,7 @@ function FunPlot() {
                     <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={functions['cos-sin']} onChange={(value) => upadteFunction('cos-sin', value)} />
                     <Checkbox label=".4 * cos(x * 4)" checked={functions['cos4']} onChange={(value) => upadteFunction('cos4', value)} />
                     <Checkbox label=".1 * x - .5" checked={functions['const']} onChange={(value) => upadteFunction('const', value)} />
+                    <CheckboxJw />
                 </div>
             </div>
         </div>
@@ -190,3 +191,4 @@ export default FunPlot;
 //TODO: probably not recalculate the y domain when toggle functions
 //TODO: fixed color for each function
 //TODO: take up less space for checkboxes
+//TODO: add zustand state store
