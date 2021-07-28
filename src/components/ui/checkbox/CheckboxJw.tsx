@@ -6,17 +6,22 @@ function CheckboxJw() {
     const [checked, setChecked] = React.useState(true);
     return (
         <div className="flex">
-            <div className="relative" onClick={() => setChecked((prev) => !prev)}>
+            <div className="relative" > {/* onClick={() => setChecked((prev) => !prev)} */}
                 {/* Real checkbox */}
-                <input className="absolute inset-0 w-full h-full opacity-0 z-20" type="checkbox" />
+                <input className="absolute inset-0 w-full h-full opacity-0 z-20" type="checkbox" checked={checked} onChange={e => setChecked(e.target.checked)} />
                 {/* Visible content */}
                 <div className="flex items-center z-10">
                     {/* Checkbox visible box */}
-                    <div className={`w-[18px] h-[18px] relative border-2 rounded border-gray-700 ${checked ? "scale-75" : "scale-100"}`}>
+                    <div className={`w-[18px] h-[18px] relative border rounded border-gray-700 bg-[#ffffffb0] ${checked ? "scale-[.9]" : "scale-100"}`}
+                        style={{transition: 'transform .2s cubic-bezier(.25,1.01,.25,1.01)'}}
+                    >
                         {/* Filler */}
-                        <div className={`absolute ${checked ? "scale-100" : "scale-0"} inset-[2px] rounded-[2px] bg-purple-800`}></div>
+                        <div className={`absolute ${checked ? "scale-100" : "scale-0"} inset-[2px] rounded-[2px] bg-gray-800 opacity-50`}
+                            style={{transition: 'transform .2s cubic-bezier(.25,1.01,.25,1.01)'}}
+                        >
+                        </div>
                     </div>
-                    <span>Reorder</span>
+                    <div className="ml-2 text-sm">Reorder</div>
                 </div>
             </div>
         </div>
