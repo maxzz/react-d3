@@ -112,7 +112,8 @@ function FunPlot() {
     const ref = React.useRef<SVGSVGElement>(null);
 
     const [xdomain, setxDomain] = React.useState(2);
-    const [lineWidth, setLineWidth] = React.useState(2);
+    const [strokeWidthInner, setStrokeWidthInner] = React.useState(20);
+    const [strokeWidthOuter, setStrokeWidthOuter] = React.useState(26);
 
     React.useEffect(() => {
         ref.current && funplot(ref.current,
@@ -127,11 +128,11 @@ function FunPlot() {
             ],
             {
                 xdomain: [-xdomain * Math.PI, xdomain * Math.PI],
-                strokeWidthInner:20,
-                strokeWidthOuter:26,
+                strokeWidthInner: strokeWidthInner,
+                strokeWidthOuter: strokeWidthOuter,
             },
         );
-    }, [xdomain]);
+    }, [xdomain, strokeWidthInner, strokeWidthOuter]);
     return (
         <div className="w-[30rem] flex flex-col">
             <div className="w-full h-64 border-8 border-blue-200 bg-blue-400">
@@ -139,7 +140,9 @@ function FunPlot() {
                 </svg>
             </div>
             <div className="">
-                <Slider value={xdomain} onChange={setxDomain} label="X domain" labelWidth="5rem" min={0.1} max={15} step={0.1} />
+                <Slider labelWidth="5.5rem" value={xdomain} onChange={setxDomain} label="X domain" min={0.1} max={15} step={0.1} />
+                <Slider labelWidth="5.5rem" value={strokeWidthInner} onChange={setStrokeWidthInner} label="Inner stroke" min={0.1} max={40} step={0.1} />
+                <Slider labelWidth="5.5rem" value={strokeWidthOuter} onChange={setStrokeWidthOuter} label="Outer stroke" min={0.1} max={40} step={0.1} />
             </div>
         </div>
     );
