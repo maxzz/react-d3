@@ -1,6 +1,6 @@
 .checkbox {
     $block: &;
-    $size: 0.9em;
+    $size: 1rem;
     // $size: 1.375em;
 
     cursor: pointer;
@@ -39,6 +39,8 @@
             stroke-dasharray: 20px;
             stroke-dashoffset: 20px;
             transition: stroke-dashoffset 0.1s ease-out;
+            
+            transform: scale(.9) translate(1.2px, 1px)
         }
     }
 
