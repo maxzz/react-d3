@@ -1,11 +1,10 @@
 import React from 'react';
 import { downloadTextAsFile } from '../utils/download-data';
 import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentered } from '../utils/ngonGenerator';
-import { CheckboxProps } from './ui/ui-props';
 import { IconRefresh, IconSave } from './ui/ButtonIcons';
 import ButtonQuick from './ButtonQuick';
 import Slider from './ui/slider/Slider';
-import CheckboxSmall from './ui/checkbox/CheckboxSmall';
+import Checkbox from './ui/checkbox/Checkbox';
 
 const VIEWBOX_SIZE = 200;
 
@@ -47,15 +46,6 @@ function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShape
 }
 
 const InterpolatedShape = React.forwardRef(InterpolatedShapeRaw);
-
-function Checkbox({ className, label, enabled = true, checked: value, onChange }: CheckboxProps) {
-    return (
-        <label className={`flex items-center text-sm ${enabled ? '' : 'opacity-50'} ${className}`}>
-            <input className="mr-1" type="checkbox" checked={value} onChange={(e) => onChange(e.target.checked)} />
-            {label}
-        </label>
-    );
-}
 
 function StarD3Interpolated() {
     const [nRays, setURays] = React.useState(21);
@@ -112,10 +102,10 @@ function StarD3Interpolated() {
                 {/* Options */}
                 <div className="relative">
                     {/* <Checkbox2 label={'Smooth lines'} /> */}
-                    <CheckboxSmall label="Smooth lines" checked={smooth} onChange={setSmooth} />
-                    <CheckboxSmall label="Randomize outer and inner radius" checked={iRandom} onChange={onRandomBoth} />
-                    <CheckboxSmall label="Randomize outer radius" checked={oRandom} onChange={onRandomOuter} />
-                    <CheckboxSmall label="Show outer points" checked={showOuter} onChange={setShowOuter} />
+                    <Checkbox enabled={false} label="Smooth lines" checked={smooth} onChange={setSmooth} />
+                    <Checkbox label="Randomize outer and inner radius" checked={iRandom} onChange={onRandomBoth} />
+                    <Checkbox label="Randomize outer radius" checked={oRandom} onChange={onRandomOuter} />
+                    <Checkbox label="Show outer points" checked={showOuter} onChange={setShowOuter} />
                     {/* Actions */}
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
                         <ButtonQuick classes="w-7 h-7" title="Save SVG" icon={<IconSave />} onClick={() => genCb?.current?.save()} />

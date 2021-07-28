@@ -1,8 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 import { css } from '@stitches/react';
-import CheckboxStyles from './ui/checkbox/CheckboxSmall.module.scss';
-import CheckboxSmall from './ui/checkbox/CheckboxSmall';
+import Checkbox from './ui/checkbox/Checkbox';
 import ButtonQuick from './ButtonQuick';
 import Slider from './ui/slider/Slider';
 
@@ -125,7 +124,7 @@ function MotionBallTransition() {
                 <ButtonQuick title="Update view" onClick={() => ref.current?.update()} />
 
                 <Slider label="Bars" labelWidth="2.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
-                <CheckboxSmall label="Sorted" checked={sorted} onChange={setSorted} styles={CheckboxStyles} />
+                <Checkbox label="Sorted" checked={sorted} onChange={setSorted} />
             </div>
         </div>
     );
