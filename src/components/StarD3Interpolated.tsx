@@ -5,6 +5,8 @@ import { CheckboxProps } from './ui/ui-props';
 import { IconRefresh, IconSave } from './ui/ButtonIcons';
 import ButtonQuick from './ButtonQuick';
 import Slider from './ui/slider/Slider';
+import CheckboxSmall from './ui/checkbox/CheckboxSmall';
+import CheckboxStyles from './ui/checkbox/CheckboxSmall.module.scss';
 
 const VIEWBOX_SIZE = 200;
 
@@ -111,10 +113,10 @@ function StarD3Interpolated() {
                 {/* Options */}
                 <div className="relative">
                     {/* <Checkbox2 label={'Smooth lines'} /> */}
-                    <Checkbox label="Smooth lines" checked={smooth} onChange={setSmooth} />
-                    <Checkbox label="Randomize outer and inner radius" checked={iRandom} onChange={onRandomBoth} />
-                    <Checkbox label="Randomize outer radius" checked={oRandom} onChange={onRandomOuter} />
-                    <Checkbox label="Show outer points" checked={showOuter} onChange={setShowOuter} />
+                    <CheckboxSmall styles={CheckboxStyles} label="Smooth lines" checked={smooth} onChange={setSmooth} />
+                    <CheckboxSmall styles={CheckboxStyles} label="Randomize outer and inner radius" checked={iRandom} onChange={onRandomBoth} />
+                    <CheckboxSmall styles={CheckboxStyles} label="Randomize outer radius" checked={oRandom} onChange={onRandomOuter} />
+                    <CheckboxSmall styles={CheckboxStyles} label="Show outer points" checked={showOuter} onChange={setShowOuter} />
                     {/* Actions */}
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
                         <ButtonQuick classes="w-7 h-7" title="Save SVG" icon={<IconSave />} onClick={() => genCb?.current?.save()} />
