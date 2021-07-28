@@ -14,9 +14,19 @@ export type SliderProps = {
 };
 
 export type CheckboxProps = {
-    className?: string;
     label: string;
-    enabled?: boolean;
     checked: boolean;
     onChange: (v: boolean) => void;
+    enabled?: boolean;
+
+    className?: string;
+};
+
+export type CheckboxWithStyleProps = {
+    label: string;
+    checked: boolean;
+    onChange: (value: boolean) => void;
+    enabled?: boolean;
+    
+    styles?: CSSModuleClasses;
 };

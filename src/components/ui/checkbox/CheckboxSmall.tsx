@@ -1,27 +1,8 @@
 import React from 'react';
+import { CheckboxWithStyleProps } from '../ui-props';
 import CheckboxStyles from './CheckboxSmall.module.scss';
 
-export type CheckboxSmallProps = {
-    label: string;
-    checked: boolean;
-    enabled?: boolean;
-    onChange: (value: boolean) => void;
-    styles?: CSSModuleClasses;
-};
-
-/*
-import { CheckboxProps } from './ui/ui-props';
-// function Checkbox({ className, label, enabled = true, checked: value, onChange }: CheckboxProps) {
-//     return (
-//         <label className={`flex items-center text-sm ${enabled ? '' : 'opacity-50'} ${className}`}>
-//             <input className="mr-1" type="checkbox" checked={value} onChange={(e) => onChange(e.target.checked)} />
-//             {label}
-//         </label>
-//     );
-// }
-*/
-
-function CheckboxSmall({ label, checked, onChange, enabled = true, styles = CheckboxStyles }: CheckboxSmallProps) {
+function CheckboxSmall({ label, checked, onChange, enabled = true, styles = CheckboxStyles }: CheckboxWithStyleProps) {
     const { checkbox, input, icon, frame, tick, text } = styles;
     return (
         <label className={`${enabled ? '' : 'opacity-50'} ${checkbox}`}>

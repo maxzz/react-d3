@@ -102,7 +102,7 @@ function StarD3Interpolated() {
                 {/* Options */}
                 <div className="relative">
                     {/* <Checkbox2 label={'Smooth lines'} /> */}
-                    <Checkbox enabled={false} label="Smooth lines" checked={smooth} onChange={setSmooth} />
+                    <Checkbox label="Smooth lines" checked={smooth} onChange={setSmooth} />
                     <Checkbox label="Randomize outer and inner radius" checked={iRandom} onChange={onRandomBoth} />
                     <Checkbox label="Randomize outer radius" checked={oRandom} onChange={onRandomOuter} />
                     <Checkbox label="Show outer points" checked={showOuter} onChange={setShowOuter} />
