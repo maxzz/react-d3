@@ -1,6 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 import Slider from './ui/slider/Slider';
+import Checkbox from './ui/checkbox/Checkbox';
 
 type FunPlotOptions = {
     xdomain?: [number, number];
@@ -108,6 +109,19 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
     return svg.node();
 }
 
+type YFunction = (x: number) => number;
+
+const FUNCTIONS: Record<string, YFunction> = {
+    //(i: number) => .1 * i - .5,
+    //Math.tan,
+    'cos-sin': (i: number) => Math.cos(i * 4) * (Math.PI / 10) * i,
+    'sin': Math.sin,
+    //Math.cos,
+    //Math.atan,
+    // (i: number) => .4 * Math.cos(i * 4),
+
+};
+
 function FunPlot() {
     const ref = React.useRef<SVGSVGElement>(null);
 
@@ -115,24 +129,42 @@ function FunPlot() {
     const [strokeWidthInner, setStrokeWidthInner] = React.useState(20);
     const [strokeWidthOuter, setStrokeWidthOuter] = React.useState(26);
 
+    const [functions, setFunctions] = React.useState<Record<string, boolean>>({
+        'cos-sin': true,
+        'sin': true,
+    });
+
+    function upadteFunction(name: string, value: boolean) {
+        setFunctions(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+
     React.useEffect(() => {
+        const functionsToShow = Object.keys(FUNCTIONS).map((fName) => functions[fName] && FUNCTIONS[fName]).filter(Boolean) as Exclude<YFunction, boolean>[];
+
+
         ref.current && funplot(ref.current,
-            [
-                //(i: number) => .1 * i - .5,
-                //Math.tan,
-                (i: number) => Math.cos(i * 4) * (Math.PI / 10) * i,
-                Math.sin,
-                //Math.cos,
-                //Math.atan,
-                // (i: number) => .4 * Math.cos(i * 4),
-            ],
+
+            /*             [
+                            //(i: number) => .1 * i - .5,
+                            //Math.tan,
+                            (i: number) => Math.cos(i * 4) * (Math.PI / 10) * i,
+                            Math.sin,
+                            //Math.cos,
+                            //Math.atan,
+                            // (i: number) => .4 * Math.cos(i * 4),
+                        ],
+             */
+            functionsToShow,
             {
                 xdomain: [-xdomain * Math.PI, xdomain * Math.PI],
                 strokeWidthInner: strokeWidthInner,
                 strokeWidthOuter: strokeWidthOuter,
             },
         );
-    }, [xdomain, strokeWidthInner, strokeWidthOuter]);
+    }, [xdomain, strokeWidthInner, strokeWidthOuter, functions]);
     return (
         <div className="w-[30rem] flex flex-col">
             <div className="w-full h-64 border-8 border-blue-200 bg-blue-400">
@@ -140,9 +172,14 @@ function FunPlot() {
                 </svg>
             </div>
             <div className="">
-                <Slider labelWidth="5.5rem" value={xdomain} onChange={setxDomain} label="X domain" min={0.1} max={15} step={0.1} />
-                <Slider labelWidth="5.5rem" value={strokeWidthInner} onChange={setStrokeWidthInner} label="Inner stroke" min={0.1} max={40} step={0.1} />
-                <Slider labelWidth="5.5rem" value={strokeWidthOuter} onChange={setStrokeWidthOuter} label="Outer stroke" min={0.1} max={40} step={0.1} />
+                <div className="">
+                    <Slider labelWidth="5.5rem" value={xdomain} onChange={setxDomain} label="X domain" min={0.1} max={15} step={0.1} />
+                    <Slider labelWidth="5.5rem" value={strokeWidthInner} onChange={setStrokeWidthInner} label="Inner stroke" min={0.1} max={40} step={0.1} />
+                    <Slider labelWidth="5.5rem" value={strokeWidthOuter} onChange={setStrokeWidthOuter} label="Outer stroke" min={0.1} max={40} step={0.1} />
+                </div>
+                <div className="">
+                    <Checkbox label="Math.sin(x)" checked={functions['sin']} onChange={(value) => upadteFunction('sin', value)} />
+                </div>
             </div>
         </div>
     );
