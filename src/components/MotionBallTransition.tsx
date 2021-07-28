@@ -124,7 +124,7 @@ function MotionBallTransition() {
                 <ButtonQuick title="Update view" onClick={() => ref.current?.update()} />
 
                 <Slider label="Bars" labelWidth="2.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
-                <Checkbox label="Sorted" checked={sorted} onChange={setSorted} />
+                <Checkbox label="Sort after update" checked={sorted} onChange={setSorted} />
             </div>
         </div>
     );

@@ -19,7 +19,8 @@ type FunPlotOptions = {
     xticks?: number;
     yticks?: number;
     scheme?: string[];
-    strokeWidth?: number;
+    strokeWidthInner?: number;
+    strokeWidthOuter?: number;
     n?: number; // number of sample;
 };
 
@@ -45,7 +46,8 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
         yticks = (height - marginTop - marginBottom - insetTop - insetBottom) / 40,
 
         scheme = d3.schemeTableau10,
-        strokeWidth = 1.5,
+        strokeWidthInner: strokeWidth = 1.5,
+        strokeWidthOuter: strokeWidth2 = 26,
         n = width // number of samples
     } = options || {} as FunPlotOptions;
 
@@ -91,7 +93,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
     // curves
     svg.append("g")
         .attr("fill", "none")
-        .attr("stroke-width", strokeWidth)
+        //.attr("stroke-width", strokeWidth)
         .attr("stroke-miterlimit", 1)
         .selectAll("path")
         .data(Y)
@@ -99,9 +101,9 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
         .join("path")
         .attr("stroke", (Y, i) => scheme[i % scheme.length])
         .attr("d", Y => d3.line<number>().x(x).y((d, i) => y(Y[i]))(X))
-        .attr("stroke-width", 20)
+        .attr("stroke-width", strokeWidth)
 
-        .clone(true).lower().attr('stroke-width', 26).attr('stroke', 'white');
+        .clone(true).lower().attr('stroke-width', strokeWidth2).attr('stroke', 'white');
 
     return svg.node();
 }
@@ -110,6 +112,7 @@ function FunPlot() {
     const ref = React.useRef<SVGSVGElement>(null);
 
     const [xdomain, setxDomain] = React.useState(2);
+    const [lineWidth, setLineWidth] = React.useState(2);
 
     React.useEffect(() => {
         ref.current && funplot(ref.current,
@@ -122,7 +125,11 @@ function FunPlot() {
                 //Math.atan,
                 // (i: number) => .4 * Math.cos(i * 4),
             ],
-            { xdomain: [-xdomain * Math.PI, xdomain * Math.PI] }
+            {
+                xdomain: [-xdomain * Math.PI, xdomain * Math.PI],
+                strokeWidthInner:20,
+                strokeWidthOuter:26,
+            },
         );
     }, [xdomain]);
     return (
