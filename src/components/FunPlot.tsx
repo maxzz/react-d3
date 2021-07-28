@@ -1,8 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
 import Slider from './ui/slider/Slider';
-//import './ui/slider/Slider.scss';
-//import SliderSimple from './ui/slider/SliderSimple';
 
 type FunPlotOptions = {
     xdomain?: [number, number];
