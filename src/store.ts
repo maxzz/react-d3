@@ -11,8 +11,8 @@ namespace BarsChart {
     export const useStore = create<Store>((set, get) => ({
         nBars: 14,
         sorted: false,
-        setNBars: (v: number) => set(state => ({nBars: v})),
-        setSorted: (v: boolean) => set(state => ({sorted: v})),
+        setNBars: (v: number) => set(state => ({...state, nBars: v})),
+        setSorted: (v: boolean) => set(state => ({...state, sorted: v})),
     }));
 }
 
