@@ -16,7 +16,7 @@ function CheckboxJw() {
                         style={{transition: 'transform .2s cubic-bezier(.25,1.01,.25,1.01)'}}
                     >
                         {/* Filler */}
-                        <div className={`absolute ${checked ? "scale-100" : "scale-0"} inset-[2px] rounded-[2px] bg-gray-800 opacity-50`}
+                        <div className={`absolute ${checked ? "scale-100" : "scale-0"} inset-[3px] rounded-[2px] bg-gray-800 opacity-50`}
                             style={{transition: 'transform .2s cubic-bezier(.25,1.01,.25,1.01)'}}
                         >
                         </div>
