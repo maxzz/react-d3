@@ -1,14 +1,14 @@
 import create from 'zustand';
 
 namespace BarsChart {
-    type BarsChartStore = {
+    export type Store = {
         nBars: number;
         sorted: boolean;
         setNBars: (v: number) => void;
         setSorted: (v: boolean) => void;
     }
 
-    export const useStore = create<BarsChartStore>((set, get) => ({
+    export const useStore = create<Store>((set, get) => ({
         nBars: 14,
         sorted: false,
         setNBars: (v: number) => set(state => ({nBars: v})),
