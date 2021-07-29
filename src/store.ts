@@ -1,5 +1,4 @@
 import create from 'zustand';
-import { devtools } from 'zustand/middleware';
 
 namespace BarsChart {
     export type Store = {
@@ -9,12 +8,12 @@ namespace BarsChart {
         setSorted: (v: boolean) => void;
     };
 
-    export const useStore = create<Store>(devtools((set, get) => ({
+    export const useStore = create<Store>((set, get) => ({
         nBars: 14,
         sorted: false,
-        setNBars: (v: number) => set(state => ({ nBars: v })),
-        setSorted: (v: boolean) => set(state => ({ sorted: v })),
-    })));
+        setNBars: (v: number) => set({ nBars: v }),
+        setSorted: (v: boolean) => set({ sorted: v }),
+    }));
 }
 
 BarsChart.useStore.subscribe((state, prevState) => {
