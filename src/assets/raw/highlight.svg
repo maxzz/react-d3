@@ -1,0 +1,17 @@
+<svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 432 432">
+  <defs>
+    <linearGradient id="a" x1="16.6" y1="216" x2="415.4" y2="216" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c7f8ff"/>
+      <stop offset=".3" stop-color="#cfecff"/>
+      <stop offset=".8" stop-color="#e4cbff"/>
+      <stop offset="1" stop-color="#ecbfff"/>
+    </linearGradient>
+    <linearGradient id="b" x1="551.2" y1="234.7" x2="551.2" y2="461.4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="216" cy="216" r="216" fill="#8bbbe1"/>
+  <circle cx="216" cy="216" r="199.4" fill="url(#a)"/>
+  <path d="M704.8 375.6c8.2 38.4-27.6-12.8-157.7 31.7-86.3 29.5-150.5 4.2-150.5-26.3s56-144.5 155.5-144.5 143.7 97.2 152.7 139.1z" transform="translate(-335.8 -200.7)" fill="url(#b)"/>
+</svg>
