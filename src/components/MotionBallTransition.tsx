@@ -4,6 +4,7 @@ import { css } from '@stitches/react';
 import Checkbox from './ui/checkbox/Checkbox';
 import ButtonQuick from './ButtonQuick';
 import Slider from './ui/slider/Slider';
+import BarsChart from '../store';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
@@ -113,8 +114,11 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProp
 
 function MotionBallTransition() {
     const ref = React.useRef<API>(null);
-    const [sorted, setSorted] = React.useState(false);
-    const [nBars, setNBars] = React.useState(14);
+
+    const {nBars, setNBars, sorted, setSorted}  = BarsChart.useStore(store => ({nBars: store.nBars, sorted: store.sorted, setNBars: store.setNBars, setSorted: store.setSorted }));
+
+    // const [nBars, setNBars] = React.useState(14);
+    // const [sorted, setSorted] = React.useState(false);
     return (
         <div className="w-[30rem]">
             <div className="border rounded border-green-200 shadow">

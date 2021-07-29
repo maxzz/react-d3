@@ -16,8 +16,8 @@ function App() {
                 <div className="w-full h-full flex flex-col justify-between items-center">
                     {/* Demos */}
                     <div className="mt-4 flex-auto space-y-4 max-w-5xl min-w-[30rem] flex flex-col flex-wrap items-center z-10">
-                        <StarD3Interpolated />
-                        <FunPlot />
+                        {/* <StarD3Interpolated />
+                        <FunPlot /> */}
                         <MotionBallTransition />
                         {/* <LineChart />
                         <FunPieChart />
