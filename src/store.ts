@@ -17,7 +17,7 @@ namespace BarsChart {
 }
 
 BarsChart.useStore.subscribe((state, prevState) => {
-    console.log('store', state, prevState);
+    //console.log('store', state, prevState);
 });
 
 export default BarsChart;
