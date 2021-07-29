@@ -112,12 +112,17 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12 }: BodyProp
     );
 });
 
-const storeSelector = (store: BarsChart.Store) => ({nBars: store.nBars, sorted: store.sorted, setNBars: store.setNBars, setSorted: store.setSorted });
+const storeSelector1 = (store: BarsChart.Store) => ({ nBars: store.nBars, setNBars: store.setNBars });
+const storeSelector2 = (store: BarsChart.Store) => ({ sorted: store.sorted, setSorted: store.setSorted });
+
+// const storeSelector = (store: BarsChart.Store) => ({ nBars: store.nBars, sorted: store.sorted, setNBars: store.setNBars, setSorted: store.setSorted });
 
 function MotionBallTransition() {
     const ref = React.useRef<API>(null);
 
-    const {nBars, setNBars, sorted, setSorted}  = BarsChart.useStore(storeSelector);
+    const { nBars, setNBars } = BarsChart.useStore(storeSelector1);
+    const { sorted, setSorted } = BarsChart.useStore(storeSelector2);
+    // const {nBars, setNBars, sorted, setSorted}  = BarsChart.useStore(storeSelector);
 
     // const [nBars, setNBars] = React.useState(14);
     // const [sorted, setSorted] = React.useState(false);
