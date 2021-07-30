@@ -25,8 +25,10 @@ export default BarsChart;
 // console.log('import.meta.env.MODE', import.meta);
 // console.log('import.meta.env.MODE', import.meta.env);
 // console.log('import.meta.env.MODE', import.meta.env.BASE_URL);
- console.log('import. meta. env.MODE', import.meta.env.MODE);
+// console.log('import. meta. env.MODE', import.meta.env.MODE);
 
-// if (import.meta.env.MODE === 'development') {
-//     console.log('a5a');
-// }
+console.log('a5a1');
+if (import.meta.env.MODE === 'development') {
+    console.log('a5a2'); // This code wont be in production!!!
+}
+console.log('a5a3');
