@@ -89,7 +89,6 @@ const Body = React.forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = f
     }, [nBars]);
 
     function genData(sorted: boolean, nBars: number) {
-        //const total = d3.randomInt(5, 20)();
         DATA = d3.range(nBars).map(_ => Math.random());
         if (sorted) {
             DATA.sort((a, b) => d3.ascending(a, b));
@@ -105,12 +104,6 @@ const Body = React.forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = f
             } else {
                 genData(sorted, nBars);
             }
-
-            // DATA = d3.range(total).map(_ => Math.random());
-            // if (sorted) {
-            //     DATA.sort((a, b) => d3.ascending(a, b));
-            // }
-            // refSvg.current && bars(refSvg.current, DATA);
         }
     }));
 
