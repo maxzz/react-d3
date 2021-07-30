@@ -85,10 +85,10 @@ const Body = React.forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = f
     const refSvg = React.useRef<SVGSVGElement>(null);
 
     React.useEffect(() => {
-        genData(sorted, nBars);
+        updateSVG(nBars, sorted);
     }, [nBars]);
 
-    function genData(sorted: boolean, nBars: number) {
+    function updateSVG(nBars: number, sorted: boolean) {
         DATA = d3.range(nBars).map(_ => Math.random());
         if (sorted) {
             DATA.sort((a, b) => d3.ascending(a, b));
@@ -102,7 +102,7 @@ const Body = React.forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = f
                 const total = d3.randomInt(5, 20)();
                 onNBarsChanged(total);
             } else {
-                genData(sorted, nBars);
+                updateSVG(nBars, sorted);
             }
         }
     }));
