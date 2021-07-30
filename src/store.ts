@@ -1,5 +1,22 @@
 import create from 'zustand';
 
+const APPKEY = 'red3';
+let persist: Record<string, string> = {};
+loadAppKey();
+
+function loadAppKey() {
+    try {
+        const store = localStorage.getItem(APPKEY);
+        let obj = JSON.parse(store || '');
+        persist = { ...obj };
+    } catch (error) {
+    }
+}
+
+function storeAppKey() {
+    localStorage.setItem(APPKEY, JSON.stringify(persist));
+}
+
 namespace BarsChart {
     const KEY = 'BarsChart';
 
@@ -14,7 +31,7 @@ namespace BarsChart {
         nBars: 14,
         sorted: false,
     };
-    loadFrom(localStorage.getItem(KEY));
+    loadFrom(persist[KEY] || '');
 
     export const useStore = create<Store>((set, get) => ({
         ...initialState,
@@ -22,7 +39,7 @@ namespace BarsChart {
         setSorted: (v: boolean) => set({ sorted: v }),
     }));
 
-    function loadFrom(store: string | null) {
+    function loadFrom(store: string) {
         try {
             let obj = JSON.parse(store || '');
             initialState = { ...obj };
@@ -36,7 +53,8 @@ namespace BarsChart {
 
     useStore.subscribe((state, prevState) => {
         let data = BarsChart.storeTo(state);
-        localStorage.setItem(KEY, data);
+        persist[KEY] = data;
+        storeAppKey();
     });
 }
 
