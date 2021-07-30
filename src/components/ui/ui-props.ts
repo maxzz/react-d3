@@ -29,4 +29,5 @@ export type CheckboxWithStyleProps = {
     enabled?: boolean;
     
     styles?: CSSModuleClasses;
+    title?: string;
 };
