@@ -75,17 +75,17 @@ function bars(svgEl: SVGSVGElement, DATA: Datum[]) {
 }
 
 type BodyProps = {
-    sorted?: boolean;
     nBars?: number;
     onNBarsChanged: (n: number) => void;
+    sorted?: boolean;
+    randomN: boolean;
 };
 
-const Body = React.forwardRef(function ({ sorted = false, nBars = 12, onNBarsChanged }: BodyProps, refAPI: React.Ref<API>) {
+const Body = React.forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = false, randomN = true }: BodyProps, refAPI: React.Ref<API>) {
     const refSvg = React.useRef<SVGSVGElement>(null);
 
     React.useEffect(() => {
         genData(sorted, nBars);
-        refSvg.current && bars(refSvg.current, DATA);
     }, [nBars]);
 
     function genData(sorted: boolean, nBars: number) {
@@ -94,12 +94,17 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12, onNBarsCha
         if (sorted) {
             DATA.sort((a, b) => d3.ascending(a, b));
         }
+        refSvg.current && bars(refSvg.current, DATA);
     }
 
     React.useImperativeHandle(refAPI, () => ({
         update: () => {
-            const total = d3.randomInt(5, 20)();
-            onNBarsChanged(total);
+            if (randomN) {
+                const total = d3.randomInt(5, 20)();
+                onNBarsChanged(total);
+            } else {
+                genData(sorted, nBars);
+            }
 
             // DATA = d3.range(total).map(_ => Math.random());
             // if (sorted) {
@@ -130,7 +135,7 @@ function MotionBallTransition() {
     return (
         <div className="w-[30rem]">
             <div className="border rounded border-green-200 shadow">
-                <Body ref={ref} sorted={sorted} nBars={nBars} onNBarsChanged={setNBars} />
+                <Body ref={ref} nBars={nBars} onNBarsChanged={setNBars} sorted={sorted} randomN={randomN} />
             </div>
             <div className="mt-2 flex items-center space-x-4">
                 <ButtonQuick title="Update view" onClick={() => ref.current?.update()} />
