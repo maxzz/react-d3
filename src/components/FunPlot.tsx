@@ -187,8 +187,3 @@ function FunPlot() {
 }
 
 export default FunPlot;
-
-//TODO: probably not recalculate the y domain when toggle functions
-//TODO: fixed color for each function
-//TODO: take up less space for checkboxes
-//TODO: add zustand state store

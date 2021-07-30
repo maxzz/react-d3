@@ -3,16 +3,15 @@ import create from 'zustand';
 namespace Global {
     const APPKEY = 'red3';
     let persist: Record<string, string> = {};
-    loadAppKey();
 
-    function loadAppKey() {
+    (function loadAppKey() {
         try {
             const store = localStorage.getItem(APPKEY);
             let obj = JSON.parse(store || '');
             persist = { ...obj };
         } catch (error) {
         }
-    }
+    })();
 
     function storeAppKey() {
         localStorage.setItem(APPKEY, JSON.stringify(persist));

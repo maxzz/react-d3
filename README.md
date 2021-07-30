@@ -5,6 +5,18 @@ Coexistence of React with D3.js
 <img src="src/assets/previews/2021-07-14_18-55-53.png" widht="300px">
 <img src="src/assets/previews/2021-07-27_2-00-28.png">
 
+#### Roadmap
+    [ ] App
+        [ ] zustand state store
+            [x] BarsChart
+        [x] Global store persistence
+    [ ] Charts
+        [ ] BarsChart
+            [ ] probably not recalculate the y domain when toggle functions
+        [ ] FunChart
+            [ ] fixed color for each function
+            [ ] take up less space for checkboxes
+
 #### Links, Refs, Credits
 
 * d3-random
