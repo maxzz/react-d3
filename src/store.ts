@@ -1,20 +1,33 @@
 import create from 'zustand';
 
-const APPKEY = 'red3';
-let persist: Record<string, string> = {};
-loadAppKey();
-
-function loadAppKey() {
-    try {
-        const store = localStorage.getItem(APPKEY);
-        let obj = JSON.parse(store || '');
-        persist = { ...obj };
-    } catch (error) {
+namespace Global {
+    const APPKEY = 'red3';
+    let persist: Record<string, string> = {};
+    loadAppKey();
+    
+    function loadAppKey() {
+        try {
+            const store = localStorage.getItem(APPKEY);
+            let obj = JSON.parse(store || '');
+            persist = { ...obj };
+        } catch (error) {
+        }
     }
-}
+    
+    function storeAppKey() {
+        localStorage.setItem(APPKEY, JSON.stringify(persist));
+    }
 
-function storeAppKey() {
-    localStorage.setItem(APPKEY, JSON.stringify(persist));
+    export function getKey(key: string): string {
+        return persist[key] || '';
+    }
+
+    export function setKey(key: string, data: string) {
+        persist[key] = data;
+        storeAppKey();
+    }
+
+    // if (import.meta.env.MODE === 'development') { /* This code wont be in production!!! */ }
 }
 
 namespace BarsChart {
@@ -31,7 +44,7 @@ namespace BarsChart {
         nBars: 14,
         sorted: false,
     };
-    loadFrom(persist[KEY] || '');
+    loadFrom(Global.getKey(KEY));
 
     export const useStore = create<Store>((set, get) => ({
         ...initialState,
@@ -51,13 +64,9 @@ namespace BarsChart {
         return JSON.stringify(state);
     }
 
-    useStore.subscribe((state, prevState) => {
-        let data = BarsChart.storeTo(state);
-        persist[KEY] = data;
-        storeAppKey();
+    useStore.subscribe((state) => {
+        Global.setKey(KEY, storeTo(state));
     });
 }
-
-// if (import.meta.env.MODE === 'development') { /* This code wont be in production!!! */ }
 
 export default BarsChart;
