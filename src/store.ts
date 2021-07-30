@@ -1,6 +1,8 @@
 import create from 'zustand';
 
 namespace BarsChart {
+    const KEY = 'BarsChart';
+
     export type Store = {
         nBars: number;
         sorted: boolean;
@@ -12,7 +14,7 @@ namespace BarsChart {
         nBars: 14,
         sorted: false,
     };
-    loadFrom(localStorage.getItem('red3'));
+    loadFrom(localStorage.getItem(KEY));
 
     export const useStore = create<Store>((set, get) => ({
         ...initialState,
@@ -31,13 +33,12 @@ namespace BarsChart {
     export function storeTo(state: Store): string {
         return JSON.stringify(state);
     }
-}
 
-BarsChart.useStore.subscribe((state, prevState) => {
-    console.log('store', state, prevState);
-    let data = BarsChart.storeTo(state);
-    localStorage.setItem('red3', data);
-});
+    useStore.subscribe((state, prevState) => {
+        let data = BarsChart.storeTo(state);
+        localStorage.setItem(KEY, data);
+    });
+}
 
 // if (import.meta.env.MODE === 'development') { /* This code wont be in production!!! */ }
 
