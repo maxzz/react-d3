@@ -115,11 +115,18 @@ const Body = React.forwardRef(function ({ sorted = false, nBars = 12, onNBarsCha
     );
 });
 
-const storeSelector = (store: BarsChart.Store) => ({ nBars: store.nBars, sorted: store.sorted, setNBars: store.setNBars, setSorted: store.setSorted });
+const storeSelector = (store: BarsChart.Store) => ({
+    nBars: store.nBars,
+    sorted: store.sorted,
+    randomN: store.randomN,
+    setNBars: store.setNBars,
+    setSorted: store.setSorted,
+    setRandomN: store.setRandomN,
+});
 
 function MotionBallTransition() {
     const ref = React.useRef<API>(null);
-    const { nBars, setNBars, sorted, setSorted } = BarsChart.useStore(storeSelector);
+    const { nBars, setNBars, sorted, setSorted, randomN, setRandomN } = BarsChart.useStore(storeSelector);
     return (
         <div className="w-[30rem]">
             <div className="border rounded border-green-200 shadow">
@@ -129,8 +136,8 @@ function MotionBallTransition() {
                 <ButtonQuick title="Update view" onClick={() => ref.current?.update()} />
 
                 <Slider label="Bars" labelWidth="2.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
+                <Checkbox label="Update quantity" checked={randomN} onChange={setRandomN} title="Update # of bars during update" />
                 <Checkbox label="Sort" checked={sorted} onChange={setSorted} title="Sort after update" />
-                {/* <Checkbox label="Update quantity" checked={sorted} onChange={setSorted} title="Update # of bars during update" /> */}
             </div>
         </div>
     );
