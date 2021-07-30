@@ -21,3 +21,12 @@ BarsChart.useStore.subscribe((state, prevState) => {
 });
 
 export default BarsChart;
+
+// console.log('import.meta.env.MODE', import.meta);
+// console.log('import.meta.env.MODE', import.meta.env);
+// console.log('import.meta.env.MODE', import.meta.env.BASE_URL);
+ console.log('import. meta. env.MODE', import.meta.env.MODE);
+
+// if (import.meta.env.MODE === 'development') {
+//     console.log('a5a');
+// }
