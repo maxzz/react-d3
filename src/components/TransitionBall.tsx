@@ -60,18 +60,25 @@ function Shape({ x, y }: { x: number, y: number; }) {
     const ref = React.useRef<SVGSVGElement>(null);
     const [realPos, setRealPos] = React.useState({ x, y });
 
+    const refX = React.useRef<HTMLDivElement>(null);
+    const refY = React.useRef<HTMLDivElement>(null);
+
     console.log('xy', realPos.x, realPos.y);
 
     React.useEffect(() => {
         const ball = d3.select(ref.current);
 
-        ball.transition('move-x')
-            .duration(800)
+        const ballX = d3.select(refX.current);
+        const ballY = d3.select(refY.current);
+
+        ballX.transition('move-x')
+            .duration(3800)
             .ease(d3.easeBounceOut)
             .style('transform', `translateX(${x - 20}px)`)
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
-        ball.transition('move-y')
+        ballY.transition('move-y')
+            .duration(800)
             .ease(d3.easeCubicInOut)
             .style('transform', `translateY(${y - 20}px)`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
@@ -79,7 +86,12 @@ function Shape({ x, y }: { x: number, y: number; }) {
     }, [x, y]);
 
     return (
-        <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" />
+        <div ref={refX}>
+            <div ref={refY}>
+                {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
+                <HighlightedBall ref={ref} width="40px" height="40px" transforms="" />
+            </div>
+        </div>
     );
 }
 
@@ -117,12 +129,12 @@ function TransitionBall() {
     const [onLeft, setOnLeft] = React.useState(true);
 
     return (
-        <div className="w-[300px] h-[300px] bg-red-100">
+        <div className="w-[300px] h-[300px] bg-red-100" onClick={() => setOnLeft(v => !v)}>
             {/* <svg className="bg-red-100 w-full h-full" onClick={() => setOnLeft(v => !v)}>
                 <ShapeNestedSVG x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
                 <Ball x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
             </svg> */}
-            <div className="" onClick={() => setOnLeft(v => !v)}>
+            <div className="">
                 <Shape x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
             </div>
         </div>
