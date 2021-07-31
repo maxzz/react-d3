@@ -52,7 +52,7 @@ function Shape({ x, y }: { x: number, y: number; }) {
     }, [x, y]);
 
     return (
-        <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} transforms="scale(.1)" />
+        <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} transforms="scale(.1) translate(-50%,-50%)" />
     );
 }
 /*
