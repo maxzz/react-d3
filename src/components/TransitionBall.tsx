@@ -39,13 +39,12 @@ function Shape({ x, y }: { x: number, y: number; }) {
         const ball = d3.select(ref.current);
 
         ball.transition('move-x')
-            .duration(1800)
+            .duration(800)
             .ease(d3.easeBounceOut)
             .attr('x', `${x}px`)
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
         ball.transition('move-y')
-            .duration(1800)
             .ease(d3.easeCubicInOut)
             .attr('y', `${y}px`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
@@ -55,7 +54,7 @@ function Shape({ x, y }: { x: number, y: number; }) {
     return (
         // <HighlightedBall ref={ref} />
         <g style={{ transform: "scale(.1)" }}>
-            <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} />
+            <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} style={{ transform: "scale(.21)" }} />
         </g>
     );
 }

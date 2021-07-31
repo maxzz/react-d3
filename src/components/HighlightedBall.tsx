@@ -15,13 +15,15 @@ function HighlightedBallRaw(props: React.SVGAttributes<SVGSVGElement>, ref: Reac
                     <stop offset="1" stopColor="#fff" stopOpacity="0" />
                 </linearGradient>
             </defs>
-            <circle cx="216" cy="216" fill="#8bbbe1" r="216" />
-            <circle cx="216" cy="216" fill="url(#a)" r="199.4" />
-            <path
-                fill="url(#b)"
-                transform="translate(-335.8 -200.7)"
-                d="M704.8 375.6c8.2 38.4-27.6-12.8-157.7 31.7-86.3 29.5-150.5 4.2-150.5-26.3s56-144.5 155.5-144.5 143.7 97.2 152.7 139.1z"
-            />
+            <g style={{ transform: "scale(.1)" }}>
+                <circle cx="216" cy="216" fill="#8bbbe1" r="216" />
+                <circle cx="216" cy="216" fill="url(#a)" r="199.4" />
+                <path
+                    fill="url(#b)"
+                    transform="translate(-335.8 -200.7)"
+                    d="M704.8 375.6c8.2 38.4-27.6-12.8-157.7 31.7-86.3 29.5-150.5 4.2-150.5-26.3s56-144.5 155.5-144.5 143.7 97.2 152.7 139.1z"
+                />
+            </g>
         </svg>
     );
 }
