@@ -8,6 +8,7 @@ import FunPieChart from './components/FunPieChart';
 import LinePlayground from './components/x-nun/XOrgLinePlayground';
 import LineChart from './components/LineChart';
 import MotionBallTransition from './components/MotionBallTransition';
+import TransitionBall from './components/TransitionBall';
 
 function App() {
     return (
@@ -18,7 +19,10 @@ function App() {
                     <div className="mt-4 flex-auto space-y-4 max-w-5xl min-w-[30rem] flex flex-col flex-wrap items-center z-10">
                         {/* <StarD3Interpolated />
                         <FunPlot /> */}
-                        <MotionBallTransition />
+
+                        {/* <MotionBallTransition /> */}
+                        <TransitionBall />
+
                         {/* <LineChart />
                         <FunPieChart />
                         <LinePlayground />
