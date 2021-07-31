@@ -1,6 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 import { precisionRound } from 'd3';
+import HighlightedBall from './HighlightedBall';
 
 function Ball({ x, y }: { x: number, y: number; }) {
     const ref = React.useRef<SVGCircleElement>(null);
@@ -28,6 +29,34 @@ function Ball({ x, y }: { x: number, y: number; }) {
     );
 }
 
+function Shape({ x, y }: { x: number, y: number; }) {
+    const ref = React.useRef<SVGGElement>(null);
+    const [realPos, setRealPos] = React.useState({ x, y });
+
+    React.useEffect(() => {
+        const ball = d3.select(ref.current);
+
+        ball.transition('move-x')
+            .duration(1800)
+            .ease(d3.easeBounceOut)
+            .style('transform', `translateX(${x}px) scale(.1)`)
+            .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
+
+        ball.transition('move-y')
+            .duration(1800)
+            .ease(d3.easeCubicInOut)
+            .style('transform', `translateY(${y}px) scale(.1)`)
+            .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
+
+    }, [x, y]);
+
+    return (
+        <g ref={ref} style={{ transform: `translate(${realPos.x}px, ${realPos.y}px) scale(.1)` }}>
+            <HighlightedBall />
+        </g>
+    );
+}
+
 function TransitionBall() {
     const [pos, setPos] = React.useState({ x: 150, y: 50 });
     const [onLeft, setOnLeft] = React.useState(true);
@@ -37,6 +66,7 @@ function TransitionBall() {
             <svg className="bg-red-100 w-full h-full" onClick={() => {
                 setOnLeft(v => !v);
             }}>
+                <Shape x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
                 <Ball x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
             </svg>
         </div>
