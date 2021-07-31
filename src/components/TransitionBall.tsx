@@ -52,10 +52,7 @@ function Shape({ x, y }: { x: number, y: number; }) {
     }, [x, y]);
 
     return (
-        // <HighlightedBall ref={ref} />
-        <g style={{ transform: "scale(.1)" }}>
-            <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} style={{ transform: "scale(.21)" }} />
-        </g>
+        <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} transforms="scale(.1)" />
     );
 }
 /*
