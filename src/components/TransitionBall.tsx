@@ -30,8 +30,10 @@ function Ball({ x, y }: { x: number, y: number; }) {
 }
 
 function Shape({ x, y }: { x: number, y: number; }) {
-    const ref = React.useRef<SVGGElement>(null);
+    const ref = React.useRef<SVGSVGElement>(null);
     const [realPos, setRealPos] = React.useState({ x, y });
+
+    console.log('xy', realPos.x, realPos.y);
 
     React.useEffect(() => {
         const ball = d3.select(ref.current);
@@ -39,14 +41,43 @@ function Shape({ x, y }: { x: number, y: number; }) {
         ball.transition('move-x')
             .duration(1800)
             .ease(d3.easeBounceOut)
-            .style('transform', `translateX(${x}px) scale(.1)`)
+            .attr('x', `${x}px`)
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
         ball.transition('move-y')
             .duration(1800)
             .ease(d3.easeCubicInOut)
-            .style('transform', `translateY(${y}px) scale(.1)`)
+            .attr('y', `${y}px`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
+
+    }, [x, y]);
+
+    return (
+        // <HighlightedBall ref={ref} />
+        <g style={{ transform: "scale(.1)" }}>
+            <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} />
+        </g>
+    );
+}
+/*
+function Shape({ x, y }: { x: number, y: number; }) {
+    const ref = React.useRef<SVGGElement>(null);
+    const [realPos, setRealPos] = React.useState({ x, y });
+
+    React.useEffect(() => {
+        const ball = d3.select(ref.current);
+
+        ball.transition('move-x')
+            .duration(3800)
+            .ease(d3.easeBounceOut)
+            .style('transform', `translateX(${x}px) scale(.1)`)
+            .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
+
+        // ball.transition('move-y')
+        //     .duration(3800)
+        //     .ease(d3.easeCubicInOut)
+        //     .style('transform', `translateY(${y}px) scale(.1)`)
+        //     .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
 
     }, [x, y]);
 
@@ -56,7 +87,7 @@ function Shape({ x, y }: { x: number, y: number; }) {
         </g>
     );
 }
-
+*/
 function TransitionBall() {
     const [pos, setPos] = React.useState({ x: 150, y: 50 });
     const [onLeft, setOnLeft] = React.useState(true);

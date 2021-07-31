@@ -1,8 +1,8 @@
 import React from 'react';
 
-function HighlightedBall() {
+function HighlightedBallRaw(props: React.SVGAttributes<SVGSVGElement>, ref: React.Ref<SVGSVGElement>) {
     return (
-        <svg viewBox="0 0 432 432">
+        <svg ref={ref} viewBox="0 0 432 432" {...props}>
             <defs>
                 <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="16.6" x2="415.4" y1="216" y2="216">
                     <stop offset="0" stopColor="#c7f8ff" />
@@ -25,5 +25,7 @@ function HighlightedBall() {
         </svg>
     );
 }
+
+const HighlightedBall = React.forwardRef(HighlightedBallRaw);
 
 export default HighlightedBall;
