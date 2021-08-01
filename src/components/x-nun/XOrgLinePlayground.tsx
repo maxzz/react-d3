@@ -8,7 +8,7 @@ type API = {
     setAll: (onOff: boolean) => void;
 };
 
-function initial(mainGroup: SVGGElement): API {
+function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => void): API {
     type CurveInfo = {
         name: string;
         curve: d3.CurveFactory | d3.CurveBundleFactory;
@@ -94,6 +94,7 @@ function initial(mainGroup: SVGGElement): API {
             .attr('class', d => `item ${styles.item} ${d.group ? styles.itemBegingroup : ''}`)
             .on('click', function (event, d) {
                 d.active = !d.active;
+                updateAllLinesOn();
                 update();
             })
             .on('mouseover', function (event, d) { updateInfo(d.info); })
@@ -184,6 +185,10 @@ function initial(mainGroup: SVGGElement): API {
         u.exit().remove();
     }
 
+    function updateAllLinesOn() {
+        onSelectionChange(!CURVEINFO.some(item => !item.active));
+    }
+
     function setAll(onOff: boolean) {
         CURVEINFO.forEach((item) => {
             item.active = onOff;
@@ -212,8 +217,12 @@ function LineEditor() {
 
     const [allChecked, setAllChecked] = React.useState(false);
 
+    function onSelectionChange(allOn: boolean) {
+        setAllChecked(allOn);
+    }
+
     React.useEffect(() => {
-        apiRef.current = svgRef.current && initial(svgRef.current);
+        apiRef.current = svgRef.current && initial(svgRef.current, onSelectionChange);
     }, []);
 
     return (
@@ -235,7 +244,7 @@ function LineEditor() {
                     <a className="mt-2 block" href="https://github.com/d3/d3-shape#curves" target="_blank">
                         D3 curve types to interpolate a set of points:
                     </a>
-                    {apiRef.current &&
+                    {
                         <CheckboxTw label="" title="Toggle all" checked={allChecked} onChange={(v) => {
                             apiRef.current?.setAll(v);
                             setAllChecked(v);
