@@ -53,7 +53,7 @@ function ShapeNestedSVG({ x, y, width, height }: { x: number, y: number; width: 
     }, [x, y]);
 
     return (
-        <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} width={`${width}px`} height={`${height}px`} transforms="" />
+        <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} width={`${width}px`} height={`${height}px`} transforms="" preserveAspectRatio="none" />
     );
 }
 
@@ -96,7 +96,7 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
                 {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
                 {/* <HighlightedBall style={{width, height, transform: `translate(${realPos.x - width / 2}px, ${realPos.y - height / 2}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" /> */}
                 {/* <HighlightedBall ref={ref} style={{ width, height, }} className="bg-red-600" preserveAspectRatio="none" /> */}
-                <HighlightedBall style={{ width, height }} ref={ref} className="w-full h-full" preserveAspectRatio="none" />
+                <HighlightedBall ref={ref} className="w-full h-full" style={{ width, height }} preserveAspectRatio="none" />
             </div>
         </div>
     );
@@ -140,12 +140,15 @@ function TransitionBall() {
     const ballWidth = 20;
     const ballHeight = 60;
 
+    const squareWidth = 20;
+    const squareHeight = 30;
+
     return (
         <div className={`relative bg-red-100`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
             <div className="absolute w-full h-full">
                 {/* <div className="absolute w-full h-full bg-yellow-100 opacity-5"></div> */}
                 <svg className="absolute w-full h-full">
-                    <ShapeNestedSVG x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} />
+                    <ShapeNestedSVG x={onLeft ? 0 : width - squareWidth} y={onLeft ? 0 : height - squareHeight} width={squareWidth} height={squareHeight} />
                     {/* <Ball x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} /> */}
                 </svg>
             </div>
