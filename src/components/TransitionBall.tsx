@@ -13,17 +13,22 @@ function Ball({ x, y, r }: { x: number, y: number; r: number; }) {
             .duration(800)
             .ease(d3.easeBounceOut)
             .attr('cx', x)
-            .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
+            .style('transform', `scale(.2)`)
+            .on('end', function () {
+                d3.select(this)
+                    .style('transform', `scale(1)`);
+
+                setRealPos((prev) => ({ x, y: prev.y }));
+            });
 
         ball.transition('move-y')
             .ease(d3.easeCubicInOut)
             .attr('cy', y)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
-
     }, [x, y]);
 
     return (
-        <circle ref={ref} cx={realPos.x} cy={realPos.y} r={r} fill="none" stroke="blue" strokeWidth={6} clipPath="circle()" >
+        <circle ref={ref} cx={realPos.x} cy={realPos.y} r={r} fill="#78dcff80" stroke="#67d8ff80" strokeWidth={6} clipPath="circle()" >
         </circle>
     );
 }
@@ -45,7 +50,6 @@ function ShapeNestedSVG({ x, y, width, height }: { x: number, y: number; width: 
             .ease(d3.easeCubicInOut)
             .attr('y', `${y}px`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
-
     }, [x, y]);
 
     return (
@@ -64,64 +68,59 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
         const ballY = d3.select(refY.current);
 
         ballX.transition('move-x')
-            .duration(800)
+            .duration(3800)
             .ease(d3.easeBounceOut)
             .style('transform', `translateX(${x}px)`)
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
         ballY.transition('move-y')
             // .duration(800)
-            // .ease(d3.easeCubicInOut)
+            .ease(d3.easeCubicInOut)
             .style('transform', `translateY(${y}px)`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
-
     }, [x, y]);
 
     return (
         <div ref={refX} style={{ transform: `translateX(${realPos.x}px`, display: 'inline-block' }} {...rest}>
             <div ref={refY} style={{ transform: `translateY(${realPos.y}px)` }}>
-                <HighlightedBall style={{ width, height }} preserveAspectRatio="none" />
+                <HighlightedBall style={{ width, height }} preserveAspectRatio="none" transforms="scale(.5)" />
             </div>
         </div>
     );
 }
 
+const width = 300;
+const height = 200;
+
+const ballWidth = 20;
+const ballHeight = 20;
+
+const squareWidth = 60;
+const squareHeight = 80;
+
+const circleR = 50;
+
 function TransitionBall() {
     const [onLeft, setOnLeft] = React.useState(true);
-
-    const width = 300;
-    const height = 500;
-
-    const ballWidth = 20;
-    const ballHeight = 20;
-
-    const squareWidth = 60;
-    const squareHeight = 60;
-
-    const circleR = 60;
 
     return (
         <div className={`relative bg-red-100`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
             <div className="absolute w-full h-full">
-                <div className="absolute w-full h-full bg-yellow-100 opacity-5"></div>
                 <svg className="absolute w-full h-full">
-                    <ShapeNestedSVG x={onLeft ? 0 : width - squareWidth} y={onLeft ? 0 : height - squareHeight} width={squareWidth} height={squareHeight} />
                     <Ball x={onLeft ? circleR : width - circleR} y={onLeft ? circleR : height - circleR} r={circleR} />
+                    <ShapeNestedSVG x={onLeft ? 0 : width - squareWidth} y={onLeft ? 0 : height - squareHeight} width={squareWidth} height={squareHeight} />
                 </svg>
             </div>
-            {[0,1,2,3].map((item) => (
-                <Shape 
-                    x={onLeft ? item * ballWidth * .5 : width - (item + 1) * ballWidth} 
-                    y={onLeft ? item * ballHeight * .5 : height - (item + 1) * ballHeight} 
-                    width={ballWidth} 
-                    height={ballHeight} 
-                    className="opacity-100"
+            {[0, 1, 2, 3, 9].map((item) => (
+                <Shape
+                    x={onLeft ? item * ballWidth * .3 : width - (item + 1) * ballWidth}
+                    y={onLeft ? item * ballHeight * .5 : height - (item + 1) * ballHeight}
+                    width={ballWidth}
+                    height={ballHeight}
                     key={item}
                 />
             ))}
-            {/* <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
-            <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
-            <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" /> */}
+            {/* <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" /> */}
         </div>
     );
 }
