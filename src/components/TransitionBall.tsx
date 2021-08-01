@@ -70,6 +70,8 @@ function Shape({ x, y }: { x: number, y: number; }) {
     console.log('xy', realPos.x, realPos.y);
 
     React.useEffect(() => {
+        console.log('hook xy', x, y, realPos.x, realPos.y);
+        
         const ball = d3.select(ref.current);
 
         const ballX = d3.select(refX.current);
@@ -78,13 +80,15 @@ function Shape({ x, y }: { x: number, y: number; }) {
         ballX.transition('move-x')
             .duration(800)
             .ease(d3.easeBounceOut)
-            .style('transform', `translateX(${x - width / 2}px)`)
+            .style('transform', `translateX(${x}px)`)
+            // .style('transform', `translateX(${x - width / 2}px)`)
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
         ballY.transition('move-y')
             // .duration(800)
             // .ease(d3.easeCubicInOut)
-            .style('transform', `translateY(${y - height / 2}px)`)
+            .style('transform', `translateY(${y}px)`)
+            // .style('transform', `translateY(${y - height / 2}px)`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
 
     }, [x, y]);
@@ -94,7 +98,8 @@ function Shape({ x, y }: { x: number, y: number; }) {
             <div ref={refY}>
                 {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
                 {/* <HighlightedBall style={{width, height, transform: `translate(${realPos.x - width / 2}px, ${realPos.y - height / 2}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" /> */}
-                <HighlightedBall ref={ref} style={{ width, height, }} className="bg-red-600" preserveAspectRatio="none" />
+                {/* <HighlightedBall ref={ref} style={{ width, height, }} className="bg-red-600" preserveAspectRatio="none" /> */}
+                <HighlightedBall style={{width, height, transform: `translate(${realPos.x}px, ${realPos.y}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" />
             </div>
         </div>
     );
