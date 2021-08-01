@@ -1,8 +1,14 @@
 import React from 'react';
 import * as d3 from 'd3';
 import styles from './XOrgLinePlayground.module.scss';
+import Checkbox from '../ui/checkbox/Checkbox';
+import CheckboxTw from '../ui/checkbox/CheckboxTw';
 
-function initial(mainGroup: SVGGElement) {
+type API = {
+    setAll: (onOff: boolean) => void;
+};
+
+function initial(mainGroup: SVGGElement): API {
     type CurveInfo = {
         name: string;
         curve: d3.CurveFactory | d3.CurveBundleFactory;
@@ -82,8 +88,6 @@ function initial(mainGroup: SVGGElement) {
         let items = d3.select('.menu')
             .selectAll<HTMLDivElement, CurveInfo>('div.item')
             .data(CURVEINFO);
-        console.log('s', styles);
-
 
         let itemsEnter = items.enter()
             .append('div')
@@ -180,6 +184,13 @@ function initial(mainGroup: SVGGElement) {
         u.exit().remove();
     }
 
+    function setAll(onOff: boolean) {
+        CURVEINFO.forEach((item) => {
+            item.active = onOff;
+        });
+        update();
+    }
+
     function update() {
         updateMenu();
         updatePointsMenu();
@@ -189,17 +200,26 @@ function initial(mainGroup: SVGGElement) {
 
     updatePointsInfo();
     update();
+
+    return {
+        setAll
+    };
 }
 
 function LineEditor() {
-    const ref = React.useRef<SVGGElement>(null);
+    const svgRef = React.useRef<SVGGElement>(null);
+    const apiRef = React.useRef<API | null>(null);
+
+    const [allChecked, setAllChecked] = React.useState(false);
+
     React.useEffect(() => {
-        ref.current && initial(ref.current);
+        apiRef.current = svgRef.current && initial(svgRef.current);
     }, []);
+
     return (
         <div className=""> {/* scale-75 */}
             <svg className="bg-white border-8 border-blue-400" viewBox="0 0 500 500" fill="none" stroke="red" strokeWidth="1">
-                <g ref={ref}></g>
+                <g ref={svgRef}></g>
             </svg>
 
             <div className="sidebar mt-4 p-2 rounded-md text-sm bg-white">
@@ -211,9 +231,18 @@ function LineEditor() {
                     <span className="text"></span>
                     <span className="points"></span>
                 </div>
-                <a className="mt-2 block" href="https://github.com/d3/d3-shape#curves" target="_blank">
-                    D3 curve types to interpolate a set of points:
-                </a>
+                <div className="flex justify-between">
+                    <a className="mt-2 block" href="https://github.com/d3/d3-shape#curves" target="_blank">
+                        D3 curve types to interpolate a set of points:
+                    </a>
+                    {apiRef.current &&
+                        <CheckboxTw label="" title="Toggle all" checked={allChecked} onChange={(v) => {
+                            apiRef.current?.setAll(v);
+                            setAllChecked(v);
+                        }}
+                        />
+                    }
+                </div>
                 <div className="menu border border-gray-400 rounded overflow-hidden"></div>
             </div>
         </div>
