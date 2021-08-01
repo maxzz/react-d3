@@ -90,11 +90,11 @@ function Shape({ x, y }: { x: number, y: number; }) {
     }, [x, y]);
 
     return (
-        <div ref={refX} style={{ width, height, }}>
-            <div ref={refY} className="w-full h-full" >
+        <div ref={refX}>
+            <div ref={refY}>
                 {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
                 {/* <HighlightedBall style={{width, height, transform: `translate(${realPos.x - width / 2}px, ${realPos.y - height / 2}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" /> */}
-                <HighlightedBall ref={ref} className="w-full h-full bg-red-600" preserveAspectRatio="none" />
+                <HighlightedBall ref={ref} style={{ width, height, }} className="bg-red-600" preserveAspectRatio="none" />
             </div>
         </div>
     );
@@ -140,7 +140,7 @@ function TransitionBall() {
                 <Ball x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
             </svg> */}
             <div className="">
-                <Shape x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
+                <Shape x={onLeft ? 0 : 300} y={onLeft ? 0 : 300} />
             </div>
             {/* <div className="w-110 h-50">
                 <IconRefresh />
