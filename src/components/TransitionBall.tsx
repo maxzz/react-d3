@@ -54,7 +54,6 @@ function ShapeNestedSVG({ x, y, width, height }: { x: number, y: number; width: 
 }
 
 function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: number; height: number; } & React.HTMLAttributes<HTMLElement>) {
-    const ref = React.useRef<SVGSVGElement>(null);
     const [realPos, setRealPos] = React.useState({ x, y });
 
     const refX = React.useRef<HTMLDivElement>(null);
@@ -63,8 +62,6 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
     console.log('xy', realPos.x, realPos.y);
 
     React.useEffect(() => {
-        const ball = d3.select(ref.current);
-
         const ballX = d3.select(refX.current);
         const ballY = d3.select(refY.current);
 
@@ -75,8 +72,8 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
         ballY.transition('move-y')
-            .duration(800)
-            .ease(d3.easeCubicInOut)
+            // .duration(800)
+            // .ease(d3.easeCubicInOut)
             .style('transform', `translateY(${y}px)`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
 
@@ -85,41 +82,12 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
     return (
         <div ref={refX} style={{ transform: `translateX(${realPos.x}px` }} {...rest}>
             <div ref={refY} style={{ transform: `translateY(${realPos.y}px)` }}>
-                <HighlightedBall ref={ref} className="w-full h-full" style={{ width, height }} preserveAspectRatio="none" />
+                <HighlightedBall className="w-full h-full" style={{ width, height }} preserveAspectRatio="none" />
             </div>
         </div>
     );
 }
 
-/*
-function Shape({ x, y }: { x: number, y: number; }) {
-    const ref = React.useRef<SVGGElement>(null);
-    const [realPos, setRealPos] = React.useState({ x, y });
-
-    React.useEffect(() => {
-        const ball = d3.select(ref.current);
-
-        ball.transition('move-x')
-            .duration(3800)
-            .ease(d3.easeBounceOut)
-            .style('transform', `translateX(${x}px) scale(.1)`)
-            .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
-
-        // ball.transition('move-y')
-        //     .duration(3800)
-        //     .ease(d3.easeCubicInOut)
-        //     .style('transform', `translateY(${y}px) scale(.1)`)
-        //     .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
-
-    }, [x, y]);
-
-    return (
-        <g ref={ref} style={{ transform: `translate(${realPos.x}px, ${realPos.y}px) scale(.1)` }}>
-            <HighlightedBall />
-        </g>
-    );
-}
-*/
 function TransitionBall() {
     const [onLeft, setOnLeft] = React.useState(true);
 
@@ -127,10 +95,10 @@ function TransitionBall() {
     const height = 500;
 
     const ballWidth = 20;
-    const ballHeight = 60;
+    const ballHeight = 30;
 
     const squareWidth = 60;
-    const squareHeight = 80;
+    const squareHeight = 60;
 
     const circleR = 20;
 
@@ -143,9 +111,9 @@ function TransitionBall() {
                     <Ball x={onLeft ? circleR : width - circleR} y={onLeft ? circleR : height - circleR} r={circleR} />
                 </svg>
             </div>
-            <div className="bg-green-400">
-                <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
-            </div>
+            <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
+            <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
+            <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
         </div>
     );
 }
