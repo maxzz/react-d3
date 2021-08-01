@@ -2,6 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import { precisionRound } from 'd3';
 import HighlightedBall from './HighlightedBall';
+import { IconRefresh } from './ui/ButtonIcons';
 
 function Ball({ x, y }: { x: number, y: number; }) {
     const ref = React.useRef<SVGCircleElement>(null);
@@ -63,6 +64,9 @@ function Shape({ x, y }: { x: number, y: number; }) {
     const refX = React.useRef<HTMLDivElement>(null);
     const refY = React.useRef<HTMLDivElement>(null);
 
+    const width = 20;
+    const height = 40;
+
     console.log('xy', realPos.x, realPos.y);
 
     React.useEffect(() => {
@@ -74,22 +78,23 @@ function Shape({ x, y }: { x: number, y: number; }) {
         ballX.transition('move-x')
             .duration(800)
             .ease(d3.easeBounceOut)
-            .style('transform', `translateX(${x - 20}px)`)
+            .style('transform', `translateX(${x - width / 2}px)`)
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
         ballY.transition('move-y')
             // .duration(800)
             // .ease(d3.easeCubicInOut)
-            .style('transform', `translateY(${y - 20}px)`)
+            .style('transform', `translateY(${y - height / 2}px)`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
 
     }, [x, y]);
 
     return (
-        <div ref={refX}>
-            <div ref={refY} className="w-10 h-40">
+        <div ref={refX} style={{ width, height, }}>
+            <div ref={refY} className="w-full h-full" >
                 {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
-                <HighlightedBall ref={ref} className="w-full h-full bg-red-600" transforms="" />
+                {/* <HighlightedBall style={{width, height, transform: `translate(${realPos.x - width / 2}px, ${realPos.y - height / 2}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" /> */}
+                <HighlightedBall ref={ref} className="w-full h-full bg-red-600" preserveAspectRatio="none" />
             </div>
         </div>
     );
@@ -137,6 +142,9 @@ function TransitionBall() {
             <div className="">
                 <Shape x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
             </div>
+            {/* <div className="w-110 h-50">
+                <IconRefresh />
+            </div> */}
         </div>
     );
 }
