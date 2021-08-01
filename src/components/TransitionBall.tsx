@@ -135,20 +135,23 @@ function TransitionBall() {
     const [pos, setPos] = React.useState({ x: 150, y: 50 });
     const [onLeft, setOnLeft] = React.useState(true);
 
-    const width = 20;
-    const height = 60;
+    const width = 300;
+    const height = 500;
+
+    const ballWidth = 20;
+    const ballHeight = 60;
 
     return (
-        <div className="w-[300px] h-[300px] relative bg-red-100" onClick={() => setOnLeft(v => !v)}>
+        <div className={`w-[${width}px] h-[${height}px] relative bg-red-100`} onClick={() => setOnLeft(v => !v)}>
             <div className="absolute w-full h-full">
-                <div className="absolute w-full h-full bg-yellow-100 opacity-50"></div>
+                <div className="absolute w-full h-full bg-yellow-100 opacity-5"></div>
                 <svg className="absolute w-full h-full">
                     <ShapeNestedSVG x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
                     <Ball x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
                 </svg>
             </div>
             <div className="bg-green-400">
-                <Shape x={onLeft ? 0 : 300 - width} y={onLeft ? 0 : 300 - height} width={width} height={height} className="opacity-100" />
+                <Shape x={onLeft ? 0 : 300 - ballWidth} y={onLeft ? 0 : 300 - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
             </div>
             {/* <div className="w-110 h-50">
                 <IconRefresh />
