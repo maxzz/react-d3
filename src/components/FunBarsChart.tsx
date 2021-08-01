@@ -122,7 +122,7 @@ const storeSelector = (store: BarsChart.Store) => ({
     setRandomN: store.setRandomN,
 });
 
-function MotionBallTransition() {
+function FunBarsChart() {
     const ref = React.useRef<API>(null);
     const { nBars, setNBars, sorted, setSorted, randomN, setRandomN } = BarsChart.useStore(storeSelector);
     return (
@@ -141,4 +141,4 @@ function MotionBallTransition() {
     );
 }
 
-export default MotionBallTransition;
+export default FunBarsChart;
