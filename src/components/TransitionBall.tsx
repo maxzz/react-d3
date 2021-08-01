@@ -65,7 +65,7 @@ function Shape({ x, y }: { x: number, y: number; }) {
     const refY = React.useRef<HTMLDivElement>(null);
 
     const width = 20;
-    const height = 40;
+    const height = 60;
 
     console.log('xy', realPos.x, realPos.y);
 
@@ -94,12 +94,12 @@ function Shape({ x, y }: { x: number, y: number; }) {
     }, [x, y]);
 
     return (
-        <div ref={refX}>
-            <div ref={refY}>
+        <div ref={refX} style={{transform: `translateX(${realPos.x}px`}}>
+            <div ref={refY} style={{transform: `translateY(${realPos.y}px)`}}>
                 {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
                 {/* <HighlightedBall style={{width, height, transform: `translate(${realPos.x - width / 2}px, ${realPos.y - height / 2}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" /> */}
                 {/* <HighlightedBall ref={ref} style={{ width, height, }} className="bg-red-600" preserveAspectRatio="none" /> */}
-                <HighlightedBall style={{width, height, transform: `translate(${realPos.x}px, ${realPos.y}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" />
+                <HighlightedBall style={{width, height }} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" />
             </div>
         </div>
     );
