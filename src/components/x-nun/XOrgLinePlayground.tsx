@@ -105,23 +105,6 @@ function initial(mainGroup: SVGGElement) {
             .select('.info')
             .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
-
-        // let u = d3.select('.menu')
-        //     .selectAll<HTMLDivElement, CurveInfo>('div.item')
-        //     .data(CURVEINFO);
-        // u.enter()
-        //     .append('div')
-        //     .attr('class', d => `item ${styles.item} ${d.group ? styles.itemBegingroup : ''}`)
-        //     .text(d => d.name)
-        //     .on('click', function (event, d) {
-        //         d.active = !d.active;
-        //         update();
-        //     })
-        //     .on('mouseover', function (event, d) { updateInfo(d.info); })
-        //     .on('mouseout', function () { updateInfo(''); })
-        //     .merge(u)
-        //     .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
-        //     .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
     }
 
     function updatePointsMenu() {
