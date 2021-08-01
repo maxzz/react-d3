@@ -140,23 +140,23 @@ function TransitionBall() {
     const ballWidth = 20;
     const ballHeight = 60;
 
-    const squareWidth = 20;
-    const squareHeight = 30;
+    const squareWidth = 60;
+    const squareHeight = 80;
 
     const circleR = 20;
 
     return (
         <div className={`relative bg-red-100`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
             <div className="absolute w-full h-full">
-                {/* <div className="absolute w-full h-full bg-yellow-100 opacity-5"></div> */}
+                <div className="absolute w-full h-full bg-yellow-100 opacity-5"></div>
                 <svg className="absolute w-full h-full">
                     <ShapeNestedSVG x={onLeft ? 0 : width - squareWidth} y={onLeft ? 0 : height - squareHeight} width={squareWidth} height={squareHeight} />
                     <Ball x={onLeft ? circleR : width - circleR} y={onLeft ? circleR : height - circleR} r={circleR} />
                 </svg>
             </div>
-            {/* <div className="bg-green-400">
+            <div className="bg-green-400">
                 <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
-            </div> */}
+            </div>
             {/* <div className="w-110 h-50">
                 <IconRefresh />
             </div> */}
