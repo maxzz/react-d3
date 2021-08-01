@@ -91,8 +91,8 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
     );
 }
 
-const width = 300;
-const height = 200;
+const width = 480 - 8 * 2;
+const height = 256 - 8 * 2;
 
 const ballWidth = 20;
 const ballHeight = 20;
@@ -111,7 +111,7 @@ function TransitionBall() {
     }, []);
 
     return (
-        <div className={`relative bg-blue-400`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
+        <div className="relative bg-blue-400 border-8" style={{ width, height, boxSizing: 'content-box' }} onClick={() => setOnLeft(v => !v)}>
             <div className="absolute w-full h-full">
                 <svg className="absolute w-full h-full">
                     <Ball x={onLeft ? circleR : width - circleR} y={onLeft ? circleR : height - circleR} r={circleR} />
