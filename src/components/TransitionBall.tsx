@@ -59,8 +59,6 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
     const refX = React.useRef<HTMLDivElement>(null);
     const refY = React.useRef<HTMLDivElement>(null);
 
-    console.log('xy', realPos.x, realPos.y);
-
     React.useEffect(() => {
         const ballX = d3.select(refX.current);
         const ballY = d3.select(refY.current);
@@ -80,9 +78,9 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
     }, [x, y]);
 
     return (
-        <div ref={refX} style={{ transform: `translateX(${realPos.x}px` }} {...rest}>
+        <div ref={refX} style={{ transform: `translateX(${realPos.x}px`, display: 'inline-block' }} {...rest}>
             <div ref={refY} style={{ transform: `translateY(${realPos.y}px)` }}>
-                <HighlightedBall className="w-full h-full" style={{ width, height }} preserveAspectRatio="none" />
+                <HighlightedBall style={{ width, height }} preserveAspectRatio="none" />
             </div>
         </div>
     );
@@ -95,12 +93,12 @@ function TransitionBall() {
     const height = 500;
 
     const ballWidth = 20;
-    const ballHeight = 30;
+    const ballHeight = 20;
 
     const squareWidth = 60;
     const squareHeight = 60;
 
-    const circleR = 20;
+    const circleR = 60;
 
     return (
         <div className={`relative bg-red-100`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
@@ -113,8 +111,8 @@ function TransitionBall() {
             </div>
             {[0,1,2,3].map((item) => (
                 <Shape 
-                    x={onLeft ? 0 : width - ballWidth} 
-                    y={onLeft ? 0 : height - ballHeight} 
+                    x={onLeft ? item * ballWidth * .5 : width - (item + 1) * ballWidth} 
+                    y={onLeft ? item * ballHeight * .5 : height - (item + 1) * ballHeight} 
                     width={ballWidth} 
                     height={ballHeight} 
                     className="opacity-100"
