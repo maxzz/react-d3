@@ -79,23 +79,48 @@ function initial(mainGroup: SVGGElement) {
     }
 
     function updateMenu() {
-        let u = d3.select('.menu')
+        let items = d3.select('.menu')
             .selectAll<HTMLDivElement, CurveInfo>('div.item')
             .data(CURVEINFO);
+            console.log('s', styles);
+            
 
-        u.enter()
+        let itemsEnter = items.enter()
             .append('div')
             .attr('class', d => `item ${styles.item} ${d.group ? styles.itemBegingroup : ''}`)
-            .text(d => d.name)
             .on('click', function (event, d) {
                 d.active = !d.active;
                 update();
             })
             .on('mouseover', function (event, d) { updateInfo(d.info); })
-            .on('mouseout', function () { updateInfo(''); })
-            .merge(u)
+            .on('mouseout', function () { updateInfo(''); });
+
+        itemsEnter.append('div')
+            .attr('class', styles['item-name'])
+            .text(d => d.name);
+        itemsEnter.append('div')
+            .attr('class', styles.info);
+
+        itemsEnter.merge(items)
             .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
+
+        // let u = d3.select('.menu')
+        //     .selectAll<HTMLDivElement, CurveInfo>('div.item')
+        //     .data(CURVEINFO);
+        // u.enter()
+        //     .append('div')
+        //     .attr('class', d => `item ${styles.item} ${d.group ? styles.itemBegingroup : ''}`)
+        //     .text(d => d.name)
+        //     .on('click', function (event, d) {
+        //         d.active = !d.active;
+        //         update();
+        //     })
+        //     .on('mouseover', function (event, d) { updateInfo(d.info); })
+        //     .on('mouseout', function () { updateInfo(''); })
+        //     .merge(u)
+        //     .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
+        //     .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
     }
 
     function updatePointsMenu() {

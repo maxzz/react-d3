@@ -1,6 +1,16 @@
 .item {
+    display: flex;
+
     cursor: pointer;
     padding: 4px;
+
+    .item-name {
+        background-color: blue;
+    }
+
+    .info {
+        border: 1px solid red;
+    }
 }
 
 .itemBegingroup {
