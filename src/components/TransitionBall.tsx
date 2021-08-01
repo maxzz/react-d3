@@ -16,6 +16,8 @@ function Ball({ x, y, r }: { x: number, y: number; r: number; }) {
             .style('transform', `scale(.2)`)
             .on('end', function () {
                 d3.select(this)
+                    .transition()
+                    .duration(800)
                     .style('transform', `scale(1)`);
 
                 setRealPos((prev) => ({ x, y: prev.y }));
@@ -74,7 +76,7 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
         ballY.transition('move-y')
-            // .duration(800)
+            .duration(800)
             .ease(d3.easeCubicInOut)
             .style('transform', `translateY(${y}px)`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
@@ -104,7 +106,7 @@ function TransitionBall() {
     const [onLeft, setOnLeft] = React.useState(true);
 
     return (
-        <div className={`relative bg-red-100`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
+        <div className={`relative bg-blue-400`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
             <div className="absolute w-full h-full">
                 <svg className="absolute w-full h-full">
                     <Ball x={onLeft ? circleR : width - circleR} y={onLeft ? circleR : height - circleR} r={circleR} />
