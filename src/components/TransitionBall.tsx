@@ -140,11 +140,13 @@ function TransitionBall() {
 
     return (
         <div className="w-[300px] h-[300px] relative bg-red-100" onClick={() => setOnLeft(v => !v)}>
-            <svg className="absolute w-full h-full bg-yellow-100 opacity-50">
-                <ShapeNestedSVG x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
-                <Ball x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
-            </svg>
-            <div className="bg-blue-400">
+            <div className="absolute w-full h-full bg-yellow-100 opacity-50">
+                <svg className="opacity-100">
+                    <ShapeNestedSVG x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
+                    <Ball x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
+                </svg>
+            </div>
+            <div className="bg-blue-400 opacity-50">
                 <Shape x={onLeft ? 0 : 300 - width} y={onLeft ? 0 : 300 - height} width={width} height={height} className="opacity-100" />
             </div>
             {/* <div className="w-110 h-50">
