@@ -4,7 +4,7 @@ import { precisionRound } from 'd3';
 import HighlightedBall from './HighlightedBall';
 import { IconRefresh } from './ui/ButtonIcons';
 
-function Ball({ x, y }: { x: number, y: number; }) {
+function Ball({ x, y, r }: { x: number, y: number; r: number; }) {
     const ref = React.useRef<SVGCircleElement>(null);
     const [realPos, setRealPos] = React.useState({ x, y });
 
@@ -25,7 +25,7 @@ function Ball({ x, y }: { x: number, y: number; }) {
     }, [x, y]);
 
     return (
-        <circle ref={ref} cx={realPos.x} cy={realPos.y} r={20} fill="none" stroke="blue" strokeWidth={6} clipPath="circle()" >
+        <circle ref={ref} cx={realPos.x} cy={realPos.y} r={r} fill="none" stroke="blue" strokeWidth={6} clipPath="circle()" >
         </circle>
     );
 }
@@ -143,13 +143,15 @@ function TransitionBall() {
     const squareWidth = 20;
     const squareHeight = 30;
 
+    const circleR = 20;
+
     return (
         <div className={`relative bg-red-100`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
             <div className="absolute w-full h-full">
                 {/* <div className="absolute w-full h-full bg-yellow-100 opacity-5"></div> */}
                 <svg className="absolute w-full h-full">
                     <ShapeNestedSVG x={onLeft ? 0 : width - squareWidth} y={onLeft ? 0 : height - squareHeight} width={squareWidth} height={squareHeight} />
-                    {/* <Ball x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} /> */}
+                    <Ball x={onLeft ? circleR : width - circleR} y={onLeft ? circleR : height - circleR} r={circleR} />
                 </svg>
             </div>
             {/* <div className="bg-green-400">
