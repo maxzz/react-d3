@@ -16,6 +16,10 @@ Coexistence of React with D3.js
         [ ] FunChart
             [ ] fixed color for each function
             [ ] take up less space for checkboxes
+        [ ] Lines playground
+            [x] Add general info and each line explanation
+            [ ] Update color selection
+            [ ] Save / restore points position and lines selection
 
 #### Links, Refs, Credits
 
