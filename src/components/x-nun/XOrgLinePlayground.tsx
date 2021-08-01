@@ -241,8 +241,12 @@ function LineEditor() {
                     <span className="points"></span>
                 </div>
                 <div className="flex justify-between">
-                    <a className="mt-2 block" href="https://github.com/d3/d3-shape#curves" target="_blank">
-                        D3 curve types to interpolate a set of points:
+                    <a className="mt-2 flex items-center" href="https://github.com/d3/d3-shape#curves" target="_blank">
+                        <span>D3 curve types to interpolate a set of points:</span>
+                        <svg className="h-4 w-4 pt-0.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                        </svg>
                     </a>
                     {
                         <CheckboxTw label="" title="Toggle all" checked={allChecked} onChange={(v) => {
