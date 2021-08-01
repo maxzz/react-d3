@@ -30,7 +30,7 @@ function Ball({ x, y }: { x: number, y: number; }) {
     );
 }
 
-function ShapeNestedSVG({ x, y }: { x: number, y: number; }) {
+function ShapeNestedSVG({ x, y, width, height }: { x: number, y: number; width: number; height: number; }) {
     const ref = React.useRef<SVGSVGElement>(null);
     const [realPos, setRealPos] = React.useState({ x, y });
 
@@ -53,7 +53,7 @@ function ShapeNestedSVG({ x, y }: { x: number, y: number; }) {
     }, [x, y]);
 
     return (
-        <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} width="50px" height="40px" transforms="" />
+        <HighlightedBall ref={ref} x={`${realPos.x}px`} y={`${realPos.y}px`} width={`${width}px`} height={`${height}px`} transforms="" />
     );
 }
 
@@ -132,7 +132,6 @@ function Shape({ x, y }: { x: number, y: number; }) {
 }
 */
 function TransitionBall() {
-    const [pos, setPos] = React.useState({ x: 150, y: 50 });
     const [onLeft, setOnLeft] = React.useState(true);
 
     const width = 300;
@@ -142,17 +141,17 @@ function TransitionBall() {
     const ballHeight = 60;
 
     return (
-        <div className={`relative bg-red-100`} style={{width, height}} onClick={() => setOnLeft(v => !v)}>
+        <div className={`relative bg-red-100`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
             <div className="absolute w-full h-full">
-                <div className="absolute w-full h-full bg-yellow-100 opacity-5"></div>
+                {/* <div className="absolute w-full h-full bg-yellow-100 opacity-5"></div> */}
                 <svg className="absolute w-full h-full">
-                    <ShapeNestedSVG x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} />
-                    <Ball x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} />
+                    <ShapeNestedSVG x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} />
+                    {/* <Ball x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} /> */}
                 </svg>
             </div>
-            <div className="bg-green-400">
+            {/* <div className="bg-green-400">
                 <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
-            </div>
+            </div> */}
             {/* <div className="w-110 h-50">
                 <IconRefresh />
             </div> */}
