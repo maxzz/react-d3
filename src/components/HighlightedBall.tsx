@@ -16,7 +16,7 @@ function HighlightedBallRaw(props: React.SVGAttributes<SVGSVGElement> & { transf
                     <stop offset="1" stopColor="#fff" stopOpacity="0" />
                 </linearGradient>
             </defs>
-            <g style={{ ...(transforms && { transform: transforms }), }}>
+            <g style={{ ...(transforms && { transform: transforms }), }} className="w-full h-full" width="50%">
                 <circle cx="216" cy="216" fill="#8bbbe1" r="216" />
                 <circle cx="216" cy="216" fill="url(#a)" r="199.4" />
                 <path

@@ -72,14 +72,14 @@ function Shape({ x, y }: { x: number, y: number; }) {
         const ballY = d3.select(refY.current);
 
         ballX.transition('move-x')
-            .duration(3800)
+            .duration(800)
             .ease(d3.easeBounceOut)
             .style('transform', `translateX(${x - 20}px)`)
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
         ballY.transition('move-y')
-            .duration(800)
-            .ease(d3.easeCubicInOut)
+            // .duration(800)
+            // .ease(d3.easeCubicInOut)
             .style('transform', `translateY(${y - 20}px)`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
 
@@ -87,9 +87,9 @@ function Shape({ x, y }: { x: number, y: number; }) {
 
     return (
         <div ref={refX}>
-            <div ref={refY}>
+            <div ref={refY} className="w-10 h-40">
                 {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
-                <HighlightedBall ref={ref} width="40px" height="40px" transforms="" />
+                <HighlightedBall ref={ref} className="w-full h-full bg-red-600" transforms="" />
             </div>
         </div>
     );
