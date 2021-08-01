@@ -3,7 +3,7 @@ import React from 'react';
 function HighlightedBallRaw(props: React.SVGAttributes<SVGSVGElement> & { transforms?: string; }, ref: React.Ref<SVGSVGElement>) {
     const { transforms, ...rest } = props;
     return (
-        <svg ref={ref} viewBox="0 0 432 432" {...props} className="bg-red-800">
+        <svg ref={ref} viewBox="0 0 432 432" {...props}>
             <defs>
                 <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="16.6" x2="415.4" y1="216" y2="216">
                     <stop offset="0" stopColor="#c7f8ff" />
@@ -16,7 +16,7 @@ function HighlightedBallRaw(props: React.SVGAttributes<SVGSVGElement> & { transf
                     <stop offset="1" stopColor="#fff" stopOpacity="0" />
                 </linearGradient>
             </defs>
-            <g style={{ ...(transforms && { transform: transforms }), outline: '3px solid red'}}>
+            <g style={{ ...(transforms && { transform: transforms }) }}>
                 <circle cx="216" cy="216" fill="#8bbbe1" r="216" />
                 <circle cx="216" cy="216" fill="url(#a)" r="199.4" />
                 <path

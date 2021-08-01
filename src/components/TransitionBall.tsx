@@ -1,8 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
-import { precisionRound } from 'd3';
 import HighlightedBall from './HighlightedBall';
-import { IconRefresh } from './ui/ButtonIcons';
 
 function Ball({ x, y, r }: { x: number, y: number; r: number; }) {
     const ref = React.useRef<SVGCircleElement>(null);
@@ -33,8 +31,6 @@ function Ball({ x, y, r }: { x: number, y: number; r: number; }) {
 function ShapeNestedSVG({ x, y, width, height }: { x: number, y: number; width: number; height: number; }) {
     const ref = React.useRef<SVGSVGElement>(null);
     const [realPos, setRealPos] = React.useState({ x, y });
-
-    console.log('xy', realPos.x, realPos.y);
 
     React.useEffect(() => {
         const ball = d3.select(ref.current);
@@ -67,8 +63,6 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
     console.log('xy', realPos.x, realPos.y);
 
     React.useEffect(() => {
-        console.log('hook xy', x, y, realPos.x, realPos.y);
-
         const ball = d3.select(ref.current);
 
         const ballX = d3.select(refX.current);
@@ -78,14 +72,12 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
             .duration(800)
             .ease(d3.easeBounceOut)
             .style('transform', `translateX(${x}px)`)
-            // .style('transform', `translateX(${x - width / 2}px)`)
             .on('end', () => setRealPos((prev) => ({ x, y: prev.y })));
 
         ballY.transition('move-y')
-            // .duration(800)
-            // .ease(d3.easeCubicInOut)
+            .duration(800)
+            .ease(d3.easeCubicInOut)
             .style('transform', `translateY(${y}px)`)
-            // .style('transform', `translateY(${y - height / 2}px)`)
             .on('end', () => setRealPos((prev) => ({ x: prev.x, y })));
 
     }, [x, y]);
@@ -93,9 +85,6 @@ function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: 
     return (
         <div ref={refX} style={{ transform: `translateX(${realPos.x}px` }} {...rest}>
             <div ref={refY} style={{ transform: `translateY(${realPos.y}px)` }}>
-                {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
-                {/* <HighlightedBall style={{width, height, transform: `translate(${realPos.x - width / 2}px, ${realPos.y - height / 2}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" /> */}
-                {/* <HighlightedBall ref={ref} style={{ width, height, }} className="bg-red-600" preserveAspectRatio="none" /> */}
                 <HighlightedBall ref={ref} className="w-full h-full" style={{ width, height }} preserveAspectRatio="none" />
             </div>
         </div>
@@ -157,9 +146,6 @@ function TransitionBall() {
             <div className="bg-green-400">
                 <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
             </div>
-            {/* <div className="w-110 h-50">
-                <IconRefresh />
-            </div> */}
         </div>
     );
 }
