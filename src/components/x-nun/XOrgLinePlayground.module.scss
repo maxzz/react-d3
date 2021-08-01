@@ -1,23 +1,23 @@
 .item {
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
     align-items: center;
 
     cursor: pointer;
     padding: 4px;
     padding-right: 4rem;
 
-    .item-name {
-        flex: none;
-        background-color: blue;
-    }
-
     .info {
+        flex: none;
         align-self: stretch;
 
-        border: 1px solid red;
-        min-width: 4rem;
-        max-width: 10rem;
+        border: 1px solid grey;
+        width: 4rem;
+    }
+
+    .item-name {
+        margin-left: .25rem;
+        padding-bottom: 2px;
     }
 }
 

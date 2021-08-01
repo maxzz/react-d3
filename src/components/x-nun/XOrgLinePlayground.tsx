@@ -82,8 +82,8 @@ function initial(mainGroup: SVGGElement) {
         let items = d3.select('.menu')
             .selectAll<HTMLDivElement, CurveInfo>('div.item')
             .data(CURVEINFO);
-            console.log('s', styles);
-            
+        console.log('s', styles);
+
 
         let itemsEnter = items.enter()
             .append('div')
@@ -96,12 +96,13 @@ function initial(mainGroup: SVGGElement) {
             .on('mouseout', function () { updateInfo(''); });
 
         itemsEnter.append('div')
+            .attr('class', `info ${styles.info}`);
+        itemsEnter.append('div')
             .attr('class', styles['item-name'])
             .text(d => d.name);
-        itemsEnter.append('div')
-            .attr('class', styles.info);
 
         itemsEnter.merge(items)
+            .select('.info')
             .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
 
@@ -227,7 +228,9 @@ function LineEditor() {
                     <span className="text"></span>
                     <span className="points"></span>
                 </div>
-                <a className="mt-4 block" href="https://github.com/d3/d3-shape#curves" target="_blank">D3 curve types to interpolate a set of points:</a>
+                <a className="mt-2 block" href="https://github.com/d3/d3-shape#curves" target="_blank">
+                    D3 curve types to interpolate a set of points:
+                </a>
                 <div className="menu border border-gray-400 rounded overflow-hidden"></div>
             </div>
         </div>
