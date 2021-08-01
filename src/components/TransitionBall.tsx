@@ -57,21 +57,18 @@ function ShapeNestedSVG({ x, y }: { x: number, y: number; }) {
     );
 }
 
-function Shape({ x, y }: { x: number, y: number; }) {
+function Shape({ x, y, width, height }: { x: number, y: number; width: number; height: number; }) {
     const ref = React.useRef<SVGSVGElement>(null);
     const [realPos, setRealPos] = React.useState({ x, y });
 
     const refX = React.useRef<HTMLDivElement>(null);
     const refY = React.useRef<HTMLDivElement>(null);
 
-    const width = 20;
-    const height = 60;
-
     console.log('xy', realPos.x, realPos.y);
 
     React.useEffect(() => {
         console.log('hook xy', x, y, realPos.x, realPos.y);
-        
+
         const ball = d3.select(ref.current);
 
         const ballX = d3.select(refX.current);
@@ -94,12 +91,12 @@ function Shape({ x, y }: { x: number, y: number; }) {
     }, [x, y]);
 
     return (
-        <div ref={refX} style={{transform: `translateX(${realPos.x}px`}}>
-            <div ref={refY} style={{transform: `translateY(${realPos.y}px)`}}>
+        <div ref={refX} style={{ transform: `translateX(${realPos.x}px` }}>
+            <div ref={refY} style={{ transform: `translateY(${realPos.y}px)` }}>
                 {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
                 {/* <HighlightedBall style={{width, height, transform: `translate(${realPos.x - width / 2}px, ${realPos.y - height / 2}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" /> */}
                 {/* <HighlightedBall ref={ref} style={{ width, height, }} className="bg-red-600" preserveAspectRatio="none" /> */}
-                <HighlightedBall style={{width, height }} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" />
+                <HighlightedBall style={{ width, height }} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" />
             </div>
         </div>
     );
@@ -138,14 +135,17 @@ function TransitionBall() {
     const [pos, setPos] = React.useState({ x: 150, y: 50 });
     const [onLeft, setOnLeft] = React.useState(true);
 
+    const width = 20;
+    const height = 60;
+
     return (
         <div className="w-[300px] h-[300px] bg-red-100" onClick={() => setOnLeft(v => !v)}>
-            {/* <svg className="bg-red-100 w-full h-full" onClick={() => setOnLeft(v => !v)}>
+            <svg className="bg-red-100 w-full h-full" onClick={() => setOnLeft(v => !v)}>
                 <ShapeNestedSVG x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
                 <Ball x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
-            </svg> */}
+            </svg>
             <div className="">
-                <Shape x={onLeft ? 0 : 300} y={onLeft ? 0 : 300} />
+                <Shape x={onLeft ? 0 : 300 - width} y={onLeft ? 0 : 300 - height} width={width} height={height} />
             </div>
             {/* <div className="w-110 h-50">
                 <IconRefresh />
