@@ -18,6 +18,7 @@ export type CheckboxProps = {
     checked: boolean;
     onChange: (v: boolean) => void;
     enabled?: boolean;
+    title?: string;
 
     className?: string;
 };
@@ -27,7 +28,7 @@ export type CheckboxWithStyleProps = {
     checked: boolean;
     onChange: (value: boolean) => void;
     enabled?: boolean;
-    
-    styles?: CSSModuleClasses;
     title?: string;
+
+    styles?: CSSModuleClasses;
 };

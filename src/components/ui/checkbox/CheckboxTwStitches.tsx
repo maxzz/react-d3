@@ -15,7 +15,7 @@ const TwCheckbox = styled('input', {
 
 function CheckboxTwStitches(props: CheckboxProps) {
     return (
-        <label className="flex items-center select-none cursor-pointer">
+        <label className="flex items-center select-none cursor-pointer" title={props.title}>
             <TwCheckbox type="checkbox"
                 className={`h-5 w-5 appearance-none rounded-md
                     text-green-600 border border-[#006f94]

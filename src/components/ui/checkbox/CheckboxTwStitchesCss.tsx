@@ -15,7 +15,7 @@ const twCheckboxTick = css({
 
 function CheckboxTwStitchesCss(props: CheckboxProps) {
     return (
-        <label className="flex items-center space-x-3">
+        <label className="flex items-center space-x-3" title={props.title}>
             <input type="checkbox"
                 className={`
                     ${twCheckboxTick()} form-tick appearance-none h-6 w-6 border rounded-md
