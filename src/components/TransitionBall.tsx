@@ -57,7 +57,7 @@ function ShapeNestedSVG({ x, y }: { x: number, y: number; }) {
     );
 }
 
-function Shape({ x, y, width, height }: { x: number, y: number; width: number; height: number; }) {
+function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: number; height: number; } & React.HTMLAttributes<HTMLElement>) {
     const ref = React.useRef<SVGSVGElement>(null);
     const [realPos, setRealPos] = React.useState({ x, y });
 
@@ -91,12 +91,12 @@ function Shape({ x, y, width, height }: { x: number, y: number; width: number; h
     }, [x, y]);
 
     return (
-        <div ref={refX} style={{ transform: `translateX(${realPos.x}px` }}>
+        <div ref={refX} style={{ transform: `translateX(${realPos.x}px` }} {...rest}>
             <div ref={refY} style={{ transform: `translateY(${realPos.y}px)` }}>
                 {/* <HighlightedBall ref={ref} style={{ transform: `translate(${realPos.x - 20}px, ${realPos.y - 20}px)` }} width="40px" height="40px" transforms="" /> */}
                 {/* <HighlightedBall style={{width, height, transform: `translate(${realPos.x - width / 2}px, ${realPos.y - height / 2}px)`}} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" /> */}
                 {/* <HighlightedBall ref={ref} style={{ width, height, }} className="bg-red-600" preserveAspectRatio="none" /> */}
-                <HighlightedBall style={{ width, height }} ref={ref} className="bg-red-600 w-full h-full" preserveAspectRatio="none" />
+                <HighlightedBall style={{ width, height }} ref={ref} className="w-full h-full" preserveAspectRatio="none" />
             </div>
         </div>
     );
@@ -139,13 +139,13 @@ function TransitionBall() {
     const height = 60;
 
     return (
-        <div className="w-[300px] h-[300px] bg-red-100" onClick={() => setOnLeft(v => !v)}>
-            <svg className="bg-red-100 w-full h-full" onClick={() => setOnLeft(v => !v)}>
+        <div className="w-[300px] h-[300px] relative bg-red-100" onClick={() => setOnLeft(v => !v)}>
+            <svg className="absolute w-full h-full bg-yellow-100 opacity-50">
                 <ShapeNestedSVG x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
                 <Ball x={onLeft ? 20 : 280} y={onLeft ? 20 : 280} />
             </svg>
-            <div className="">
-                <Shape x={onLeft ? 0 : 300 - width} y={onLeft ? 0 : 300 - height} width={width} height={height} />
+            <div className="bg-blue-400">
+                <Shape x={onLeft ? 0 : 300 - width} y={onLeft ? 0 : 300 - height} width={width} height={height} className="opacity-100" />
             </div>
             {/* <div className="w-110 h-50">
                 <IconRefresh />
