@@ -111,9 +111,19 @@ function TransitionBall() {
                     <Ball x={onLeft ? circleR : width - circleR} y={onLeft ? circleR : height - circleR} r={circleR} />
                 </svg>
             </div>
+            {[0,1,2,3].map((item) => (
+                <Shape 
+                    x={onLeft ? 0 : width - ballWidth} 
+                    y={onLeft ? 0 : height - ballHeight} 
+                    width={ballWidth} 
+                    height={ballHeight} 
+                    className="opacity-100"
+                    key={item}
+                />
+            ))}
+            {/* <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
             <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
-            <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
-            <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" />
+            <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" /> */}
         </div>
     );
 }
