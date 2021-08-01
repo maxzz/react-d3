@@ -105,6 +105,11 @@ const circleR = 50;
 function TransitionBall() {
     const [onLeft, setOnLeft] = React.useState(true);
 
+    React.useEffect(() => {
+        const timer = d3.interval(() => setOnLeft(v => !v), 3000);
+        return () => timer.stop();
+    }, []);
+
     return (
         <div className={`relative bg-blue-400`} style={{ width, height }} onClick={() => setOnLeft(v => !v)}>
             <div className="absolute w-full h-full">
@@ -113,13 +118,13 @@ function TransitionBall() {
                     <ShapeNestedSVG x={onLeft ? 0 : width - squareWidth} y={onLeft ? 0 : height - squareHeight} width={squareWidth} height={squareHeight} />
                 </svg>
             </div>
-            {[0, 1, 2, 3, 9].map((item) => (
+            {[0, 1, 2, 3, 9].map((i) => (
                 <Shape
-                    x={onLeft ? item * ballWidth * .3 : width - (item + 1) * ballWidth}
-                    y={onLeft ? item * ballHeight * .5 : height - (item + 1) * ballHeight}
+                    x={onLeft ? i * ballWidth * .3 : width - (i + 1) * ballWidth}
+                    y={onLeft ? i * ballHeight * .5 : height - (i + 1) * ballHeight}
                     width={ballWidth}
                     height={ballHeight}
-                    key={item}
+                    key={i}
                 />
             ))}
             {/* <Shape x={onLeft ? 0 : width - ballWidth} y={onLeft ? 0 : height - ballHeight} width={ballWidth} height={ballHeight} className="opacity-100" /> */}
