@@ -255,6 +255,11 @@ function LineEditor() {
                 <g ref={svgRef}></g>
             </svg>
 
+            <div className="flex space-x-1">
+                <div className="w-6 h-6 bg-yellow-200 cursor-pointer border border-green-600 rounded remove-point">-</div>
+                <div className="w-6 h-6 bg-yellow-200 cursor-pointer border border-green-600 rounded add-point">+</div>
+            </div>
+
             {/* Controls */}
             <div className="sidebar mt-4 p-2 rounded-md text-sm bg-white">
                 {/* Info panel */}
