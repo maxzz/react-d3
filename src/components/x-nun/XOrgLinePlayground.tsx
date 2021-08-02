@@ -37,7 +37,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         { name: 'curveMonotoneY', curve: d3.curveMonotoneY, grpIdx: 3, lineStyle: 1, group: false, active: false, info: 'Interpolates the points with a cubic spline which are monotonic (i.e. always increasing or always decreasing) in x.' },
 
         { name: 'curveNatural', curve: d3.curveNatural, grpIdx: 4, lineStyle: 0, group: true, active: false, info: 'Interpolates the points with a cubic spline with zero 2nd derivatives at the endpoints.' },
-        
+
         { name: 'curveStep', curve: d3.curveStep, grpIdx: 5, lineStyle: 0, group: true, active: false, info: 'Interpolates the points with alternating horizontal and vertical linear segments. The vertical segments lie midway between points.' },
         { name: 'curveStepAfter', curve: d3.curveStepAfter, grpIdx: 5, lineStyle: 1, group: false, active: false, info: 'Interpolates the points with alternating horizontal and vertical linear segments. The y value changes after the x value.' },
         { name: 'curveStepBefore', curve: d3.curveStepBefore, grpIdx: 5, lineStyle: 2, group: false, active: false, info: 'Interpolates the points with alternating horizontal and vertical linear segments. The y value changes before the x value.' },
@@ -106,14 +106,16 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .on('mouseout', function () { updateInfo(''); });
 
         itemsEnter.append('div')
-            .attr('class', d => `info ${styles.info} ${d.lineStyle === 2 ? styles.line2 : d.lineStyle === 1 ? styles.line1 : ''}`);
-            // .attr('class', `info ${styles.info}`);
+            .attr('class', d => `info ${styles.info}`);
+            // .attr('class', d => `info ${styles.info} ${!d.active ? '' : d.lineStyle === 2 ? styles.line2 : d.lineStyle === 1 ? styles.line1 : styles.line0}`);
+        // .attr('class', `info ${styles.info}`);
         itemsEnter.append('div')
             .attr('class', styles['item-name'])
             .text(d => d.name);
 
         itemsEnter.merge(items)
             .select('.info')
+            .attr('class', d => `info ${styles.info} ${!d.active ? '' : d.lineStyle === 2 ? styles.line2 : d.lineStyle === 1 ? styles.line1 : styles.line0}`)
             .style('--color', function (d, i) { return colorScale(d.grpIdx); })
             // .style('--color', function (d, i) { return colorScale(i); })
             .transition()

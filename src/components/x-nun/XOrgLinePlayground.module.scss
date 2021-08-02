@@ -30,6 +30,20 @@
     //     mix-blend-mode: multiply;
     // }
 
+    .line0::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        background-image: url("../../assets/dashed-line0.svg");
+        background-repeat: no-repeat;
+
+        background-size: 32% 150%;
+        background-position: 85% 5%;
+
+        mix-blend-mode: multiply;
+    }
+
     .line1::after {
         content: "";
         position: absolute;
