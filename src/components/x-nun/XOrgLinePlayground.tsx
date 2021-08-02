@@ -160,7 +160,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .attr('stroke-width', 7)
             .style('stroke', (d, i) => colorScale(d.grpIdx))
             //.style('stroke', (d, i) => colorScale(i))
-            .style('stroke-dasharray', (d, i) => d.lineStyle === 2 ? "20,8" : d.lineStyle === 1 ? "8,8" : "")
+            .style('stroke-dasharray', (d, i) => d.lineStyle === 2 ? "8,2" : d.lineStyle === 1 ? "2,2,2" : "")
             .attr('d', d => d.lineString || '')
             .style('display', d => d.active ? 'inline' : 'none');
     }
