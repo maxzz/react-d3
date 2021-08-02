@@ -132,8 +132,9 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             // .style('--size', 80)
 
             .transition()
-            .duration(800)
-            .style('--size', 80)
+            .duration(100)
+            .ease(d3.easeBounceInOut)
+            .style('--size', d => d.active ? 0 : 90)
             
             // .styleTween('--color', function (d) { return d3.interpolate(20, 80); })
             // .styleTween('opacity', () => { return d3.interpolate(0, 1); })
@@ -149,8 +150,8 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             ;
 
         merged.transition()
-            .duration(100)
-            .ease(d3.easeBounceInOut)
+            // .duration(100)
+            // .ease(d3.easeBounceInOut)
             .style('--size', d => d.active ? 0 : 90);
     }
 
