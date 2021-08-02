@@ -113,7 +113,8 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
 
         itemsEnter.merge(items)
             .select('.info')
-            .style('--color', function (d, i) { return colorScale(i); })
+            .style('--color', function (d, i) { return colorScale(d.grpIdx); })
+            // .style('--color', function (d, i) { return colorScale(i); })
             .transition()
             .duration(50)
             .ease(d3.easeCubicInOut)
@@ -157,7 +158,9 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .append('path')
             .merge(u)
             .attr('stroke-width', 7)
-            .style('stroke', (d, i) => colorScale(i))
+            .style('stroke', (d, i) => colorScale(d.grpIdx))
+            //.style('stroke', (d, i) => colorScale(i))
+            .style('stroke-dasharray', (d, i) => d.lineStyle === 2 ? "20,8" : d.lineStyle === 1 ? "8,8" : "")
             .attr('d', d => d.lineString || '')
             .style('display', d => d.active ? 'inline' : 'none');
     }
