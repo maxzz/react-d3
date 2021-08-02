@@ -113,14 +113,27 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .attr('class', styles['item-name'])
             .text(d => d.name);
 
+            // const tr = d3.transition().styleTween<string>('--color', function () {
+            //     return '';
+            // })
+
         const merged = itemsEnter.merge(items)
             .select('.info')
             //.style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             //.style('color', function (d, i) { return d.active ? 'white' : '#444'; })
 
             // .style('--color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
+
+            // .transition()
+            // .duration(800)
+            // .on('start', function () {
+            //     d3.select(this).style('--size', 21);
+            // })
+            // .style('--size', 80)
+
             .transition()
-            .styleTween('--color', function () { return d3.interpolate(20, 80); })
+            // .styleTween('--color', function (d) { return d3.interpolate(20, 80); })
+            .styleTween('opacity', () => { return d3.interpolate(0, 1); })
             ;
 
         merged.transition()
@@ -213,8 +226,8 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
 
     d3.select("body").transition()
         .duration(4750)
-        .on("start", function () { d3.select(this).style("color", "green"); })
-        .style("color", "orange");
+        .on("start", function () { d3.select(this).style("color", "red"); })
+        .style("color", "green");
 
     function update() {
         updateMenu();
