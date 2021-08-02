@@ -136,7 +136,8 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .ease(d3.easeBounceInOut)
             //.style('--size', d => d.active ? 0 : 90) OK
             //.styleTween('--size', () => d => `${d.active ? 0 : 90}`)
-            .styleTween('--size', function (d) {return () => `${d.active ? 0 : 90}`})
+            //.styleTween('--size', function () {return (t) => `${d.active ? 0 : 90}`}) //NO
+            .styleTween('--size', () => function () {return `${d3.interpolateNumber(0,1)}`;}) //NO
             
             // .styleTween('--color', function (d) { return d3.interpolate(20, 80); })
             // .styleTween('opacity', () => { return d3.interpolate(0, 1); })
