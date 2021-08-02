@@ -212,9 +212,9 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
     }
 
     d3.select("body").transition()
-        .delay(3750)
+        .duration(4750)
         .on("start", function () { d3.select(this).style("color", "green"); })
-        .style("color", "red");
+        .style("color", "orange");
 
     function update() {
         updateMenu();
