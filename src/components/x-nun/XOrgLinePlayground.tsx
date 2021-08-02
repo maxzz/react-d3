@@ -132,10 +132,19 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             // .style('--size', 80)
 
             .transition()
+            .duration(1800)
+            
             // .styleTween('--color', function (d) { return d3.interpolate(20, 80); })
             // .styleTween('opacity', () => { return d3.interpolate(0, 1); })
             //.styleTween('opacity', function a(t) { return function (t)  {return 'a';} }) //OK
-            .styleTween('opacity', function () { return function ()  {return 'a';} }) //OK
+            //.styleTween('opacity', function () { return function ()  {return 'a';} }) //OK
+            // .styleTween('opacity', () => () => d3.interpolate(0, 1)() )
+            // .styleTween('opacity', function () {
+            //     return d3.interpolate(0, 1)
+            // } )
+            //.styleTween('opacity', function () { return function (t)  {return d3.interpolate(0,1);} })
+            //.styleTween('opacity', () => function () { return `${d3.interpolateNumber(0,1)}` }) //OK
+            
             ;
 
         merged.transition()
