@@ -94,6 +94,13 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .attr('class', d => `item ${styles.item} ${d.group ? styles.itemBegingroup : ''}`)
             .on('click', function (event, d) {
                 d.active = !d.active;
+
+                d3.select(this)
+                    .transition()
+                    .duration(800)
+                    .ease(d3.easeBounceInOut)
+                    .style('--size', 80);
+
                 updateAllLinesOn();
                 update();
             })
@@ -109,19 +116,13 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         const merged = itemsEnter.merge(items)
             .select('.info')
             //.style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
-            .style('--color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
-            .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
+            //.style('color', function (d, i) { return d.active ? 'white' : '#444'; })
+            .style('--color', function (d, i) { return d.active ? colorScale(i) : '#fff'; });
 
         merged.transition()
             .duration(100)
             .ease(d3.easeBounceInOut)
             .style('--size', d => d.active ? 20 : 80);
-
-        merged.exit<CurveInfo>()
-            .transition()
-            .duration(800)
-            .ease(d3.easeBounceInOut)
-            .style('--size', 80);
     }
 
     function updatePointsMenu() {
