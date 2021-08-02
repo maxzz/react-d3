@@ -20,8 +20,9 @@ Coexistence of React with D3.js
             [x] Add general info and each line explanation
             [x] Change color selection from whole row to small box
             [x] Check / uncheck all lines at once
-            [ ] Add animation of color bar width on change
+            [x] Add animation of color bar width on change
             [ ] Specify specific colors without duplication
+                [ ] Use a color combination with a line style
             [ ] Save / restore points position and lines selection
 
 #### Links, Refs, Credits
