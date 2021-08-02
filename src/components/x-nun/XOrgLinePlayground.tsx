@@ -95,11 +95,11 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .on('click', function (event, d) {
                 d.active = !d.active;
 
-                d3.select(this)
-                    .transition()
-                    .duration(800)
-                    .ease(d3.easeBounceInOut)
-                    .style('--size', 80);
+                // d3.select(this)
+                //     .transition()
+                //     .duration(800)
+                //     .ease(d3.easeBounceInOut)
+                //     .style('--size', 80);
 
                 updateAllLinesOn();
                 update();
@@ -117,7 +117,11 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .select('.info')
             //.style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             //.style('color', function (d, i) { return d.active ? 'white' : '#444'; })
-            .style('--color', function (d, i) { return d.active ? colorScale(i) : '#fff'; });
+
+            // .style('--color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
+            .transition()
+            .styleTween('--color', function () { return d3.interpolate(20, 80); })
+            ;
 
         merged.transition()
             .duration(100)
@@ -206,6 +210,11 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         CURVEINFO.forEach(item => item.active = onOff);
         update();
     }
+
+    d3.select("body").transition()
+        .delay(3750)
+        .on("start", function () { d3.select(this).style("color", "green"); })
+        .style("color", "red");
 
     function update() {
         updateMenu();
