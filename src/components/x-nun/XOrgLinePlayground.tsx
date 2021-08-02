@@ -107,8 +107,6 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
 
         itemsEnter.append('div')
             .attr('class', d => `info ${styles.info}`);
-        // .attr('class', d => `info ${styles.info} ${!d.active ? '' : d.lineStyle === 2 ? styles.line2 : d.lineStyle === 1 ? styles.line1 : styles.line0}`);
-        // .attr('class', `info ${styles.info}`);
         itemsEnter.append('div')
             .attr('class', styles['item-name'])
             .text(d => d.name);
@@ -117,13 +115,10 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .select('.info')
             .attr('class', d => `info ${styles.info} ${!d.active ? '' : d.lineStyle === 2 ? styles.line2 : d.lineStyle === 1 ? styles.line1 : styles.line0}`)
             .style('--color', function (d, i) { return colorScale(d.grpIdx); })
-            // .style('--color', function (d, i) { return colorScale(i); })
             .transition()
             .duration(50)
             .ease(d3.easeCubicInOut)
-            .style('--size', d => d.active ? 0 : 80) //OK
-            //.styleTween('opacity', (d) => function () { return `${d3.interpolateNumber(0,1)}` }) //OK The returned style should be string w/ the current CSS specs
-            ;
+            .style('--size', d => d.active ? 0 : 80);
     }
 
     function updatePointsMenu() {
@@ -153,7 +148,6 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         });
 
         let u = d3.select(mainGroup)
-            // let u = d3.select('svg g')
             .selectAll<SVGPathElement, CurveInfo>('path')
             .data(CURVEINFO);
 
@@ -162,7 +156,6 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .merge(u)
             .attr('stroke-width', 7)
             .style('stroke', (d, i) => colorScale(d.grpIdx))
-            //.style('stroke', (d, i) => colorScale(i))
             .style('stroke-dasharray', (d, i) => d.lineStyle === 2 ? "8,2" : d.lineStyle === 1 ? "2,2,2" : "")
             .attr('d', d => d.lineString || '')
             .style('display', d => d.active ? 'inline' : 'none');
@@ -170,12 +163,10 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
 
     function updatePoints() {
         let u = d3.select(mainGroup)
-            // let u = d3.select('g')
             .selectAll<SVGCircleElement, DatumPoint>('circle')
             .data(points.slice(0, numActivePoints));
 
         let t = d3.select(mainGroup)
-            // let t = d3.select('g')
             .selectAll<SVGTextElement, DatumPoint>('text')
             .data(points.slice(0, numActivePoints));
 
@@ -224,6 +215,8 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         //     .style("color", "green");
 
         //d3.select(mainGroup).selectAll('.menu').remove();
+
+        //.styleTween('opacity', (d) => function () { return `${d3.interpolateNumber(0,1)}` }) //OK The returned style should be string w/ the current CSS specs
 
         updatePointsInfo();
         update();
