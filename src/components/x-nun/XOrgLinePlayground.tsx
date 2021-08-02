@@ -133,7 +133,9 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
 
             .transition()
             // .styleTween('--color', function (d) { return d3.interpolate(20, 80); })
-            .styleTween('opacity', () => { return d3.interpolate(0, 1); })
+            // .styleTween('opacity', () => { return d3.interpolate(0, 1); })
+            //.styleTween('opacity', function a(t) { return function (t)  {return 'a';} }) //OK
+            .styleTween('opacity', function () { return function ()  {return 'a';} }) //OK
             ;
 
         merged.transition()
