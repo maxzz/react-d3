@@ -6,6 +6,8 @@
     padding: 4px;
     padding-right: 4rem;
 
+    //z-index: 2;
+
     .info {
         flex: none;
         align-self: stretch;
@@ -20,13 +22,23 @@
         --color: green;
     }
 
-    .info:after {
+    .info::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url('../../assets/dashed-line3.svg');
+        //z-index: 2;
+    }
+
+    .info::before {
         content: "";
         position: absolute;
         inset: 0;
         background-color: var(--color);
         transform: scaleX(calc(calc(100 - var(--size)) * 1%));
         transform-origin: left;
+        mix-blend-mode: multiply;
+        //z-index: 3;
     }
 
     .item-name {
