@@ -21,7 +21,7 @@ function CheckboxTw(props: CheckboxProps) {
                     bg-[#ffffff70] 
                     checked:bg-blue-600 checked:border-transparent 
                     checked:bg-ui-check
-                    focus:outline-none`
+                    focus:outline-none ${props.className}`
                 }
                 checked={props.checked}
                 onChange={(event) => props.onChange(event.target.checked)}

@@ -249,10 +249,10 @@ function LineEditor() {
                         </svg>
                     </a>
                     {
-                        <CheckboxTw label="" title="Toggle all" checked={allChecked} onChange={(v) => {
-                            apiRef.current?.setAll(v);
-                            setAllChecked(v);
-                        }}
+                        <CheckboxTw label="" title="Toggle all"
+                            checked={allChecked}
+                            onChange={(v) => { apiRef.current?.setAll(v); setAllChecked(v); }}
+                            className="w-4 h-4 rounded-sm"
                         />
                     }
                 </div>
