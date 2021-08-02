@@ -21,8 +21,10 @@ Coexistence of React with D3.js
             [x] Change color selection from whole row to small box
             [x] Check / uncheck all lines at once
             [x] Add animation of color bar width on change
-            [ ] Specify specific colors without duplication
-                [ ] Use a color combination with a line style
+            [x] Specify specific colors without duplication
+                [x] Use a color combination with a line style
+            [-] Add selection / deselection to the line with a slide, similar to working with a layer selection in Photoshop. TBD.
+            [ ] Allow to change the number of points
             [ ] Save / restore points position and lines selection
 
 #### Links, Refs, Credits
