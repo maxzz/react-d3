@@ -20,13 +20,40 @@
         --color: green;
     }
 
-    .info::after {
-        content: '';
+    // .info::after {
+    //     content: '';
+    //     position: absolute;
+    //     inset: 0;
+    //     background-image: url('../../assets/dashed-line1.svg');
+    //     background-position-x: 80%;
+    //     background-repeat: no-repeat;
+    //     mix-blend-mode: multiply;
+    // }
+
+    .line1::after {
+        content: "";
         position: absolute;
         inset: 0;
-        background-image: url('../../assets/dashed-line1.svg');
-        background-position-x: 80%;
+
+        background-image: url("../../assets/dashed-line1.svg");
         background-repeat: no-repeat;
+
+        background-size: 54% 150%;
+        background-position: 106% 5%;
+
+        mix-blend-mode: multiply;
+    }
+
+    .line2::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("../../assets/dashed-line2.svg");
+        background-repeat: no-repeat;
+
+        background-size: 38% 150%;
+        background-position: 92% 10%;
+
         mix-blend-mode: multiply;
     }
 

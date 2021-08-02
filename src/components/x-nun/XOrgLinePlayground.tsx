@@ -106,7 +106,8 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .on('mouseout', function () { updateInfo(''); });
 
         itemsEnter.append('div')
-            .attr('class', `info ${styles.info}`);
+            .attr('class', d => `info ${styles.info} ${d.lineStyle === 2 ? styles.line2 : d.lineStyle === 1 ? styles.line1 : ''}`);
+            // .attr('class', `info ${styles.info}`);
         itemsEnter.append('div')
             .attr('class', styles['item-name'])
             .text(d => d.name);
