@@ -6,8 +6,6 @@
     padding: 4px;
     padding-right: 4rem;
 
-    //z-index: 2;
-
     .info {
         flex: none;
         align-self: stretch;
@@ -26,8 +24,10 @@
         content: '';
         position: absolute;
         inset: 0;
-        background-image: url('../../assets/dashed-line3.svg');
-        //z-index: 2;
+        background-image: url('../../assets/dashed-line1.svg');
+        background-position-x: 80%;
+        background-repeat: no-repeat;
+        mix-blend-mode: multiply;
     }
 
     .info::before {
@@ -37,8 +37,6 @@
         background-color: var(--color);
         transform: scaleX(calc(calc(100 - var(--size)) * 1%));
         transform-origin: left;
-        mix-blend-mode: multiply;
-        //z-index: 3;
     }
 
     .item-name {
