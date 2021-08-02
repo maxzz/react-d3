@@ -24,7 +24,8 @@
         content: '';
         position: absolute;
         inset: 0;
-        right: calc(var(--size) * 1%);
+        //right: calc(var(--size) * 1%);
+        background-size: calc(var(--size) * 1%);
         background-color: var(--color);
     }
 

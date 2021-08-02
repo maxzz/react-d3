@@ -122,7 +122,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             //.style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             //.style('color', function (d, i) { return d.active ? 'white' : '#444'; })
 
-            // .style('--color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
+            .style('--color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
 
             // .transition()
             // .duration(800)
@@ -131,13 +131,13 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             // })
             // .style('--size', 80)
 
-            .transition()
-            .duration(400)
-            .ease(d3.easeBounceInOut)
-            //.style('--size', d => d.active ? 0 : 90) OK
+            // .transition()
+            // .duration(400)
+            // .ease(d3.easeBounceInOut)
+            .style('--size', d => d.active ? 20 : 100) //OK
             //.styleTween('--size', () => d => `${d.active ? 0 : 90}`)
             //.styleTween('--size', function () {return (t) => `${d.active ? 0 : 90}`}) //NO
-            .styleTween('--size', () => function () {return `${d3.interpolateNumber(0,1)}`;}) //NO
+            // .styleTween('--size', () => function () {return `${d3.interpolateNumber(0,1)}`;}) //NO
             
             // .styleTween('--color', function (d) { return d3.interpolate(20, 80); })
             // .styleTween('opacity', () => { return d3.interpolate(0, 1); })
