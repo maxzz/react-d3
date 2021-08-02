@@ -190,9 +190,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
     }
 
     function setAll(onOff: boolean) {
-        CURVEINFO.forEach((item) => {
-            item.active = onOff;
-        });
+        CURVEINFO.forEach(item => item.active = onOff);
         update();
     }
 
@@ -205,6 +203,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
 
     updatePointsInfo();
     update();
+    updateAllLinesOn();
 
     return {
         setAll

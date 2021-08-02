@@ -18,7 +18,10 @@ Coexistence of React with D3.js
             [ ] take up less space for checkboxes
         [ ] Lines playground
             [x] Add general info and each line explanation
-            [ ] Update color selection
+            [x] Change color selection from whole row to small box
+            [x] Check / uncheck all lines at once
+            [ ] Add animation of color bar width on change
+            [ ] Specify specific colors without duplication
             [ ] Save / restore points position and lines selection
 
 #### Links, Refs, Credits
