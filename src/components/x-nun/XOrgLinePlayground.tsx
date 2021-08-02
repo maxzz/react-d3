@@ -132,9 +132,11 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             // .style('--size', 80)
 
             .transition()
-            .duration(100)
+            .duration(400)
             .ease(d3.easeBounceInOut)
-            .style('--size', d => d.active ? 0 : 90)
+            //.style('--size', d => d.active ? 0 : 90) OK
+            //.styleTween('--size', () => d => `${d.active ? 0 : 90}`)
+            .styleTween('--size', function (d) {return () => `${d.active ? 0 : 90}`})
             
             // .styleTween('--color', function (d) { return d3.interpolate(20, 80); })
             // .styleTween('opacity', () => { return d3.interpolate(0, 1); })
@@ -149,10 +151,10 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             
             ;
 
-        merged.transition()
+        // merged.transition()
             // .duration(100)
             // .ease(d3.easeBounceInOut)
-            .style('--size', d => d.active ? 0 : 90);
+            // .style('--size', d => d.active ? 0 : 90);
     }
 
     function updatePointsMenu() {
