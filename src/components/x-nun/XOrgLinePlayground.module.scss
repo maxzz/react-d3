@@ -1,6 +1,5 @@
 .item {
     display: flex;
-    //justify-content: space-between;
     align-items: center;
 
     cursor: pointer;
@@ -25,10 +24,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        //right: calc(var(--size) * 1%);
-        // background-size: calc(var(--size) * 1%);
         background-color: var(--color);
-
         transform: scaleX(calc(calc(100 - var(--size)) * 1%));
         transform-origin: left;
     }

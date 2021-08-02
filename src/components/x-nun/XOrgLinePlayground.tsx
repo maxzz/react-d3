@@ -94,13 +94,6 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .attr('class', d => `item ${styles.item} ${d.group ? styles.itemBegingroup : ''}`)
             .on('click', function (event, d) {
                 d.active = !d.active;
-
-                // d3.select(this)
-                //     .transition()
-                //     .duration(800)
-                //     .ease(d3.easeBounceInOut)
-                //     .style('--size', 80);
-
                 updateAllLinesOn();
                 update();
             })
@@ -113,51 +106,15 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .attr('class', styles['item-name'])
             .text(d => d.name);
 
-            // const tr = d3.transition().styleTween<string>('--color', function () {
-            //     return '';
-            // })
-
-        const merged = itemsEnter.merge(items)
+        itemsEnter.merge(items)
             .select('.info')
-            //.style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
-            //.style('color', function (d, i) { return d.active ? 'white' : '#444'; })
-
-            //.style('--color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
-            //.style('--color', function (d, i) { return d.active ? colorScale(i) : 'tomato'; })
             .style('--color', function (d, i) { return colorScale(i); })
-
-            // .transition()
-            // .duration(800)
-            // .on('start', function () {
-            //     d3.select(this).style('--size', 21);
-            // })
-            // .style('--size', 80)
-
             .transition()
             .duration(50)
             .ease(d3.easeCubicInOut)
             .style('--size', d => d.active ? 0 : 80) //OK
-            //.styleTween('--size', () => d => `${d.active ? 0 : 90}`)
-            //.styleTween('--size', function () {return (t) => `${d.active ? 0 : 90}`}) //NO
-            // .styleTween('--size', () => function () {return `${d3.interpolateNumber(0,1)}`;}) //NO
-            
-            // .styleTween('--color', function (d) { return d3.interpolate(20, 80); })
-            // .styleTween('opacity', () => { return d3.interpolate(0, 1); })
-            //.styleTween('opacity', function a(t) { return function (t)  {return 'a';} }) //OK
-            //.styleTween('opacity', function () { return function ()  {return 'a';} }) //OK
-            // .styleTween('opacity', () => () => d3.interpolate(0, 1)() )
-            // .styleTween('opacity', function () {
-            //     return d3.interpolate(0, 1)
-            // } )
-            //.styleTween('opacity', function () { return function (t)  {return d3.interpolate(0,1);} })
-            //.styleTween('opacity', () => function () { return `${d3.interpolateNumber(0,1)}` }) //OK
-            
+            //.styleTween('opacity', (d) => function () { return `${d3.interpolateNumber(0,1)}` }) //OK The returned style should be string w/ the current CSS specs
             ;
-
-        // merged.transition()
-            // .duration(100)
-            // .ease(d3.easeBounceInOut)
-            // .style('--size', d => d.active ? 0 : 90);
     }
 
     function updatePointsMenu() {
@@ -242,10 +199,10 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         update();
     }
 
-    d3.select("body").transition()
-        .duration(4750)
-        .on("start", function () { d3.select(this).style("color", "red"); })
-        .style("color", "green");
+    // d3.select("body").transition()
+    //     .duration(4750)
+    //     .on("start", function () { d3.select(this).style("color", "red"); })
+    //     .style("color", "green");
 
     function update() {
         updateMenu();
