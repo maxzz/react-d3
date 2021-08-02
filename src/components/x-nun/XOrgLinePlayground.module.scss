@@ -11,26 +11,30 @@
         flex: none;
         align-self: stretch;
 
-        border: 1px solid grey;
+        border: 2px solid #00000080;
         border-radius: 3px;
-        width: 2rem;
+        width: 3rem;
 
+        overflow: hidden;
         position: relative;
         --size: 80;
         --color: green;
     }
 
     .info:after {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
         //right: calc(var(--size) * 1%);
-        background-size: calc(var(--size) * 1%);
+        // background-size: calc(var(--size) * 1%);
         background-color: var(--color);
+
+        transform: scaleX(calc(calc(100 - var(--size)) * 1%));
+        transform-origin: left;
     }
 
     .item-name {
-        margin-left: .25rem;
+        margin-left: 0.25rem;
         padding-bottom: 2px;
     }
 }
