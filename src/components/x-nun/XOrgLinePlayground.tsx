@@ -106,10 +106,22 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .attr('class', styles['item-name'])
             .text(d => d.name);
 
-        itemsEnter.merge(items)
+        const merged = itemsEnter.merge(items)
             .select('.info')
-            .style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
+            //.style('background-color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
+            .style('--color', function (d, i) { return d.active ? colorScale(i) : '#fff'; })
             .style('color', function (d, i) { return d.active ? 'white' : '#444'; });
+
+        merged.transition()
+            .duration(100)
+            .ease(d3.easeBounceInOut)
+            .style('--size', d => d.active ? 20 : 80);
+
+        merged.exit<CurveInfo>()
+            .transition()
+            .duration(800)
+            .ease(d3.easeBounceInOut)
+            .style('--size', 80);
     }
 
     function updatePointsMenu() {
@@ -200,6 +212,8 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         updateLines();
         updatePoints();
     }
+
+    //d3.select(mainGroup).selectAll('.menu').remove();
 
     updatePointsInfo();
     update();

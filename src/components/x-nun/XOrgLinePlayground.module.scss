@@ -17,6 +17,7 @@
 
         position: relative;
         --size: 80;
+        --color: green;
     }
 
     .info:after {
@@ -24,7 +25,7 @@
         position: absolute;
         inset: 0;
         right: calc(var(--size) * 1%);
-        background-color: red;
+        background-color: var(--color);
     }
 
     .item-name {
