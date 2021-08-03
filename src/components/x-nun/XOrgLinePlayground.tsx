@@ -55,8 +55,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
     let numActivePoints = points.length;
 
     const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
-    function colorScale(d: number | string) { return categoryScale(d as string); } // TODO: we need 18 but have 10
-    // function colorScale(d: number | string) { return d === 0 ? '#777' : categoryScale(d as string); }
+    function colorScale(d: number | string) { return categoryScale(d as string); } // We need to have 18 colors but have onlt 10.
 
     const lineGenerator = d3.line();
 
@@ -88,19 +87,6 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         const c = b ? `[${[...a, b].join(',')}]` : `[${a.join(',')}]`;
         d3.select('.info .points').html(c);
     }
-
-    // function updatePointsInfo(current?: DatumPoint) {
-    //     if (current) {
-    //         let s = points.map(d => {
-    //             let pt = JSON.stringify(d);
-    //             return d === current ? `<b>${pt}</b>` : pt;
-    //         }).join(',');
-    //         d3.select('.info .points').html(s);
-    //     }
-    //     else {
-    //         d3.select('.info .points').text(`${JSON.stringify(points)}`);
-    //     }
-    // }
 
     function updateMenu() {
         let items = d3.select('.menu')
@@ -274,7 +260,7 @@ function LineEditor() {
                         w-4 h-4 pb-1 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center"
                     title="Remove point (min is 2)"
-                >-</div>
+                >-</div> {/* TODO: maybe: background-color: #60a5fa; (blue-400) color: white; border: 1px solid white */}
                 <div
                     className="add-point
                         w-4 h-4 pb-1 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 

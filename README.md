@@ -29,7 +29,7 @@ Coexistence of React with D3.js
                 [ ] Add disabled state to +/- buttons
             [ ] Points path panel
                 [x] Show current dragged point in bold
-                [ ] Show unsaturated inactive path points
+                [x] Show unsaturated inactive path points
             [ ] Save / restore points position and lines selection
 
 #### Links, Refs, Credits
