@@ -48,8 +48,10 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         { name: 'curveBasisClosed', curve: d3.curveBasisClosed, grpIdx: 7, lineStyle: 1, group: false, active: false, info: 'Uses a closed B-Spline to approximate the points.' },
     ];
 
+    const importedPoints: [number, number][] = [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]];
+
     type DatumPoint = [number, number, number];
-    const points: DatumPoint[] = [[46, 179, 0], [123, 404, 1], [123, 56, 2], [292, 56, 3], [292, 274, 4], [456, 163, 5], [463, 473, 6]];
+    const points: DatumPoint[] = importedPoints.map((d, i) => [...d, i]);
     let numActivePoints = points.length;
 
     const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
