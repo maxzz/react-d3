@@ -86,7 +86,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         const a = points.slice(0, numActivePoints).map(joinPoints);
         const b = points.slice(numActivePoints).map(joinPoints).join(',');
 
-        d3.select('.info .points').html([...a, ...b].join(','));
+        d3.select('.info .points').html(`[${[...a, ...b].join(',')}]`);
     }
 
     // function updatePointsInfo(current?: DatumPoint) {
