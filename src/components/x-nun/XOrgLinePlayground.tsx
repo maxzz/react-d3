@@ -80,7 +80,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
 
     function updatePointsInfo(current?: DatumPoint) {
         function joinPoints(d: DatumPoint) {
-            let pt = JSON.stringify(d);
+            let pt = JSON.stringify([d[0], d[1]]);
             return d === current ? `<b>${pt}</b>` : pt;
         }
         const a = points.slice(0, numActivePoints).map(joinPoints);
