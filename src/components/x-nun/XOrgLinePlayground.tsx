@@ -77,17 +77,30 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
     }
 
     function updatePointsInfo(current?: DatumPoint) {
-        if (current) {
-            let s = points.map(d => {
-                let pt = JSON.stringify(d);
-                return d === current ? `<b>${pt}</b>` : pt;
-            }).join(',');
-            d3.select('.info .points').html(s);
+
+        function joinPoints(d: DatumPoint) {
+            let pt = JSON.stringify(d);
+            return d === current ? `<b>${pt}</b>` : pt;
         }
-        else {
-            d3.select('.info .points').text(`${JSON.stringify(points)}`);
-        }
+
+        const a = points.slice(0, numActivePoints).map(joinPoints);
+        const b = points.slice(numActivePoints).map(joinPoints).join(',');
+
+        d3.select('.info .points').html([...a, ...b].join(','));
     }
+
+    // function updatePointsInfo(current?: DatumPoint) {
+    //     if (current) {
+    //         let s = points.map(d => {
+    //             let pt = JSON.stringify(d);
+    //             return d === current ? `<b>${pt}</b>` : pt;
+    //         }).join(',');
+    //         d3.select('.info .points').html(s);
+    //     }
+    //     else {
+    //         d3.select('.info .points').text(`${JSON.stringify(points)}`);
+    //     }
+    // }
 
     function updateMenu() {
         let items = d3.select('.menu')

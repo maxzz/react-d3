@@ -24,7 +24,12 @@ Coexistence of React with D3.js
             [x] Specify specific colors without duplication
                 [x] Use a color combination with a line style
             [-] Add selection / deselection to the line with a slide, similar to working with a layer selection in Photoshop. TBD.
-            [ ] Allow to change the number of points
+            [x] Allow to change the number of points
+                [x] Add +/- buttons tooltips
+                [ ] Add disabled state to +/- buttons
+            [ ] Points path panel
+                [x] Show current dragged point in bold
+                [ ] Show unsaturated inactive path points
             [ ] Save / restore points position and lines selection
 
 #### Links, Refs, Credits
