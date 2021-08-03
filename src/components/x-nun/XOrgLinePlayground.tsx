@@ -2,6 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import styles from './XOrgLinePlayground.module.scss';
 import CheckboxTw from '../ui/checkbox/CheckboxTw';
+import { LinesPlay } from '../../store';
 
 type API = {
     setAll: (onOff: boolean) => void;
@@ -242,6 +243,14 @@ const importedPoints: [number, number][] = [[46, 179], [123, 404], [123, 56], [2
 const inputData: InputData = {
     points: importedPoints,
     active: importedPoints.length
+};
+
+function storeSelector(store: LinesPlay.Store) {
+    return {
+        inputData: store.inputData,
+        setActivePoint: store.setActivePoint,
+        setPoints: store.setPoints,
+    };
 }
 
 function LineEditor() {
@@ -249,6 +258,10 @@ function LineEditor() {
     const apiRef = React.useRef<API | null>(null);
 
     const [allChecked, setAllChecked] = React.useState(false);
+
+    const { inputData, setActivePoint, setPoints } = LinesPlay.useStore(storeSelector);
+    console.log('i', inputData);
+    
 
     function onSelectionChange(allOn: boolean) {
         setAllChecked(allOn);
