@@ -7,7 +7,12 @@ type API = {
     setAll: (onOff: boolean) => void;
 };
 
-function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => void): API {
+export type InputData = {
+    points: [number, number][]; // control points coordinates as [x, y][]
+    active: number;             // number of active points
+};
+
+function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange: (allOn: boolean) => void): API {
     type CurveInfo = {
         name: string;
         curve: d3.CurveFactory | d3.CurveBundleFactory;
@@ -48,11 +53,9 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
         { name: 'curveBasisClosed', curve: d3.curveBasisClosed, grpIdx: 7, lineStyle: 1, group: false, active: false, info: 'Uses a closed B-Spline to approximate the points.' },
     ];
 
-    const importedPoints: [number, number][] = [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]];
-
     type DatumPoint = [number, number, number];
-    const points: DatumPoint[] = importedPoints.map((d, i) => [...d, i]);
-    let numActivePoints = points.length;
+    const points: DatumPoint[] = inputData.points.map((d, i) => [...d, i]);
+    let numActivePoints = Math.min(points.length, inputData.active);
 
     const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
     function colorScale(d: number | string) { return categoryScale(d as string); } // We need to have 18 colors but have onlt 10.
@@ -234,6 +237,13 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
     };
 }
 
+const importedPoints2: [number, number][] = [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]];
+
+const inputData: InputData = {
+    points: importedPoints2,
+    active: importedPoints2.length
+}
+
 function LineEditor() {
     const svgRef = React.useRef<SVGGElement>(null);
     const apiRef = React.useRef<API | null>(null);
@@ -245,7 +255,7 @@ function LineEditor() {
     }
 
     React.useEffect(() => {
-        apiRef.current = svgRef.current && initial(svgRef.current, onSelectionChange);
+        apiRef.current = svgRef.current && initial(svgRef.current, inputData, onSelectionChange);
     }, []);
 
     return (
