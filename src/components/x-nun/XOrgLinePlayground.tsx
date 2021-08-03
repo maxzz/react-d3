@@ -189,8 +189,13 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .attr('cx', d => d[0])
             .attr('cy', d => d[1]);
 
-        u.exit().remove();
-        t.exit().remove();
+        let g = d3.select(mainGroup)
+            .selectAll('g')
+            .data(points.slice(0, numActivePoints));
+
+        g.exit().remove();
+        // u.exit().remove();
+        // t.exit().remove();
     }
 
     function updateAllLinesOn() {
