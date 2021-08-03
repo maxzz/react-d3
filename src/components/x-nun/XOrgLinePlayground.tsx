@@ -82,7 +82,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             return d === current ? `<b>${pt}</b>` : pt;
         }
         const a = points.slice(0, numActivePoints).map(joinPoints);
-        const b = numActivePoints < points.length ? `<i>${points.slice(numActivePoints).map(joinPoints).join(',')}</i>` : '';
+        const b = numActivePoints < points.length ? `<span class=${styles.inactivePath}>${points.slice(numActivePoints).map(joinPoints).join(',')}</span>` : '';
         const c = b ? `[${[...a, b].join(',')}]` : `[${a.join(',')}]`;
         d3.select('.info .points').html(c);
     }
