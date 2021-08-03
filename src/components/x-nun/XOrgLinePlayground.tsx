@@ -237,11 +237,11 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
     };
 }
 
-const importedPoints2: [number, number][] = [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]];
+const importedPoints: [number, number][] = [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]];
 
 const inputData: InputData = {
-    points: importedPoints2,
-    active: importedPoints2.length
+    points: importedPoints,
+    active: importedPoints.length
 }
 
 function LineEditor() {
