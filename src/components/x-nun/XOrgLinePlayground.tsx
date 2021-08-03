@@ -194,8 +194,6 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .data(points.slice(0, numActivePoints));
 
         g.exit().remove();
-        // u.exit().remove();
-        // t.exit().remove();
     }
 
     function updateAllLinesOn() {
@@ -254,13 +252,23 @@ function LineEditor() {
                 <g ref={svgRef}></g>
             </svg>
 
-            <div className="flex space-x-1">
-                <div className="w-6 h-6 bg-yellow-200 cursor-pointer border border-green-600 rounded remove-point">-</div>
-                <div className="w-6 h-6 bg-yellow-200 cursor-pointer border border-green-600 rounded add-point">+</div>
+            <div className="ml-4 -mt-3 flex space-x-1">
+                <div
+                    className="remove-point
+                        w-4 h-4 pb-1 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
+                        flex items-center justify-center"
+                    title="Remove point (min is 2)"
+                >-</div>
+                <div
+                    className="add-point
+                        w-4 h-4 pb-1 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
+                        flex items-center justify-center"
+                    title="Add point (maximum 7)"
+                >+</div>
             </div>
 
             {/* Controls */}
-            <div className="sidebar mt-4 p-2 rounded-md text-sm bg-white">
+            <div className="sidebar mt-1 p-2 rounded-md text-sm bg-white">
                 {/* Info panel */}
                 <div className="info w-[30rem] h-20 p-2 text-xs rounded bg-blue-100 flex flex-col justify-between">
                     <span className="default">
