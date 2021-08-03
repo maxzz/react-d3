@@ -194,6 +194,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
                     .merge(t)
                     .attr('x', d => d[0] - 24)
                     .attr('y', d => d[1] - 16)
+                    .attr('stroke', '#1c31b3')
                     .text(d => d[2] + 1);
             })
             .append('circle')
