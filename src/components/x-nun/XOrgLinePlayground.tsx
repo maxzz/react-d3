@@ -190,6 +190,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .attr('cy', d => d[1]);
 
         u.exit().remove();
+        t.exit().remove();
     }
 
     function updateAllLinesOn() {
