@@ -77,16 +77,14 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
     }
 
     function updatePointsInfo(current?: DatumPoint) {
-
         function joinPoints(d: DatumPoint) {
             let pt = JSON.stringify(d);
             return d === current ? `<b>${pt}</b>` : pt;
         }
-
         const a = points.slice(0, numActivePoints).map(joinPoints);
-        const b = points.slice(numActivePoints).map(joinPoints).join(',');
-
-        d3.select('.info .points').html(`[${[...a, ...b].join(',')}]`);
+        const b = numActivePoints < points.length ? `<i>${points.slice(numActivePoints).map(joinPoints).join(',')}</i>` : '';
+        const c = b ? `[${[...a, b].join(',')}]` : `[${a.join(',')}]`;
+        d3.select('.info .points').html(c);
     }
 
     // function updatePointsInfo(current?: DatumPoint) {
@@ -140,6 +138,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .on('click', function () {
                 if (numActivePoints <= 2) return;
                 numActivePoints--;
+                updatePointsInfo();
                 update();
             });
 
@@ -148,6 +147,7 @@ function initial(mainGroup: SVGGElement, onSelectionChange: (allOn: boolean) => 
             .on('click', function () {
                 if (numActivePoints >= points.length) return;
                 numActivePoints++;
+                updatePointsInfo();
                 update();
             });
     }
