@@ -237,14 +237,14 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
         setAll
     };
 }
-
+/*
 const importedPoints: [number, number][] = [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]];
 
 const inputData: InputData = {
     points: importedPoints,
     active: importedPoints.length
 };
-
+*/
 function storeSelector(store: LinesPlay.Store) {
     return {
         inputData: store.inputData,
@@ -260,8 +260,6 @@ function LineEditor() {
     const [allChecked, setAllChecked] = React.useState(false);
 
     const { inputData, setActivePoint, setPoints } = LinesPlay.useStore(storeSelector);
-    console.log('i', inputData);
-    
 
     function onSelectionChange(allOn: boolean) {
         setAllChecked(allOn);
