@@ -177,7 +177,7 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
             .data(points.slice(0, numActivePoints));
 
         let p = d3.select(mainGroup)
-            .selectAll<SVGPathElement, DatumPoint>('path')
+            .selectAll<SVGPathElement, DatumPoint>('.g-highlight')
             .data(points.slice(0, numActivePoints));
 
         u.enter()
@@ -199,8 +199,9 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
                     .attr('transform', (d) => `translate(${d[0] - 11} ${d[1] - 11}) scale(.5)`)
                     // .attr('transform', (d) => `scale(.5)`)
                     .append('path')
+                    .attr('class', 'g-highlight')
                     .merge(p)
-                    .attr('fill', 'white')
+                    .attr('fill', 'red')
                     .attr('stroke', 'none')
                     .attr('d', "M451.5 120.7a18.8 18.8 0 01.7-2.1A22 22 0 01460 108l-2.3-4a22.2 22.2 0 00-7.5 10.3 22.7 22.7 0 00-1.2 5.1 7.8 7.8 0 012.5 1.3zM462.6 106.3a22.2 22.2 0 019.4-2.6l-.2-.3-2.3-4a22.2 22.2 0 00-9.2 2.8l2.3 4.1z")
                     .attr('transform', (d) => `translate(-448.5 -98.4)`);
