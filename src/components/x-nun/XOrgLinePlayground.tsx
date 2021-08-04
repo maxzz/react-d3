@@ -182,6 +182,7 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
 
         u.enter()
             .append('g')
+            .attr('class', 'g-point')
             .call(function (selection) {
                 selection
                     .append('text')
@@ -211,7 +212,7 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
             .attr('cy', d => d[1]);
 
         let g = d3.select(mainGroup)
-            .selectAll('g')
+            .selectAll('.g-point')
             .data(points.slice(0, numActivePoints));
 
         g.exit().remove();
