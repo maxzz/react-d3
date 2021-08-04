@@ -193,16 +193,18 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
                     .attr('stroke', '#1c31b3')
                     .text(d => d[2] + 1);
             })
-            // .call((selection) => {
-            //     selection
-            //         .append('g')
-            //         //.attr('transform', (d) => `translate(${d[0] - 10} ${d[1] - 16})`)
-            //         // .attr('transform', (d) => `scale(.5)`)
-            //         .append('path')
-            //         .merge(p)
-            //         .attr('d', "M451.5 120.7a18.8 18.8 0 01.7-2.1A22 22 0 01460 108l-2.3-4a22.2 22.2 0 00-7.5 10.3 22.7 22.7 0 00-1.2 5.1 7.8 7.8 0 012.5 1.3zM462.6 106.3a22.2 22.2 0 019.4-2.6l-.2-.3-2.3-4a22.2 22.2 0 00-9.2 2.8l2.3 4.1z")
-            //         .attr('transform', (d) => `translate(-448.5 -98.4)`);
-            // })
+            .call((selection) => {
+                selection
+                    .append('g')
+                    .attr('transform', (d) => `translate(${d[0] - 11} ${d[1] - 11}) scale(.5)`)
+                    // .attr('transform', (d) => `scale(.5)`)
+                    .append('path')
+                    .merge(p)
+                    .attr('fill', 'white')
+                    .attr('stroke', 'none')
+                    .attr('d', "M451.5 120.7a18.8 18.8 0 01.7-2.1A22 22 0 01460 108l-2.3-4a22.2 22.2 0 00-7.5 10.3 22.7 22.7 0 00-1.2 5.1 7.8 7.8 0 012.5 1.3zM462.6 106.3a22.2 22.2 0 019.4-2.6l-.2-.3-2.3-4a22.2 22.2 0 00-9.2 2.8l2.3 4.1z")
+                    .attr('transform', (d) => `translate(-448.5 -98.4)`);
+            })
             .append('circle')
             .attr('class', `${styles.circle}`)
             .attr('r', 14)
