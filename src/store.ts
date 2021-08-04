@@ -82,7 +82,7 @@ export namespace LinesPlay {
     let initialState = {
         inputData: {
             points: importedPoints,
-            active: importedPoints.length
+            active: importedPoints.length,
         }
     };
 
