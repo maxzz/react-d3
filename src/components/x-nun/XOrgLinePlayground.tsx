@@ -59,8 +59,8 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
     const points: DatumPoint[] = inputData.points.map((d, i) => [...d, i]);
     let numActivePoints = Math.min(points.length, inputData.active);
 
-    const categoryScale = d3.scaleOrdinal<string>(d3.schemeCategory10);
-    function colorScale(d: number | string) { return categoryScale(d as string); } // We need to have 18 colors but have onlt 10.
+    const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
+    function colorScale(d: number) { return categoryScale(d); } // We need to have 18 colors but have onlt 10.
 
     const lineGenerator = d3.line();
 
