@@ -121,6 +121,7 @@ const FUNCTIONS: Record<string, YFunction> = {
     'atan': Math.atan,
     'cos4': (x: number) => .4 * Math.cos(x * 4),
     'const': (i: number) => .1 * i - .5,
+    'twit': (x: number) => Math.sin(4.1 * x) + 12 * Math.sin(3 * x), //https://twitter.com/yuanchuan23/status/1447548295992152072
 };
 
 function FunPlot() {
@@ -138,6 +139,7 @@ function FunPlot() {
         'cos-sin': true,
         'cos4': false,
         'const': false,
+        'twit': false,
     });
 
     function upadteFunction(name: string, value: boolean) {
@@ -179,6 +181,7 @@ function FunPlot() {
                     <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={functions['cos-sin']} onChange={(value) => upadteFunction('cos-sin', value)} />
                     <Checkbox label=".4 * cos(x * 4)" checked={functions['cos4']} onChange={(value) => upadteFunction('cos4', value)} />
                     <Checkbox label=".1 * x - .5" checked={functions['const']} onChange={(value) => upadteFunction('const', value)} />
+                    <Checkbox label="sin(4.1 * x) + 12 * sin(3 * x)" checked={functions['twit']} onChange={(value) => upadteFunction('twit', value)} />
                     <CheckboxJw />
                 </div>
             </div>
