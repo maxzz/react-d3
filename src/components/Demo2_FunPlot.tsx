@@ -4,29 +4,41 @@ import { Slider } from '@ui/Slider';
 import { Checkbox } from '@ui/Checkbox';
 import { CheckboxJw } from '@ui/Checkboxes/CheckboxJw';
 
-type FunPlotOptions = {
+type PlotOptions = {
     xdomain?: [number, number];
     ydomain?: [number, number];
+
     marginTop?: number;
     marginRight?: number;
     marginBottom?: number;
     marginLeft?: number;
+
     inset?: number;
+
     insetTop?: number;
     insetRight?: number;
     insetBottom?: number;
     insetLeft?: number;
+
     width?: number;
     height?: number;
+
     xticks?: number;
     yticks?: number;
+
     scheme?: string[];
+
     strokeWidthInner?: number;
     strokeWidthOuter?: number;
+
     n?: number; // number of sample;
 };
 
-function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: number) => number> /* either a function or array of functions */, options?: FunPlotOptions) {
+type MapXToYFn = (x: number) => number;
+
+type MapXToYFnParam = MapXToYFn | MapXToYFn[]; // either a function or array of functions
+
+function funplot(svgOrg: SVGSVGElement, f: MapXToYFnParam, options?: PlotOptions) {
     let {
         xdomain = [-10, +10],
         ydomain, // = [-2, +2],
@@ -51,7 +63,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
         strokeWidthInner: strokeWidth = 1.5,
         strokeWidthOuter: strokeWidth2 = 26,
         n = width // number of samples
-    } = options || {} as FunPlotOptions;
+    } = options || {} as PlotOptions;
 
     const F = typeof f === "function" ? [f] : Array.from(f);
     const X = d3.range(n).map(d3.scaleLinear([0, n - 1], xdomain));
@@ -110,9 +122,7 @@ function funplot(svgOrg: SVGSVGElement, f: ((x: number) => number) | Array<(x: n
     return svg.node();
 }
 
-type YFunction = (x: number) => number;
-
-const FUNCTIONS: Record<string, YFunction> = {
+const FUNCTIONS: Record<string, MapXToYFn> = {
     'cos-sin': (x: number) => Math.cos(x * 4) * (Math.PI / 10) * x,
 
     'sin': Math.sin,
@@ -125,13 +135,13 @@ const FUNCTIONS: Record<string, YFunction> = {
 };
 
 export function Demo2_FunPlotFunPlot() {
-    const ref = useRef<SVGSVGElement>(null);
+    const svgRef = useRef<SVGSVGElement>(null);
 
     const [xdomain, setxDomain] = useState(2);
     const [strokeWidthInner, setStrokeWidthInner] = useState(20);
     const [strokeWidthOuter, setStrokeWidthOuter] = useState(26);
 
-    const [functions, setFunctions] = useState<Record<string, boolean>>({
+    const [allFns, setAllFns] = useState<Record<string, boolean>>({
         'sin': true,
         'cos': false,
         'tan': false,
@@ -142,47 +152,50 @@ export function Demo2_FunPlotFunPlot() {
         'twit': false,
     });
 
-    function upadteFunction(name: string, value: boolean) {
-        setFunctions(prev => ({
-            ...prev,
-            [name]: value
-        }));
+    function setFnCheck(fnName: string, cheked: boolean) {
+        setAllFns(prev => ({ ...prev, [fnName]: cheked, }));
     }
 
-    useEffect(() => {
-        const functionsToShow = Object.keys(FUNCTIONS).map((fName) => functions[fName] && FUNCTIONS[fName]).filter(Boolean) as Exclude<YFunction, boolean>[];
+    useEffect(
+        () => {
+            if (!svgRef.current) { return; }
+            
+            const functionsToShow = Object.keys(FUNCTIONS).map((fnName) => allFns[fnName] && FUNCTIONS[fnName]).filter(Boolean);
 
-        ref.current && funplot(ref.current,
-            functionsToShow,
-            {
+            funplot(svgRef.current, functionsToShow, {
                 xdomain: [-xdomain * Math.PI, xdomain * Math.PI],
                 strokeWidthInner: strokeWidthInner,
                 strokeWidthOuter: strokeWidthOuter,
-            },
-        );
-    }, [xdomain, strokeWidthInner, strokeWidthOuter, functions]);
+            });
+        },
+        [xdomain, strokeWidthInner, strokeWidthOuter, allFns]
+    );
+
     return (
-        <div className="w-[30rem] flex flex-col">
-            <div className="w-full h-64 border-8 border-blue-200 bg-blue-400">
-                <svg className="w-full h-full" ref={ref}>
-                </svg>
+        <div className="w-[30rem] p-1 border-white/50 border rounded flex flex-col">
+            {/* Preview */}
+            <div className="h-64 border-8 border-blue-200 bg-blue-400">
+                <svg className="w-full h-full" ref={svgRef} />
             </div>
-            <div className="">
+
+            <div className="my-2 space-y-2">
+                {/* Sliders */}
                 <div className="">
                     <Slider labelWidth="5.5rem" value={xdomain} onChange={setxDomain} label="X domain" min={0.1} max={15} step={0.1} />
                     <Slider labelWidth="5.5rem" value={strokeWidthInner} onChange={setStrokeWidthInner} label="Inner stroke" min={0.1} max={40} step={0.1} />
                     <Slider labelWidth="5.5rem" value={strokeWidthOuter} onChange={setStrokeWidthOuter} label="Outer stroke" min={0.1} max={40} step={0.1} />
                 </div>
+                {/* Checkboxes */}
                 <div className="">
-                    <Checkbox label="sin(x)" checked={functions['sin']} onChange={(value) => upadteFunction('sin', value)} />
-                    <Checkbox label="cos(x)" checked={functions['cos']} onChange={(value) => upadteFunction('cos', value)} />
-                    <Checkbox label="tan(x)" checked={functions['tan']} onChange={(value) => upadteFunction('tan', value)} />
-                    <Checkbox label="atan(x)" checked={functions['atan']} onChange={(value) => upadteFunction('atan', value)} />
-                    <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={functions['cos-sin']} onChange={(value) => upadteFunction('cos-sin', value)} />
-                    <Checkbox label=".4 * cos(x * 4)" checked={functions['cos4']} onChange={(value) => upadteFunction('cos4', value)} />
-                    <Checkbox label=".1 * x - .5" checked={functions['const']} onChange={(value) => upadteFunction('const', value)} />
-                    <Checkbox label="sin(4.1 * x) + 12 * sin(3 * x)" checked={functions['twit']} onChange={(value) => upadteFunction('twit', value)} />
-                    <CheckboxJw />
+                    <Checkbox label="sin(x)" checked={allFns['sin']} onChange={(cheked) => setFnCheck('sin', cheked)} />
+                    <Checkbox label="cos(x)" checked={allFns['cos']} onChange={(cheked) => setFnCheck('cos', cheked)} />
+                    <Checkbox label="tan(x)" checked={allFns['tan']} onChange={(cheked) => setFnCheck('tan', cheked)} />
+                    <Checkbox label="atan(x)" checked={allFns['atan']} onChange={(cheked) => setFnCheck('atan', cheked)} />
+                    <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={allFns['cos-sin']} onChange={(cheked) => setFnCheck('cos-sin', cheked)} />
+                    <Checkbox label=".4 * cos(x * 4)" checked={allFns['cos4']} onChange={(cheked) => setFnCheck('cos4', cheked)} />
+                    <Checkbox label=".1 * x - .5" checked={allFns['const']} onChange={(cheked) => setFnCheck('const', cheked)} />
+                    <Checkbox label="sin(4.1 * x) + 12 * sin(3 * x)" checked={allFns['twit']} onChange={(cheked) => setFnCheck('twit', cheked)} />
+                    {/* <CheckboxJw /> */}
                 </div>
             </div>
         </div>
