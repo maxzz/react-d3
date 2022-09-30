@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { SliderProps } from './ui/UIProps';
+import { SliderProps } from '@ui/UIProps';
 
 type Fruit = {
     name: string;

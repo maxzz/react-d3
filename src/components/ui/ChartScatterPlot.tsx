@@ -43,7 +43,7 @@ function ScatterPlot({ data, width, height, xScale, yScale }: { data: Datum; wid
     );
 }
 
-function MotionBallTransition() {
+export function MotionBallTransition() {
     const WIDTH = 400;
     const HEIGHT = 300;
 
@@ -68,5 +68,3 @@ function MotionBallTransition() {
         </div>
     );
 }
-
-export default MotionBallTransition;

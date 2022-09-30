@@ -1,6 +1,6 @@
 import React from 'react';
-import { styled } from '../../../stitches.config';
-import { CheckboxProps } from '../UIProps';
+import { styled } from '@/stitches.config';
+import { CheckboxProps } from '@ui/UIProps';
 
 const TwCheckbox = styled('input', {
     '&:checked': {
@@ -13,7 +13,7 @@ const TwCheckbox = styled('input', {
     }
 });
 
-function CheckboxTwStitches(props: CheckboxProps) {
+export function CheckboxTwStitches(props: CheckboxProps) {
     return (
         <label className="flex items-center select-none cursor-pointer" title={props.title}>
             <TwCheckbox type="checkbox"
@@ -30,5 +30,3 @@ function CheckboxTwStitches(props: CheckboxProps) {
         </label>
     );
 }
-
-export default CheckboxTwStitches;

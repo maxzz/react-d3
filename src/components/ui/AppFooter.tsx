@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Footer() {
+export function AppFooter() {
     return (
         <div className="relative">
             <svg className="absolute bottom-0 right-0 h-24" viewBox="0 0 500.1 142.3">

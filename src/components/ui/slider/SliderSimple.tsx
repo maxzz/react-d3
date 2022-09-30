@@ -1,5 +1,5 @@
 import React from 'react';
-import { SliderProps } from '../UIProps';
+import { SliderProps } from '@ui/UIProps';
 
 export function SliderSimple({ value, onChange, label, min = 0, max = 100, step = 1, labelWidth, lStyles = {}, rStyles = {} }: SliderProps) {
     return (

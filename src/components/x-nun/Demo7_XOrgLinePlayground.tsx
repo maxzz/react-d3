@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import styles from './XOrgLinePlayground.module.scss';
-import CheckboxTw from '@ui/Checkboxes/CheckboxTw';
-import { LinesPlay } from '../../store';
+import { CheckboxTw } from '@ui/Checkboxes/CheckboxTw';
+import { LinesPlay } from '@/store';
 
 type API = {
     setAll: (onOff: boolean) => void;

@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import HighlightedBall from './HighlightedBall';
+import { HighlightedBall } from '@ui/HighlightedBall';
 
 function Ball({ x, y, r }: { x: number, y: number; r: number; }) {
     const ref = useRef<SVGCircleElement>(null);

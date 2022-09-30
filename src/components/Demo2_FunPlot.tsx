@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { Slider } from '@ui/Slider';
-import Checkbox from '@ui/Checkbox/Checkbox';
-import CheckboxJw from '@ui/Checkboxes/CheckboxJw';
+import { Checkbox } from '@ui/Checkbox';
+import { CheckboxJw } from '@ui/Checkboxes/CheckboxJw';
 
 type FunPlotOptions = {
     xdomain?: [number, number];

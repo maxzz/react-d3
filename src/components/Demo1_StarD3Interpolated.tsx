@@ -1,10 +1,10 @@
 import React, { forwardRef, Ref, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import { downloadTextAsFile } from '../utils/download-data';
-import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentered } from '../utils/ngonGenerator';
-import { IconRefresh, IconSave } from './UI/UIIcons';
-import ButtonQuick from './ButtonQuick';
-import { Slider } from './UI/Slider';
-import Checkbox from './UI/Checkbox/Checkbox';
+import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentered } from '@/utils/ngonGenerator';
+import { downloadTextAsFile } from '@/utils/download-data';
+import { ButtonQuick } from '@ui/ButtonQuick';
+import { Slider } from '@ui/Slider';
+import { Checkbox } from '@ui/Checkbox';
+import { IconRefresh, IconSave } from '@ui/UIIcons';
 
 const VIEWBOX_SIZE = 200;
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconRefresh } from './UI/UIIcons';
+import { IconRefresh } from '@ui/UIIcons';
 
-function ButtonQuick({ icon = <IconRefresh />, onClick, classes = '', title }: { icon?: React.ReactNode, onClick: () => void; classes?: string; title?: string }) {
+export function ButtonQuick({ icon = <IconRefresh />, onClick, classes = '', title }: { icon?: React.ReactNode, onClick: () => void; classes?: string; title?: string }) {
     return (
         <button
             className={`p-0.5 w-6 h-6 flex-none
@@ -18,5 +18,3 @@ function ButtonQuick({ icon = <IconRefresh />, onClick, classes = '', title }: {
         </button>
     );
 }
-
-export default ButtonQuick;

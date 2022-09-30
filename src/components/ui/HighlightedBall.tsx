@@ -29,6 +29,4 @@ function HighlightedBallRaw(props: React.SVGAttributes<SVGSVGElement> & { transf
     );
 }
 
-const HighlightedBall = React.forwardRef(HighlightedBallRaw);
-
-export default HighlightedBall;
+export const HighlightedBall = React.forwardRef(HighlightedBallRaw);

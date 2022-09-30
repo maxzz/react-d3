@@ -16,12 +16,10 @@ function HierarchyPanD3() {
     );
 }
 
-function HierarchyPan() {
+export function HierarchyPan() {
     return (
         <div>
             <HierarchyPanD3 />
         </div>
     );
 }
-
-export default HierarchyPan;

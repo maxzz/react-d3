@@ -1,7 +1,7 @@
 import React from 'react';
 import './BigCheckbox.scss';
 
-function Checkbox({label, checked, onChange}: {label: string, checked: boolean, onChange: (value: boolean) => void}) {
+export function Checkbox({label, checked, onChange}: {label: string, checked: boolean, onChange: (value: boolean) => void}) {
     return (
         <label className="checkbox">
             <input className="checkbox__input" type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} />
@@ -14,5 +14,3 @@ function Checkbox({label, checked, onChange}: {label: string, checked: boolean, 
         </label>
     );
 }
-
-export default Checkbox;

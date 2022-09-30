@@ -2,7 +2,7 @@ import React from 'react';
 
 //https://www.joshwcomeau.com/react/demystifying-styled-components
 
-function CheckboxJw() {
+export function CheckboxJw() {
     const [checked, setChecked] = React.useState(true);
     return (
         <div className="flex">
@@ -27,5 +27,3 @@ function CheckboxJw() {
         </div>
     );
 }
-
-export default CheckboxJw;

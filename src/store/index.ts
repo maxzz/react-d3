@@ -1,6 +1,6 @@
 import PreviousMap from 'postcss/lib/previous-map';
 import create from 'zustand';
-import { InputData } from './components/x-nun/Demo7_XOrgLinePlayground';
+import { InputData } from '@/components/x-nun/Demo7_XOrgLinePlayground';
 
 namespace Global {
     const APPKEY = 'red3';
@@ -38,7 +38,7 @@ namespace Global {
     // if (import.meta.env.MODE === 'development') { /* This code wont be in production!!! */ }
 }
 
-namespace BarsChart {
+export namespace BarsChart {
     const KEY = 'BarsChart';
 
     export type Store = {
@@ -106,5 +106,3 @@ export namespace LinesPlay {
         Global.setKey(KEY, JSON.stringify(state));
     });
 }
-
-export default BarsChart;

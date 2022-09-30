@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.scss';
-import { Footer } from './components/UI/Footer';
-import { Demo1_StarD3Interpolated } from './components/Demo1_StarD3Interpolated';
-import { Demo2_FunPlotFunPlot } from './components/Demo2_FunPlot';
-import { Demo3_FunBarsChart } from './components/Demo3_FunBarsChart';
-import { Demo4_TransitionBall } from './components/Demo4_TransitionBall';
-import { Demo5_LineChart } from './components/Demo5_LineChart';
-import { Demo6_FunPieChart } from './components/Demo6_FunPieChart';
-import { Demo7_LinePlayground } from './components/x-nun/Demo7_XOrgLinePlayground';
-import { Demo8_HierarchyClassic } from './components/Demo8_HierarchyClassic';
+import { AppFooter } from '@ui/AppFooter';
+import { Demo1_StarD3Interpolated } from '@/components/Demo1_StarD3Interpolated';
+import { Demo2_FunPlotFunPlot } from '@/components/Demo2_FunPlot';
+import { Demo3_FunBarsChart } from '@/components/Demo3_FunBarsChart';
+import { Demo4_TransitionBall } from '@/components/Demo4_TransitionBall';
+import { Demo5_LineChart } from '@/components/Demo5_LineChart';
+import { Demo6_FunPieChart } from '@/components/Demo6_FunPieChart';
+import { Demo7_LinePlayground } from '@/components/x-nun/Demo7_XOrgLinePlayground';
+import { Demo8_HierarchyClassic } from '@/components/Demo8_HierarchyClassic';
 
 function App() {
     return (
@@ -35,7 +35,7 @@ function App() {
                     </div>
                     {/* Footer */}
                     <div className="self-end">
-                        <Footer />
+                        <AppFooter />
                     </div>
                 </div>
             </div>

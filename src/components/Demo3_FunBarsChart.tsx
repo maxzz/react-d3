@@ -1,10 +1,10 @@
 import React, { forwardRef, Ref, useEffect, useImperativeHandle, useRef } from 'react';
 import * as d3 from 'd3';
-import { css } from '../stitches.config';
-import Checkbox from './UI/Checkbox/Checkbox';
-import ButtonQuick from './ButtonQuick';
-import { Slider } from './UI/Slider';
-import BarsChart from '../store';
+import { css } from '@/stitches.config';
+import { Checkbox } from '@ui/Checkbox';
+import { ButtonQuick } from '@ui/ButtonQuick';
+import { Slider } from '@ui/Slider';
+import { BarsChart } from '@/store';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);

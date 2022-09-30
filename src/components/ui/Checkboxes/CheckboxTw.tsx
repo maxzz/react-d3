@@ -12,7 +12,7 @@ import { CheckboxProps } from '@ui/UIProps';
 }
 */
 
-function CheckboxTw(props: CheckboxProps) {
+export function CheckboxTw(props: CheckboxProps) {
     return (
         <label className="flex items-center select-none cursor-pointer" title={props.title}>
             <input type="checkbox"
@@ -30,5 +30,3 @@ function CheckboxTw(props: CheckboxProps) {
         </label>
     );
 }
-
-export default CheckboxTw;
