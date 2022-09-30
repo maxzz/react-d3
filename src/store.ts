@@ -1,6 +1,6 @@
 import PreviousMap from 'postcss/lib/previous-map';
 import create from 'zustand';
-import { InputData } from './components/x-nun/XOrgLinePlayground';
+import { InputData } from './components/x-nun/Demo7_XOrgLinePlayground';
 
 namespace Global {
     const APPKEY = 'red3';

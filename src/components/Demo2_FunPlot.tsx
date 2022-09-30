@@ -124,7 +124,7 @@ const FUNCTIONS: Record<string, YFunction> = {
     'twit': (x: number) => Math.sin(4.1 * x) + 12 * Math.sin(3 * x), //https://twitter.com/yuanchuan23/status/1447548295992152072
 };
 
-function FunPlot() {
+function Demo2_FunPlotFunPlot() {
     const ref = React.useRef<SVGSVGElement>(null);
 
     const [xdomain, setxDomain] = React.useState(2);
@@ -189,4 +189,4 @@ function FunPlot() {
     );
 }
 
-export default FunPlot;
+export default Demo2_FunPlotFunPlot;

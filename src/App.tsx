@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.scss';
 import Footer from './components/ui/Footer';
-import FunPlot from './components/FunPlot';
-import HierarchyClassic from './components/HierarchyClassic';
-import StarD3Interpolated from './components/StarD3Interpolated';
-import FunPieChart from './components/FunPieChart';
-import LinePlayground from './components/x-nun/XOrgLinePlayground';
-import LineChart from './components/LineChart';
-import FunBarsChart from './components/FunBarsChart';
-import TransitionBall from './components/TransitionBall';
+import Demo1_StarD3Interpolated from './components/Demo1_StarD3Interpolated';
+import Demo2_FunPlotFunPlot from './components/Demo2_FunPlot';
+import Demo3_FunBarsChart from './components/Demo3_FunBarsChart';
+import Demo4_TransitionBall from './components/Demo4_TransitionBall';
+import Demo5_LineChart from './components/Demo5_LineChart';
+import Demo6_FunPieChart from './components/Demo6_FunPieChart';
+import Demo7_LinePlayground from './components/x-nun/Demo7_XOrgLinePlayground';
+import Demo8_HierarchyClassic from './components/HierarchyClassic';
 
 function App() {
     return (
@@ -17,16 +17,16 @@ function App() {
                 <div className="w-full h-full flex flex-col justify-between items-center">
                     {/* Demos */}
                     <div className="mt-4 flex-auto space-y-4 max-w-5xl min-w-[30rem] flex flex-col flex-wrap items-center z-10">
-                        <StarD3Interpolated />
-                        <FunPlot />
+                        <Demo1_StarD3Interpolated />
+                        <Demo2_FunPlotFunPlot />
 
-                        <FunBarsChart />
-                        <TransitionBall />
+                        <Demo3_FunBarsChart />
+                        <Demo4_TransitionBall />
 
-                        <LineChart />
-                        <FunPieChart />
-                        <LinePlayground />
-                        <HierarchyClassic />
+                        <Demo5_LineChart />
+                        <Demo6_FunPieChart />
+                        <Demo7_LinePlayground />
+                        <Demo8_HierarchyClassic />
                     </div>
                     {/* Footer */}
                     <div className="self-end">

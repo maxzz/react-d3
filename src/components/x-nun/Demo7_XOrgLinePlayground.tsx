@@ -343,7 +343,7 @@ function LineEditor() {
     );
 }
 
-function LinePlayground() {
+function Demo7_LinePlayground() {
     return (
         <div className="w-full">
             <LineEditor />
@@ -351,4 +351,4 @@ function LinePlayground() {
     );
 }
 
-export default LinePlayground;
+export default Demo7_LinePlayground;
