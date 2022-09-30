@@ -8,7 +8,7 @@ import Demo4_TransitionBall from './components/Demo4_TransitionBall';
 import Demo5_LineChart from './components/Demo5_LineChart';
 import Demo6_FunPieChart from './components/Demo6_FunPieChart';
 import Demo7_LinePlayground from './components/x-nun/Demo7_XOrgLinePlayground';
-import Demo8_HierarchyClassic from './components/HierarchyClassic';
+import Demo8_HierarchyClassic from './components/Demo8_HierarchyClassic';
 
 function App() {
     return (
