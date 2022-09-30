@@ -15,18 +15,23 @@ function App() {
         <div className="h-screen">
             <div className="h-full overflow-y-auto bg-green-50 bg-gradient-to-tl from-green-500 to-cyan-500">
                 <div className="w-full h-full flex flex-col justify-between items-center">
+                    {/* Header */}
+                    <div className="self-start">
+                        <div className="px-4 text-2xl text-white/50">TODO: Add header and explanation</div>
+                    </div>
                     {/* Demos */}
                     <div className="mt-4 flex-auto space-y-4 max-w-5xl min-w-[30rem] flex flex-col flex-wrap items-center z-10">
                         <Demo1_StarD3Interpolated />
                         <Demo2_FunPlotFunPlot />
 
                         <Demo3_FunBarsChart />
-                        <Demo4_TransitionBall />
 
                         <Demo5_LineChart />
                         <Demo6_FunPieChart />
                         <Demo7_LinePlayground />
                         <Demo8_HierarchyClassic />
+
+                        <Demo4_TransitionBall />
                     </div>
                     {/* Footer */}
                     <div className="self-end">
