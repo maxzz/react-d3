@@ -102,7 +102,7 @@ const squareHeight = 80;
 
 const circleR = 50;
 
-function Demo4_TransitionBall() {
+export function Demo4_TransitionBall() {
     const [onLeft, setOnLeft] = React.useState(true);
 
     React.useEffect(() => {
@@ -131,5 +131,3 @@ function Demo4_TransitionBall() {
         </div>
     );
 }
-
-export default Demo4_TransitionBall;

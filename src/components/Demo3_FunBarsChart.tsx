@@ -122,7 +122,7 @@ const storeSelector = (store: BarsChart.Store) => ({
     setRandomN: store.setRandomN,
 });
 
-function Demo3_FunBarsChart() {
+export function Demo3_FunBarsChart() {
     const ref = React.useRef<API>(null);
     const { nBars, setNBars, sorted, setSorted, randomN, setRandomN } = BarsChart.useStore(storeSelector);
     return (
@@ -140,5 +140,3 @@ function Demo3_FunBarsChart() {
         </div>
     );
 }
-
-export default Demo3_FunBarsChart;

@@ -76,7 +76,7 @@ const RANGES: { [key in keyof FunChartBodyProps]: { min: number; max: number; st
     cornerRadius: { min: 0, max: 100, step: 1 },
 };
 
-function Demo6_FunPieChart() {
+export function Demo6_FunPieChart() {
 
     const [props, setProps] = React.useState({
         innerRadius: 100,
@@ -107,5 +107,3 @@ function Demo6_FunPieChart() {
         </div>
     );
 }
-
-export default Demo6_FunPieChart;

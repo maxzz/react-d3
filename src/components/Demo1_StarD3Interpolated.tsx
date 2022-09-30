@@ -47,7 +47,7 @@ function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShape
 
 const InterpolatedShape = React.forwardRef(InterpolatedShapeRaw);
 
-function Demo1_StarD3Interpolated() {
+export function Demo1_StarD3Interpolated() {
     const [nRays, setURays] = React.useState(21);
     const [iRadius, setIRadius] = React.useState(89);
     const [oRadius, setORadius] = React.useState(7);
@@ -116,5 +116,3 @@ function Demo1_StarD3Interpolated() {
         </div>
     );
 }
-
-export default Demo1_StarD3Interpolated;

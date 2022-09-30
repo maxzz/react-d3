@@ -216,10 +216,8 @@ function HierarchyClassicRaw() {
     );
 }
 
-function Demo8_HierarchyClassic() {
+export function Demo8_HierarchyClassic() {
     return (
         <HierarchyClassicRaw />
     );
 }
-
-export default Demo8_HierarchyClassic;

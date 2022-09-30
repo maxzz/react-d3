@@ -115,7 +115,7 @@ function LineChartBodyRaw(_: React.PropsWithChildren<any>, ref: React.Ref<LineCh
 
 const LineChartBody = React.forwardRef(LineChartBodyRaw);
 
-function Demo5_LineChart() {
+export function Demo5_LineChart() {
     const api = React.useRef<LineChartBodyApi>(null);
     return (
         <div className='w-[30rem] border-8 border-blue-200 bg-blue-400'
@@ -133,5 +133,3 @@ function Demo5_LineChart() {
         </div>
     );
 }
-
-export default Demo5_LineChart;
