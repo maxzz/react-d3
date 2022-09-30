@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconRefresh } from './ui/ButtonIcons';
+import { IconRefresh } from './UI/UIIcons';
 
 function ButtonQuick({ icon = <IconRefresh />, onClick, classes = '', title }: { icon?: React.ReactNode, onClick: () => void; classes?: string; title?: string }) {
     return (

@@ -1,6 +1,6 @@
 import React, { forwardRef, PropsWithChildren, Ref, useEffect, useImperativeHandle, useRef } from 'react';
 import * as d3 from 'd3';
-import { IconRefresh } from './ui/ButtonIcons';
+import { IconRefresh } from './UI/UIIcons';
 
 function D3World(svgRoot: SVGSVGElement) {
     let svg = d3.select<SVGSVGElement, Datum>(svgRoot);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckboxWithStyleProps } from '../ui-props';
+import { CheckboxWithStyleProps } from '../UIProps';
 import CheckboxStyles from './CheckboxSmall.module.scss';
 
 function CheckboxSmall({ label, checked, onChange, enabled = true, title, styles = CheckboxStyles }: CheckboxWithStyleProps) {

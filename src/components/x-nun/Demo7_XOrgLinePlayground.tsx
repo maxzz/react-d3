@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import styles from './XOrgLinePlayground.module.scss';
-import CheckboxTw from '../ui/checkbox/CheckboxTw';
+import CheckboxTw from '../UI/Checkbox/CheckboxTw';
 import { LinesPlay } from '../../store';
 
 type API = {

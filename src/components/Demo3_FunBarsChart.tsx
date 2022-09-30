@@ -1,9 +1,9 @@
 import React, { forwardRef, Ref, useEffect, useImperativeHandle, useRef } from 'react';
 import * as d3 from 'd3';
 import { css } from '../stitches.config';
-import Checkbox from './ui/checkbox/Checkbox';
+import Checkbox from './UI/Checkbox/Checkbox';
 import ButtonQuick from './ButtonQuick';
-import Slider from './ui/slider/Slider';
+import Slider from './UI/Slider/Slider';
 import BarsChart from '../store';
 
 type Datum = number;

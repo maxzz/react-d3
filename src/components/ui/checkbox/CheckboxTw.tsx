@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckboxProps } from '../ui-props';
+import { CheckboxProps } from '../UIProps';
 
 //https://tailwindcss.com/docs/hover-focus-and-other-states#checked
 
