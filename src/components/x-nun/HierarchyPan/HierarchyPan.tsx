@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Data as JSONDATA } from './HeirarchyPanData';
 import { treeJSON } from './HierarchyPanD3';
 
 function HierarchyPanD3() {
 
-    const ref = React.useRef(null);
-    React.useEffect(() => {
+    const ref = useRef(null);
+    useEffect(() => {
         treeJSON(JSONDATA);
     }, []);
 

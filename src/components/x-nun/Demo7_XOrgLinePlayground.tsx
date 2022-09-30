@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import styles from './XOrgLinePlayground.module.scss';
 import CheckboxTw from '../ui/checkbox/CheckboxTw';
@@ -273,10 +273,10 @@ function storeSelector(store: LinesPlay.Store) {
 }
 
 function LineEditor() {
-    const svgRef = React.useRef<SVGGElement>(null);
-    const apiRef = React.useRef<API | null>(null);
+    const svgRef = useRef<SVGGElement>(null);
+    const apiRef = useRef<API | null>(null);
 
-    const [allChecked, setAllChecked] = React.useState(false);
+    const [allChecked, setAllChecked] = useState(false);
 
     const { inputData, setActivePoint, setPoints } = LinesPlay.useStore(storeSelector);
 
@@ -284,7 +284,7 @@ function LineEditor() {
         setAllChecked(allOn);
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         apiRef.current = svgRef.current && initial(svgRef.current, inputData, onSelectionChange);
     }, []);
 

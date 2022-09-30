@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, PropsWithChildren, Ref, useEffect, useImperativeHandle, useRef } from 'react';
 import * as d3 from 'd3';
 import { IconRefresh } from './ui/ButtonIcons';
 
@@ -93,14 +93,14 @@ type LineChartBodyApi = {
     update: () => void;
 };
 
-function LineChartBodyRaw(_: React.PropsWithChildren<any>, ref: React.Ref<LineChartBodyApi>) {
-    const svgRef = React.useRef<SVGSVGElement>(null);
+function LineChartBodyRaw(_: PropsWithChildren<any>, ref: Ref<LineChartBodyApi>) {
+    const svgRef = useRef<SVGSVGElement>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         svgRef.current && D3World(svgRef.current);
     }, []);
 
-    React.useImperativeHandle(ref, () => ({
+    useImperativeHandle(ref, () => ({
         update() {
             svgRef.current && D3World(svgRef.current);
         }
@@ -113,10 +113,10 @@ function LineChartBodyRaw(_: React.PropsWithChildren<any>, ref: React.Ref<LineCh
     );
 }
 
-const LineChartBody = React.forwardRef(LineChartBodyRaw);
+const LineChartBody = forwardRef(LineChartBodyRaw);
 
 export function Demo5_LineChart() {
-    const api = React.useRef<LineChartBodyApi>(null);
+    const api = useRef<LineChartBodyApi>(null);
     return (
         <div className='w-[30rem] border-8 border-blue-200 bg-blue-400'
             style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}

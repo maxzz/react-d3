@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, Ref, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { downloadTextAsFile } from '../utils/download-data';
 import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentered } from '../utils/ngonGenerator';
 import { IconRefresh, IconSave } from './ui/ButtonIcons';
@@ -18,15 +18,15 @@ type InterpolatedShapeActions = {
     save: () => void;
 };
 
-function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShapeProps, ref: React.Ref<InterpolatedShapeActions>) {
+function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShapeProps, ref: Ref<InterpolatedShapeActions>) {
     const { nRays, iRadius, oRadius, smooth } = shape;
     const { inner, outer, update, } = randomize;
 
-    const path = React.useMemo(() => {
+    const path = useMemo(() => {
         return generatePath(shape, randomize);
     }, [nRays, iRadius, oRadius, smooth, inner, outer, update,]);
 
-    React.useImperativeHandle(ref, () => ({
+    useImperativeHandle(ref, () => ({
         save: () => {
             downloadTextAsFile(generateSVG({ path: path[0], outerPoints: showOuter ? path[1] : [], size: VIEWBOX_SIZE }), 'red3.svg');
         }
@@ -45,13 +45,13 @@ function InterpolatedShapeRaw({ shape, randomize, showOuter }: InterpolatedShape
     );
 }
 
-const InterpolatedShape = React.forwardRef(InterpolatedShapeRaw);
+const InterpolatedShape = forwardRef(InterpolatedShapeRaw);
 
 export function Demo1_StarD3Interpolated() {
-    const [nRays, setURays] = React.useState(21);
-    const [iRadius, setIRadius] = React.useState(89);
-    const [oRadius, setORadius] = React.useState(7);
-    const [smooth, setSmooth] = React.useState(true);
+    const [nRays, setURays] = useState(21);
+    const [iRadius, setIRadius] = useState(89);
+    const [oRadius, setORadius] = useState(7);
+    const [smooth, setSmooth] = useState(true);
     const shape = {
         nRays,
         iRadius,
@@ -59,16 +59,16 @@ export function Demo1_StarD3Interpolated() {
         smooth,
     };
 
-    const [iRandom, setIRandom] = React.useState(true);
-    const [oRandom, setORandom] = React.useState(true);
-    const [update, setUpdate] = React.useState(0);
+    const [iRandom, setIRandom] = useState(true);
+    const [oRandom, setORandom] = useState(true);
+    const [update, setUpdate] = useState(0);
     const randomize: RandomizeParams = {
         inner: iRandom,
         outer: oRandom,
         update,
     };
 
-    const [showOuter, setShowOuter] = React.useState(false);
+    const [showOuter, setShowOuter] = useState(false);
 
     function onRandomBoth(v: boolean) {
         setIRandom(v);
@@ -80,7 +80,7 @@ export function Demo1_StarD3Interpolated() {
         setORandom(v);
     }
 
-    const genCb = React.useRef<InterpolatedShapeActions>(null);
+    const genCb = useRef<InterpolatedShapeActions>(null);
 
     return (
         <div className="w-[30rem] flex select-none">

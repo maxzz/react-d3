@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import Footer from './components/ui/Footer';
+import { Footer } from './components/ui/Footer';
 import { Demo1_StarD3Interpolated } from './components/Demo1_StarD3Interpolated';
 import { Demo2_FunPlotFunPlot } from './components/Demo2_FunPlot';
 import { Demo3_FunBarsChart } from './components/Demo3_FunBarsChart';

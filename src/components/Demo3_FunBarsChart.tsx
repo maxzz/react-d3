@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, Ref, useEffect, useImperativeHandle, useRef } from 'react';
 import * as d3 from 'd3';
 import { css } from '../stitches.config';
 import Checkbox from './ui/checkbox/Checkbox';
@@ -81,10 +81,10 @@ type BodyProps = {
     randomN: boolean;
 };
 
-const Body = React.forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = false, randomN = true }: BodyProps, refAPI: React.Ref<API>) {
-    const refSvg = React.useRef<SVGSVGElement>(null);
+const Body = forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = false, randomN = true }: BodyProps, refAPI: Ref<API>) {
+    const refSvg = useRef<SVGSVGElement>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         updateSVG(nBars, sorted);
     }, [nBars]);
 
@@ -96,7 +96,7 @@ const Body = React.forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = f
         refSvg.current && bars(refSvg.current, DATA);
     }
 
-    React.useImperativeHandle(refAPI, () => ({
+    useImperativeHandle(refAPI, () => ({
         update: () => {
             if (randomN) {
                 const total = d3.randomInt(5, 20)();
@@ -123,7 +123,7 @@ const storeSelector = (store: BarsChart.Store) => ({
 });
 
 export function Demo3_FunBarsChart() {
-    const ref = React.useRef<API>(null);
+    const ref = useRef<API>(null);
     const { nBars, setNBars, sorted, setSorted, randomN, setRandomN } = BarsChart.useStore(storeSelector);
     return (
         <div className="w-[30rem]">

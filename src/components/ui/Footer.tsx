@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Footer() {
+export function Footer() {
     return (
         <div className="relative">
             <svg className="absolute bottom-0 right-0 h-24" viewBox="0 0 500.1 142.3">
@@ -12,5 +12,3 @@ function Footer() {
         </div>
     );
 }
-
-export default Footer;

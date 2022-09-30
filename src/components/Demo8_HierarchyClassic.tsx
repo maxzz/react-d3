@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 // Data
@@ -79,9 +79,9 @@ function getLeftRight<T>(root: d3.HierarchyPointNode<T>): readonly [number, numb
 }
 
 function HierarchyClassicRaw() {
-    const ref = React.useRef(null);
+    const ref = useRef(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
 
         const width = 300;
         const nodeDX = 12;

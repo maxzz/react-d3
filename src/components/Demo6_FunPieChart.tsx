@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { SliderProps } from './ui/ui-props';
 
@@ -27,10 +27,7 @@ type FunChartBodyProps = {
 };
 
 function FunChartBody(props: FunChartBodyProps) {
-    const ref = React.useRef(null);
-
-    React.useEffect(() => {
-    }, []);
+    const ref = useRef(null);
 
     const pieData = d3.pie<Fruit>().value(d => d.count)(FRUITS);
 
@@ -78,7 +75,7 @@ const RANGES: { [key in keyof FunChartBodyProps]: { min: number; max: number; st
 
 export function Demo6_FunPieChart() {
 
-    const [props, setProps] = React.useState({
+    const [props, setProps] = useState({
         innerRadius: 100,
         outerRadius: 310,
         padRadius: 300,

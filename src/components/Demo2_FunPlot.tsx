@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import Slider from './ui/slider/Slider';
 import Checkbox from './ui/checkbox/Checkbox';
@@ -125,13 +125,13 @@ const FUNCTIONS: Record<string, YFunction> = {
 };
 
 export function Demo2_FunPlotFunPlot() {
-    const ref = React.useRef<SVGSVGElement>(null);
+    const ref = useRef<SVGSVGElement>(null);
 
-    const [xdomain, setxDomain] = React.useState(2);
-    const [strokeWidthInner, setStrokeWidthInner] = React.useState(20);
-    const [strokeWidthOuter, setStrokeWidthOuter] = React.useState(26);
+    const [xdomain, setxDomain] = useState(2);
+    const [strokeWidthInner, setStrokeWidthInner] = useState(20);
+    const [strokeWidthOuter, setStrokeWidthOuter] = useState(26);
 
-    const [functions, setFunctions] = React.useState<Record<string, boolean>>({
+    const [functions, setFunctions] = useState<Record<string, boolean>>({
         'sin': true,
         'cos': false,
         'tan': false,
@@ -149,7 +149,7 @@ export function Demo2_FunPlotFunPlot() {
         }));
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         const functionsToShow = Object.keys(FUNCTIONS).map((fName) => functions[fName] && FUNCTIONS[fName]).filter(Boolean) as Exclude<YFunction, boolean>[];
 
         ref.current && funplot(ref.current,

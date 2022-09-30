@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import HighlightedBall from './HighlightedBall';
 
 function Ball({ x, y, r }: { x: number, y: number; r: number; }) {
-    const ref = React.useRef<SVGCircleElement>(null);
-    const [realPos, setRealPos] = React.useState({ x, y });
+    const ref = useRef<SVGCircleElement>(null);
+    const [realPos, setRealPos] = useState({ x, y });
 
-    React.useEffect(() => {
+    useEffect(() => {
         const ball = d3.select(ref.current);
 
         ball.transition('move-x')
@@ -36,10 +36,10 @@ function Ball({ x, y, r }: { x: number, y: number; r: number; }) {
 }
 
 function ShapeNestedSVG({ x, y, width, height }: { x: number, y: number; width: number; height: number; }) {
-    const ref = React.useRef<SVGSVGElement>(null);
-    const [realPos, setRealPos] = React.useState({ x, y });
+    const ref = useRef<SVGSVGElement>(null);
+    const [realPos, setRealPos] = useState({ x, y });
 
-    React.useEffect(() => {
+    useEffect(() => {
         const ball = d3.select(ref.current);
 
         ball.transition('move-x')
@@ -59,13 +59,13 @@ function ShapeNestedSVG({ x, y, width, height }: { x: number, y: number; width: 
     );
 }
 
-function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: number; height: number; } & React.HTMLAttributes<HTMLElement>) {
-    const [realPos, setRealPos] = React.useState({ x, y });
+function Shape({ x, y, width, height, ...rest }: { x: number, y: number; width: number; height: number; } & HTMLAttributes<HTMLElement>) {
+    const [realPos, setRealPos] = useState({ x, y });
 
-    const refX = React.useRef<HTMLDivElement>(null);
-    const refY = React.useRef<HTMLDivElement>(null);
+    const refX = useRef<HTMLDivElement>(null);
+    const refY = useRef<HTMLDivElement>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const ballX = d3.select(refX.current);
         const ballY = d3.select(refY.current);
 
@@ -103,9 +103,9 @@ const squareHeight = 80;
 const circleR = 50;
 
 export function Demo4_TransitionBall() {
-    const [onLeft, setOnLeft] = React.useState(true);
+    const [onLeft, setOnLeft] = useState(true);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const timer = d3.interval(() => setOnLeft(v => !v), 3000);
         return () => timer.stop();
     }, []);
