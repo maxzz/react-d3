@@ -1,3 +1,4 @@
+import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -51,6 +52,14 @@ export default defineConfig({
         //     }
         // }),
     ],
+
+    resolve: {
+        alias: {
+            '@ui': path.resolve(__dirname, './src/components/UI'),
+            '@': path.resolve(__dirname, './src'),
+        },
+    },
+
     server: {
         port: 3000,
     }
