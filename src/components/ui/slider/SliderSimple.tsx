@@ -1,7 +1,7 @@
 import React from 'react';
 import { SliderProps } from '../UIProps';
 
-function SliderSimple({ value, onChange, label, min = 0, max = 100, step = 1, labelWidth, lStyles = {}, rStyles = {} }: SliderProps) {
+export function SliderSimple({ value, onChange, label, min = 0, max = 100, step = 1, labelWidth, lStyles = {}, rStyles = {} }: SliderProps) {
     return (
         <div className="flex items-center text-sm text-gray-800">
             <div style={{ ...(labelWidth && { width: labelWidth }), ...lStyles }}>{label}</div>
@@ -12,5 +12,3 @@ function SliderSimple({ value, onChange, label, min = 0, max = 100, step = 1, la
         </div>
     );
 }
-
-export default SliderSimple;

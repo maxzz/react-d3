@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import Slider from './UI/Slider/Slider';
+import { Slider } from './UI/Slider';
 import Checkbox from './UI/Checkbox/Checkbox';
 import CheckboxJw from './UI/Checkbox/CheckboxJw';
 

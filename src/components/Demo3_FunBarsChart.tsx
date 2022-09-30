@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { css } from '../stitches.config';
 import Checkbox from './UI/Checkbox/Checkbox';
 import ButtonQuick from './ButtonQuick';
-import Slider from './UI/Slider/Slider';
+import { Slider } from './UI/Slider';
 import BarsChart from '../store';
 
 type Datum = number;

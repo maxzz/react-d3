@@ -1,5 +1,4 @@
 import React, { CSSProperties } from 'react';
-//import './Slider.scss'; // TODO: does not work this way. later.
 
 export type SliderProps = {
     value: number;

@@ -3,7 +3,7 @@ import { downloadTextAsFile } from '../utils/download-data';
 import { generatePath, generateSVG, RandomizeParams, ShapeParams, viewboxCentered } from '../utils/ngonGenerator';
 import { IconRefresh, IconSave } from './UI/UIIcons';
 import ButtonQuick from './ButtonQuick';
-import Slider from './UI/Slider/Slider';
+import { Slider } from './UI/Slider';
 import Checkbox from './UI/Checkbox/Checkbox';
 
 const VIEWBOX_SIZE = 200;
