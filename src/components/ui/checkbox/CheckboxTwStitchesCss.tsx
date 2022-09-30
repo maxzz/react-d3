@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@stitches/react';
+import { css } from '../../../stitches.config';
 import { CheckboxProps } from '../ui-props';
 
 const twCheckboxTick = css({

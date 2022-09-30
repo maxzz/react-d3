@@ -1,6 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
-import { css } from '@stitches/react';
+import { css } from '../stitches.config';
 import Checkbox from './ui/checkbox/Checkbox';
 import ButtonQuick from './ButtonQuick';
 import Slider from './ui/slider/Slider';
