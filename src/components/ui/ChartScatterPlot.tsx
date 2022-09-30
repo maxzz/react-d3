@@ -1,35 +1,31 @@
-import React, { useEffect, useRef } from 'react';
+import React, { SVGAttributes, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 type AxisProps = {
     direction: 'axisLeft' | 'axisRight' | 'axisTop' | 'axisBottom';
     scale: Scale;
-    attrs?: React.SVGAttributes<SVGGElement>;
+    attrs?: SVGAttributes<SVGGElement>;
 };
 
 type Scale = d3.ScaleLinear<number, number>;
 
 function AxisX({ direction, scale, attrs = {} }: AxisProps) {
-    const gEl = useRef<SVGGElement>(null);
+    const gRef = useRef<SVGGElement>(null);
 
     useEffect(() => {
-        d3render();
-    }, [direction]);
-
-    function d3render() {
-        if (gEl.current) {
-            let axisX = d3[direction](scale);
-            d3.select(gEl.current).call(axisX);
+        function d3render(el: SVGGElement) {
+            const axisX = d3[direction](scale);
+            d3.select(el).call(axisX);
         }
-    }
 
-    return (
-        <g ref={gEl} {...attrs} > {/* style={{ outline: '1px solid red' }} */}
-        </g>
-    );
+        gRef.current && d3render(gRef.current);
+    }, [direction, scale]);
+
+    return <g ref={gRef} {...attrs} > {/* style={{ outline: '1px solid red' }} */} </g>;
 }
 
 const datum = d3.range(200).map(_ => [Math.random(), Math.random()]);
+
 type Datum = typeof datum;
 
 function ScatterPlot({ data, width, height, xScale, yScale }: { data: Datum; width: number, height: number; xScale: Scale; yScale: Scale; }) {
@@ -37,7 +33,15 @@ function ScatterPlot({ data, width, height, xScale, yScale }: { data: Datum; wid
         <g>
             <rect width={width} height={height} fill="rgb(147, 197, 253)" /> {/* #f707 */}
             {data.map((item, idx) => (
-                <circle cx={xScale(item[0])} cy={yScale(item[1])} r="3" fill='#fff' stroke="rebeccapurple" strokeWidth={1} key={idx} />
+                <circle
+                    cx={xScale(item[0])}
+                    cy={yScale(item[1])}
+                    r="3"
+                    fill='#fff'
+                    stroke="rebeccapurple"
+                    strokeWidth={1}
+                    key={idx}
+                />
             ))}
         </g>
     );

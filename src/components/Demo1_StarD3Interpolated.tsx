@@ -85,12 +85,10 @@ export function Demo1_StarD3Interpolated() {
     return (
         <div className="w-[30rem] flex select-none">
             {/* Shape */}
-            <div
-                className="w-44 h-44 text-blue-800 bg-blue-400 border-8 border-blue-200"
-                style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}
-            >
+            <div className="w-44 h-44 text-blue-800 bg-blue-400 border-8 border-blue-200" style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}>
                 <InterpolatedShape shape={shape} randomize={randomize} showOuter={showOuter} ref={genCb} />
             </div>
+
             {/* Controls */}
             <div className="mx-2 p-2 flex flex-col justify-between">
                 {/* Sliders */}
@@ -106,10 +104,11 @@ export function Demo1_StarD3Interpolated() {
                     <Checkbox label="Randomize outer and inner radius" checked={iRandom} onChange={onRandomBoth} />
                     <Checkbox label="Randomize outer radius" checked={oRandom} onChange={onRandomOuter} />
                     <Checkbox label="Show outer points" checked={showOuter} onChange={setShowOuter} />
+                    
                     {/* Actions */}
                     <div className="absolute text-sm bottom-0 right-0 space-x-1">
-                        <ButtonQuick classes="w-7 h-7" title="Save SVG" icon={<IconSave />} onClick={() => genCb?.current?.save()} />
-                        <ButtonQuick classes="w-7 h-7" title="Update view" icon={<IconRefresh />} onClick={() => setUpdate(v => v + 1)} />
+                        <ButtonQuick className="w-7 h-7" title="Save SVG" onClick={() => genCb?.current?.save()}><IconSave /></ButtonQuick>
+                        <ButtonQuick className="w-7 h-7" title="Update view" onClick={() => setUpdate(v => v + 1)}><IconRefresh /></ButtonQuick>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { forwardRef, Ref, useEffect, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, Ref, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import * as d3 from 'd3';
 import { css } from '@/stitches.config';
 import { Checkbox } from '@ui/Checkbox';
@@ -16,7 +16,7 @@ const style = css({
     strokeWidth: '1',
 });
 
-type API = {
+type BodyAPI = {
     update: () => void;
 };
 
@@ -81,20 +81,14 @@ type BodyProps = {
     randomN: boolean;
 };
 
-const Body = forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = false, randomN = true }: BodyProps, refAPI: Ref<API>) {
+const Body = forwardRef(function (props: BodyProps, refAPI: Ref<BodyAPI>) {
+    const { nBars = 12, onNBarsChanged, sorted = false, randomN = true } = props;
+
     const refSvg = useRef<SVGSVGElement>(null);
 
     useEffect(() => {
         updateSVG(nBars, sorted);
-    }, [nBars]);
-
-    function updateSVG(nBars: number, sorted: boolean) {
-        DATA = d3.range(nBars).map(_ => Math.random());
-        if (sorted) {
-            DATA.sort((a, b) => d3.ascending(a, b));
-        }
-        refSvg.current && bars(refSvg.current, DATA);
-    }
+    }, [nBars, sorted]);
 
     useImperativeHandle(refAPI, () => ({
         update: () => {
@@ -105,12 +99,20 @@ const Body = forwardRef(function ({ nBars = 12, onNBarsChanged, sorted = false, 
                 updateSVG(nBars, sorted);
             }
         }
-    }));
+    }), [nBars, sorted, randomN, onNBarsChanged]);
 
-    return (
-        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} ref={refSvg}>
-        </svg>
+    const updateSVG = useCallback(
+        (nBars: number, sorted: boolean) => {
+            if (!refSvg.current) { return; }
+
+            DATA = d3.range(nBars).map(_ => Math.random());
+            sorted && DATA.sort((a, b) => d3.ascending(a, b));
+
+            bars(refSvg.current, DATA);
+        }, [],
     );
+
+    return <svg ref={refSvg} viewBox={`0 0 ${WIDTH} ${HEIGHT}`} />;
 });
 
 const storeSelector = (store: BarsChart.Store) => ({
@@ -123,15 +125,15 @@ const storeSelector = (store: BarsChart.Store) => ({
 });
 
 export function Demo3_FunBarsChart() {
-    const ref = useRef<API>(null);
+    const bodyApiRef = useRef<BodyAPI>(null);
     const { nBars, setNBars, sorted, setSorted, randomN, setRandomN } = BarsChart.useStore(storeSelector);
     return (
-        <div className="w-[30rem]">
-            <div className="border rounded border-green-200 shadow">
-                <Body ref={ref} nBars={nBars} onNBarsChanged={setNBars} sorted={sorted} randomN={randomN} />
+        <div className="p-1 w-[30rem] border rounded border-white/50 shadow">
+            <div className="bg-white/10">
+                <Body ref={bodyApiRef} nBars={nBars} onNBarsChanged={setNBars} sorted={sorted} randomN={randomN} />
             </div>
             <div className="mt-2 flex items-center space-x-4">
-                <ButtonQuick title="Update view" onClick={() => ref.current?.update()} />
+                <ButtonQuick title="Update view" onClick={() => bodyApiRef.current?.update()} />
 
                 <Slider label="Bars" labelWidth="2.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
                 <Checkbox label="Update quantity" checked={randomN} onChange={setRandomN} title="Update # of bars during update" />
