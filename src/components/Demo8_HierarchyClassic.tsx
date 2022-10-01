@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { FrameOfDemo } from '@ui/FrameOfDemo';
 
 // Data
 
@@ -218,6 +219,8 @@ function HierarchyClassicRaw() {
 
 export function Demo8_HierarchyClassic() {
     return (
-        <HierarchyClassicRaw />
+        <FrameOfDemo>
+            <HierarchyClassicRaw />
+        </FrameOfDemo>
     );
 }

@@ -1,6 +1,7 @@
 import React, { forwardRef, PropsWithChildren, Ref, useEffect, useImperativeHandle, useRef } from 'react';
 import * as d3 from 'd3';
 import { IconRefresh } from '@ui/UIIcons';
+import { FrameOfDemo } from '@ui/FrameOfDemo';
 
 function D3World(svgRoot: SVGSVGElement) {
     let svg = d3.select<SVGSVGElement, Datum>(svgRoot);
@@ -118,18 +119,19 @@ const LineChartBody = forwardRef(LineChartBodyRaw);
 export function Demo5_LineChart() {
     const api = useRef<LineChartBodyApi>(null);
     return (
-        <div className='w-[30rem] border-8 border-blue-200 bg-blue-400'
-            style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}
-        >
-            <div className="">
-                <LineChartBody ref={api} />
-                <button className="ml-4 mb-2 h-6 w-6 p-1 border rounded border-blue-800 hover:bg-blue-500 active:bg-blue-500 active:scale-[.97]"
-                    style={{ boxShadow: '#00000019 0 0 1px 1px' }}
-                    onClick={() => api.current?.update()}
-                >
-                    <IconRefresh />
-                </button>
+        <FrameOfDemo>
+            <div className='border-8 border-blue-200 bg-blue-400' style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}>
+                <div className="">
+                    <LineChartBody ref={api} />
+                    
+                    <button className="ml-4 mb-2 h-6 w-6 p-1 border rounded border-blue-800 hover:bg-blue-500 active:bg-blue-500 active:scale-[.97]"
+                        style={{ boxShadow: '#00000019 0 0 1px 1px' }}
+                        onClick={() => api.current?.update()}
+                    >
+                        <IconRefresh />
+                    </button>
+                </div>
             </div>
-        </div>
+        </FrameOfDemo>
     );
 }

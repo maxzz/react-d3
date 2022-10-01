@@ -5,6 +5,7 @@ import { Checkbox } from '@ui/Checkbox';
 import { ButtonQuick } from '@ui/ButtonQuick';
 import { Slider } from '@ui/Slider';
 import { BarsChart } from '@/store';
+import { FrameOfDemo } from '@ui/FrameOfDemo';
 
 type Datum = number;
 let DATA = d3.range(5).map((_, i) => (i + 1) / 5);
@@ -128,17 +129,19 @@ export function Demo3_FunBarsChart() {
     const bodyApiRef = useRef<BodyAPI>(null);
     const { nBars, setNBars, sorted, setSorted, randomN, setRandomN } = BarsChart.useStore(storeSelector);
     return (
-        <div className="p-1 w-[30rem] border rounded border-white/50 shadow">
-            <div className="bg-white/10">
-                <Body ref={bodyApiRef} nBars={nBars} onNBarsChanged={setNBars} sorted={sorted} randomN={randomN} />
-            </div>
-            <div className="mt-2 flex items-center space-x-4">
-                <ButtonQuick title="Update view" onClick={() => bodyApiRef.current?.update()} />
+        <FrameOfDemo>
+            <div>
+                <div className="bg-white/10">
+                    <Body ref={bodyApiRef} nBars={nBars} onNBarsChanged={setNBars} sorted={sorted} randomN={randomN} />
+                </div>
+                <div className="mt-2 flex items-center space-x-4">
+                    <ButtonQuick title="Update view" onClick={() => bodyApiRef.current?.update()} />
 
-                <Slider label="Bars" labelWidth="2.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
-                <Checkbox label="Update quantity" checked={randomN} onChange={setRandomN} title="Update # of bars during update" />
-                <Checkbox label="Sort" checked={sorted} onChange={setSorted} title="Sort after update" />
+                    <Slider label="Bars" labelWidth="2.5rem" value={nBars} onChange={(value) => setNBars(value)} step={1} min={2} max={120} />
+                    <Checkbox label="Update quantity" checked={randomN} onChange={setRandomN} title="Update # of bars during update" />
+                    <Checkbox label="Sort" checked={sorted} onChange={setSorted} title="Sort after update" />
+                </div>
             </div>
-        </div>
+        </FrameOfDemo>
     );
 }

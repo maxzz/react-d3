@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { SliderProps } from '@ui/UIProps';
+import { FrameOfDemo } from '@ui/FrameOfDemo';
 
 type Fruit = {
     name: string;
@@ -91,16 +92,18 @@ export function Demo6_FunPieChart() {
     }
 
     return (
-        <div className="w-[30rem]">
-            <div className="w-full border-8 border-blue-200 bg-blue-400" style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}>
-                <FunChartBody {...props} />
-            </div>
+        <FrameOfDemo>
+            <div className="">
+                <div className="mb-1 w-full border-8 border-blue-200 bg-blue-400" style={{ boxShadow: '#0000001f 0px 0px 3px 1px' }}>
+                    <FunChartBody {...props} />
+                </div>
 
-            <Slider value={props.innerRadius} onChange={(v) => update('innerRadius', v)} label="innerRadius" {...RANGES['innerRadius']}/>
-            <Slider value={props.outerRadius} onChange={(v) => update('outerRadius', v)} label="outerRadius" {...RANGES['outerRadius']}/>
-            <Slider value={props.padRadius} onChange={(v) => update('padRadius', v)} label="padRadius" {...RANGES['padRadius']}/>
-            <Slider value={props.padAngle} onChange={(v) => update('padAngle', v)} label="padAngle" {...RANGES['padAngle']}/>
-            <Slider value={props.cornerRadius} onChange={(v) => update('cornerRadius', v)} label="cornerRadius" {...RANGES['cornerRadius']}/>
-        </div>
+                <Slider value={props.innerRadius} onChange={(v) => update('innerRadius', v)} label="innerRadius" {...RANGES['innerRadius']} />
+                <Slider value={props.outerRadius} onChange={(v) => update('outerRadius', v)} label="outerRadius" {...RANGES['outerRadius']} />
+                <Slider value={props.padRadius} onChange={(v) => update('padRadius', v)} label="padRadius" {...RANGES['padRadius']} />
+                <Slider value={props.padAngle} onChange={(v) => update('padAngle', v)} label="padAngle" {...RANGES['padAngle']} />
+                <Slider value={props.cornerRadius} onChange={(v) => update('cornerRadius', v)} label="cornerRadius" {...RANGES['cornerRadius']} />
+            </div>
+        </FrameOfDemo>
     );
 }

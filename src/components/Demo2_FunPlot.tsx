@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { Slider } from '@ui/Slider';
 import { Checkbox } from '@ui/Checkbox';
 import { CheckboxJw } from '@ui/Checkboxes/CheckboxJw';
+import { FrameOfDemo } from '@ui/FrameOfDemo';
 
 type PlotOptions = {
     xdomain?: [number, number];
@@ -159,7 +160,7 @@ export function Demo2_FunPlotFunPlot() {
     useEffect(
         () => {
             if (!svgRef.current) { return; }
-            
+
             const functionsToShow = Object.keys(FUNCTIONS).map((fnName) => allFns[fnName] && FUNCTIONS[fnName]).filter(Boolean);
 
             funplot(svgRef.current, functionsToShow, {
@@ -172,32 +173,34 @@ export function Demo2_FunPlotFunPlot() {
     );
 
     return (
-        <div className="w-[30rem] p-1 border-white/50 border rounded flex flex-col">
-            {/* Preview */}
-            <div className="h-64 border-8 border-blue-200 bg-blue-400">
-                <svg className="w-full h-full" ref={svgRef} />
-            </div>
+        <FrameOfDemo>
+            <div className="flex flex-col">
+                {/* Preview */}
+                <div className="h-64 border-8 border-blue-200 bg-blue-400">
+                    <svg className="w-full h-full" ref={svgRef} />
+                </div>
 
-            <div className="my-2 space-y-2">
-                {/* Sliders */}
-                <div className="">
-                    <Slider labelWidth="5.5rem" value={xdomain} onChange={setxDomain} label="X domain" min={0.1} max={15} step={0.1} />
-                    <Slider labelWidth="5.5rem" value={strokeWidthInner} onChange={setStrokeWidthInner} label="Inner stroke" min={0.1} max={40} step={0.1} />
-                    <Slider labelWidth="5.5rem" value={strokeWidthOuter} onChange={setStrokeWidthOuter} label="Outer stroke" min={0.1} max={40} step={0.1} />
-                </div>
-                {/* Checkboxes */}
-                <div className="">
-                    <Checkbox label="sin(x)" checked={allFns['sin']} onChange={(cheked) => setFnCheck('sin', cheked)} />
-                    <Checkbox label="cos(x)" checked={allFns['cos']} onChange={(cheked) => setFnCheck('cos', cheked)} />
-                    <Checkbox label="tan(x)" checked={allFns['tan']} onChange={(cheked) => setFnCheck('tan', cheked)} />
-                    <Checkbox label="atan(x)" checked={allFns['atan']} onChange={(cheked) => setFnCheck('atan', cheked)} />
-                    <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={allFns['cos-sin']} onChange={(cheked) => setFnCheck('cos-sin', cheked)} />
-                    <Checkbox label=".4 * cos(x * 4)" checked={allFns['cos4']} onChange={(cheked) => setFnCheck('cos4', cheked)} />
-                    <Checkbox label=".1 * x - .5" checked={allFns['const']} onChange={(cheked) => setFnCheck('const', cheked)} />
-                    <Checkbox label="sin(4.1 * x) + 12 * sin(3 * x)" checked={allFns['twit']} onChange={(cheked) => setFnCheck('twit', cheked)} />
-                    {/* <CheckboxJw /> */}
+                <div className="my-2 space-y-2">
+                    {/* Sliders */}
+                    <div className="">
+                        <Slider labelWidth="5.5rem" value={xdomain} onChange={setxDomain} label="X domain" min={0.1} max={15} step={0.1} />
+                        <Slider labelWidth="5.5rem" value={strokeWidthInner} onChange={setStrokeWidthInner} label="Inner stroke" min={0.1} max={40} step={0.1} />
+                        <Slider labelWidth="5.5rem" value={strokeWidthOuter} onChange={setStrokeWidthOuter} label="Outer stroke" min={0.1} max={40} step={0.1} />
+                    </div>
+                    {/* Checkboxes */}
+                    <div className="">
+                        <Checkbox label="sin(x)" checked={allFns['sin']} onChange={(cheked) => setFnCheck('sin', cheked)} />
+                        <Checkbox label="cos(x)" checked={allFns['cos']} onChange={(cheked) => setFnCheck('cos', cheked)} />
+                        <Checkbox label="tan(x)" checked={allFns['tan']} onChange={(cheked) => setFnCheck('tan', cheked)} />
+                        <Checkbox label="atan(x)" checked={allFns['atan']} onChange={(cheked) => setFnCheck('atan', cheked)} />
+                        <Checkbox label="cos(x * 4) * (PI / 10) * x" checked={allFns['cos-sin']} onChange={(cheked) => setFnCheck('cos-sin', cheked)} />
+                        <Checkbox label=".4 * cos(x * 4)" checked={allFns['cos4']} onChange={(cheked) => setFnCheck('cos4', cheked)} />
+                        <Checkbox label=".1 * x - .5" checked={allFns['const']} onChange={(cheked) => setFnCheck('const', cheked)} />
+                        <Checkbox label="sin(4.1 * x) + 12 * sin(3 * x)" checked={allFns['twit']} onChange={(cheked) => setFnCheck('twit', cheked)} />
+                        {/* <CheckboxJw /> */}
+                    </div>
                 </div>
             </div>
-        </div>
+        </FrameOfDemo>
     );
 }
