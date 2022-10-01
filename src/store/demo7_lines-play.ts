@@ -1,5 +1,5 @@
 import create from 'zustand';
-import { InputData } from '@/components/x-nun/Demo7_XOrgLinePlayground';
+import { InputData } from '@/components/x-nun/Demo7_LinePlaygroundOrg';
 import { Global } from '.';
 
 export namespace LinesPlay {

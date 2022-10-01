@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import styles from './XOrgLinePlayground.module.scss';
+import styles from './Demo7_LinePlaygroundOrg.module.scss';
 import { CheckboxTw } from '@ui/Checkboxes/CheckboxTw';
 import { LinesPlay } from '@/store';
+import { FrameOfDemo } from '@ui/FrameOfDemo';
+import { classNames } from '@/utils/classnames';
 
 type API = {
     setAll: (onOff: boolean) => void;
@@ -125,7 +127,7 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
             .style('--size', d => d.active ? 0 : 80);
     }
 
-    function updatePointsMenu() {
+    function addListenersToButtons() {
         d3.select('.remove-point')
             .classed('active', numActivePoints > 2)
             .on('click', function () {
@@ -232,7 +234,7 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
 
     function update() {
         updateMenu();
-        updatePointsMenu();
+        addListenersToButtons();
         updateLines();
         updatePoints();
     }
@@ -288,31 +290,37 @@ function LineEditor() {
         apiRef.current = svgRef.current && initial(svgRef.current, inputData, onSelectionChange);
     }, []);
 
+    function SmallButton({ children, className, ...rest }: HTMLAttributes<HTMLButtonElement>) {
+        return (
+            <button
+                className={classNames(
+                    "w-4 h-4 pb-1 rounded shadow cursor-pointer select-none flex items-center justify-center active:scale-[.97]",
+                    "bg-green-200 border border-green-600", //TODO: maybe: background-color: #60a5fa; (blue-400) color: white; border: 1px solid white
+                    className,
+                )} {...rest}
+            >
+                {children}
+            </button>
+        );
+    }
+
     return (
         <div className=""> {/* scale-75 */}
             <svg className="bg-white border-8 border-blue-400" viewBox="0 0 500 500" fill="none" stroke="red" strokeWidth="1">
                 <g ref={svgRef}></g>
             </svg>
 
+            {/* Menu buttons */}
             <div className="ml-4 -mt-3 flex space-x-1">
-                <div
-                    className="remove-point
-                        w-4 h-4 pb-1 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
-                        flex items-center justify-center"
-                    title="Remove point (min is 2)"
-                >-</div> {/* TODO: maybe: background-color: #60a5fa; (blue-400) color: white; border: 1px solid white */}
-                <div
-                    className="add-point
-                        w-4 h-4 pb-1 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
-                        flex items-center justify-center"
-                    title="Add point (maximum 7)"
-                >+</div>
+                <SmallButton className="remove-point" title="Remove point (min is 2)">-</SmallButton>
+                <SmallButton className="add-point" title="Add point (maximum 7)">+</SmallButton>
             </div>
 
             {/* Controls */}
-            <div className="sidebar mt-1 p-2 rounded-md text-sm bg-white">
-                {/* Info panel */}
-                <div className="info w-[30rem] h-20 p-2 text-xs rounded bg-blue-100 flex flex-col justify-between">
+            <div className="sidebar mt-1 p-2 rounded-md text-sm bg-white/10">
+                
+                {/* Summary info panel */}
+                <div className="info h-20 p-2 text-xs rounded bg-white/50 flex flex-col justify-between">
                     <span className="default">
                         <p>Toggle each of the curve types to activate / deactivate the curve.</p>
                         <p>You can also add/remove/drag the points to change the shape of the curve.</p>
@@ -345,8 +353,10 @@ function LineEditor() {
 
 export function Demo7_LinePlayground() {
     return (
-        <div className="w-full">
-            <LineEditor />
-        </div>
+        <FrameOfDemo>
+            <div className="w-full">
+                <LineEditor />
+            </div>
+        </FrameOfDemo>
     );
 }
